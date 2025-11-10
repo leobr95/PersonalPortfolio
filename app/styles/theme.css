@@ -1,0 +1,25 @@
+:root{
+  /* Paleta “cristal líquido” */
+  --base:#0b0c13;
+  --panel:rgba(18,20,32,0.72);
+  --panel-strong:rgba(18,20,32,0.88);
+  --side-bg:linear-gradient(180deg, rgba(24,26,44,.86), rgba(14,15,29,.92));
+
+  --text:#E7EAFF;
+  --text-weak:#B6BDDB;
+  --line:#26304a;
+  --line-weak:#1b2236;
+
+  --primary:#8B5CF6;
+  --primary-grad:linear-gradient(135deg,#8B5CF6 0%,#22D3EE 100%);
+  --ring:#6a57f0;
+
+  --glass:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  --glass-weak:rgba(255,255,255,.06);
+
+  --elev-1: 0 10px 24px rgba(0,0,0,.32);
+  --elev-2: 0 16px 40px rgba(0,0,0,.45);
+}
+
+html,body{background:var(--base);color:var(--text);margin:0}
+*{box-sizing:border-box}

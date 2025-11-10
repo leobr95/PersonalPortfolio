@@ -1,0 +1,142 @@
+/* ===== Contenedor general con espacio para sidebar fijo ===== */
+.pf{
+  --gap-bridge: 20px;
+  --aside-w: 300px;
+
+  width: 100%;
+  padding: 16px;
+  padding-left: calc(var(--aside-w) + var(--gap-bridge));
+}
+
+/* Main centrado y con cards de cristal */
+.pf-main{
+  max-width: 1200px;
+  margin-inline: auto;
+  display: grid;
+  gap: 18px;
+}
+
+/* ===== Sidebar fijo / drawer ===== */
+.pf-aside{
+  position: fixed; inset: 0 auto 0 0;
+  width: var(--aside-w); height: 100vh;
+  display: grid; grid-template-rows: auto 1fr auto;
+
+  background: var(--side-bg);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-right: 1px solid var(--line-weak);
+  padding: 22px 14px 18px;
+  box-shadow: var(--elev-2);
+  z-index: 30;
+
+  transform: translateX(0);
+  transition: transform .22s ease;
+}
+
+.pf-brand{ color:#fff; font-weight:900; letter-spacing:.6px; margin: 4px 8px 12px; }
+
+/* ===== Nav con efecto Curved Outside ===== */
+.pf-nav{ margin-top: 4px; }
+.pf-menu{ list-style:none; margin:0; padding:10px 0 10px 14px; display:grid; gap:12px; }
+.pf-menu li{ position:relative; }
+
+.pf-nav-item{
+  display:flex; align-items:center; gap:10px;
+  position:relative;
+  padding:16px 16px 16px 12px;
+  border-radius:14px 0 0 14px;
+  background: transparent;
+  color:#EDEEFF; text-decoration:none; font-weight:700; font-size:15px;
+  transition: transform .12s ease, filter .15s ease, background .15s ease, color .15s ease;
+}
+.pf-nav-item:hover{ transform: translateY(-1px); filter: brightness(1.04); }
+.pf-nav-ico{ font-size: 20px; color:#E6E6FF; }
+.pf-nav-label{ line-height: 1; }
+
+.pf-nav-item.is-active{
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: var(--elev-1);
+  backdrop-filter: blur(10px) saturate(140%);
+}
+.pf-nav-item.is-active .pf-nav-ico{ color: var(--primary); }
+
+/* Puente (rellena el gap hacia el contenido) */
+.pf-nav-item .pf-bridge{
+  position:absolute; top:0; right:calc(-1 * var(--gap-bridge));
+  width:var(--gap-bridge); height:100%;
+  background: transparent;
+  pointer-events:none;
+}
+.pf-nav-item.is-active .pf-bridge{ background: var(--panel); }
+
+/* Curvas pegadas al puente */
+.pf-menu li .pf-nav-item.is-active::after,
+.pf-menu li .pf-nav-item.is-active::before{
+  content:''; position:absolute; width:18px; height:18px;
+  right: calc(-1 * var(--gap-bridge)); z-index:2;
+}
+.pf-menu li .pf-nav-item.is-active::after{
+  top:-18px;
+  background: radial-gradient(circle at top left, var(--side-bg) 18px, var(--panel) 19px);
+}
+.pf-menu li .pf-nav-item.is-active::before{
+  bottom:-18px;
+  background: radial-gradient(circle at bottom left, var(--side-bg) 18px, var(--panel) 19px);
+}
+
+/* Footer */
+.pf-aside-foot{ align-self:end; margin-top:12px; }
+.pf-socials{ display:flex; gap:8px; flex-wrap:wrap; }
+.pf-ico{
+  display:grid; place-items:center;
+  width:36px; height:36px; border-radius:10px;
+  background: var(--glass);
+  border: 1px solid var(--line-weak);
+  color:#fff;
+}
+
+/* ===== Panel genérico “cristal” ===== */
+.pf-panel{
+  background: var(--panel);
+  backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: var(--elev-1);
+}
+.pf-head h2{ margin:0 0 10px; color:var(--text); font-weight:900; font-size:clamp(18px,2.4vw,22px); }
+
+/* ===== Perfil (ejemplo) ===== */
+.pf-profile{ display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:center; }
+.pf-avatar{ width:140px; height:140px; border-radius:999px; overflow:hidden; border:4px solid var(--ring); box-shadow:var(--elev-2);
+  background: linear-gradient(135deg,#8B5CF6 0%, #22D3EE 100%); }
+.pf-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+.pf-initials{ width:100%; height:100%; display:grid; place-items:center; color:#fff; font-weight:900; font-size:42px; }
+.pf-info{ display:grid; gap:6px; }
+.pf-name{ margin:0; color:var(--text); font-size:clamp(20px,3vw,28px); }
+.pf-role{ margin:0; color:#b7bedc; }
+.pf-meta{ display:grid; gap:4px; padding:0; margin:0; list-style:none; color:var(--text); }
+.pf-meta a{ color:#a8b3ff; text-decoration:none; }
+.pf-meta a:hover{ text-decoration:underline; }
+
+/* ===== Botón hamburguesa + overlay ===== */
+.pf-hamburger{
+  position: fixed; top:12px; left:12px; width:44px; height:44px;
+  border-radius:10px; border:1px solid var(--line-weak);
+  background: var(--panel); color:var(--text);
+  display:none; z-index:40;
+}
+.pf-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:25; }
+.pf-overlay.is-on{ opacity:1; pointer-events:auto; }
+
+/* ===== Responsivo ===== */
+@media (max-width: 980px){
+  .pf{ padding-left:16px; }
+  .pf-aside{ transform: translateX(-100%); width: 88vw; max-width: 360px; border-right:none; border-radius:0 18px 18px 0; }
+  .pf--menuOpen .pf-aside{ transform: translateX(0); }
+  .pf-main{ max-width: 100%; }
+  .pf-hamburger{ display:grid; place-items:center; }
+  .pf-profile{ grid-template-columns: 1fr; text-align:center; }
+  .pf-avatar{ margin-inline:auto; }
+}

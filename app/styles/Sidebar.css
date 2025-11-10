@@ -1,0 +1,198 @@
+/* ===== Sidebar.css (scopeado) ===== */
+
+/* Paleta y variables locales */
+.pf-aside{
+  --aside-w: 300px;
+  --gap-bridge: 17px;
+
+  --side-bg: #0f1118;
+  --panel: #14151d;
+  --base: #0f1118;
+  --text: #eaf0ff;
+  --line: #23263a;
+  --line-weak: #1c2033;
+
+  /* glass + elevaciones */
+  --glass: rgba(255,255,255,.05);
+  --glass-weak: rgba(255,255,255,.04);
+  --elev-1: 0 10px 24px rgba(0,0,0,.35);
+
+  /* Colores glow por ítem */
+  --clr-1: #ff1f71;  /* Perfil */
+  --clr-2: #01c3a8;  /* Experiencia */
+  --clr-3: #1890ff;  /* Proyectos */
+  --clr-4: #8b5cf6;  /* Habilidades */
+  --clr-5: #ffb741;  /* Educación */
+  --clr-6: #1eff45;  /* Contacto */
+}
+
+/* ===== Contenedor aside (fijo / drawer) ===== */
+.pf-aside{
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--aside-w);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: linear-gradient(180deg, #0b0c11, var(--side-bg));
+  border-right: 1px solid var(--line-weak);
+  padding: 20px 14px;
+  z-index: 30;
+  transform: translateX(0);
+  transition: transform .24s ease;
+}
+
+@media (max-width: 980px){
+  .pf-aside{
+    width: min(88vw, 360px);
+    transform: translateX(-100%);
+    border-right: none;
+    box-shadow: var(--elev-1);
+    border-radius: 0 18px 18px 0;
+  }
+  .pf-aside.is-open{ transform: translateX(0); }
+}
+
+/* Marca */
+.pf-aside .pf-brand{
+  color:#fff; font-weight:900; letter-spacing:.6px; font-size:18px;
+  margin: 6px 8px 14px;
+}
+
+/* ===== Menú ===== */
+.pf-aside .pf-nav{ margin-top: 4px; }
+.pf-aside .pf-menu{
+  list-style:none; margin:0; padding: 10px 0 10px 10px;
+  display:grid; gap: 12px;
+}
+.pf-aside .pf-menu li{ position: relative; }
+
+/* ===== Item con efecto GLASS + GLOW (como botones) ===== */
+.pf-aside .pf-nav-item{
+  --clr: var(--clr-1); /* por defecto, se redefine por nth-child abajo */
+
+  position: relative;
+  display:flex; align-items:center; gap:10px;
+  padding: 14px 14px 14px 12px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 800; font-size: 15px;
+  color: #EFF0FF;
+
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 15px 15px rgba(0,0,0,.30);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition: .45s ease;
+  overflow: hidden;
+}
+
+/* Icono */
+.pf-aside .pf-nav-ico{ font-size: 20px; color: #E6E6FF; }
+.pf-aside .pf-nav-label{ line-height: 1; }
+
+/* Brillo diagonal interno (sheen) usando ::after */
+.pf-aside .pf-nav-item::after{
+  content:"";
+  position:absolute; inset:0; z-index:0;
+  background: linear-gradient(to left, rgba(255,255,255,0.15), transparent);
+  transform: skewX(45deg) translateX(-40%);
+  transition: transform .5s ease;
+  pointer-events:none;
+}
+.pf-aside .pf-nav-item:hover::after{
+  transform: skewX(45deg) translateX(140%);
+}
+
+/* Glow “barras” superior/inferior (como en tus glass buttons) */
+.pf-aside .pf-nav-item::before{
+  content:"";
+  position:absolute; left:50%; transform: translateX(-50%);
+  bottom:-6px; width:28px; height:10px; border-radius:10px;
+  background: var(--clr);
+  box-shadow:
+    0 0 5px var(--clr),
+    0 0 15px var(--clr),
+    0 0 30px var(--clr),
+    0 0 60px var(--clr);
+  transition: .5s;
+}
+.pf-aside .pf-nav-item .pf-bridge{ /* mantiene el “curved outside” si lo usas */
+  position: absolute; top: 0; right: calc(-1 * var(--gap-bridge));
+  width: var(--gap-bridge); height: 100%; background: transparent; pointer-events: none;
+}
+
+/* Hover: leve separación y despliegue de glow */
+.pf-aside .pf-nav-item:hover{
+  letter-spacing: .3px;
+  filter: brightness(1.05);
+}
+.pf-aside .pf-nav-item:hover::before{
+  bottom: 0; height: 50%; width: 86%; border-radius: 14px;
+}
+
+/* Estado activo: énfasis + borde luminoso */
+.pf-aside .pf-nav-item.is-active{
+  color:#fff;
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.06),
+    0 0 32px -6px var(--clr);
+  border-color: rgba(255,255,255,.14);
+}
+.pf-aside .pf-nav-item.is-active .pf-nav-ico{ color: var(--clr); }
+.pf-aside .pf-nav-item.is-active::before{
+  bottom: 0; height: 55%; width: 90%; border-radius: 14px;
+}
+
+/* Colores por posición (según tu NAV orden) */
+.pf-aside .pf-menu li:nth-child(1) .pf-nav-item{ --clr: var(--clr-1); } /* Perfil */
+.pf-aside .pf-menu li:nth-child(2) .pf-nav-item{ --clr: var(--clr-2); } /* Experiencia */
+.pf-aside .pf-menu li:nth-child(3) .pf-nav-item{ --clr: var(--clr-3); } /* Proyectos */
+.pf-aside .pf-menu li:nth-child(4) .pf-nav-item{ --clr: var(--clr-4); } /* Habilidades */
+.pf-aside .pf-menu li:nth-child(5) .pf-nav-item{ --clr: var(--clr-5); } /* Educación */
+.pf-aside .pf-menu li:nth-child(6) .pf-nav-item{ --clr: var(--clr-6); } /* Contacto */
+
+/* ===== Social icons del footer ===== */
+.pf-aside .pf-aside-foot{ align-self:end; margin-top: 16px; }
+.pf-aside .pf-socials{ display:flex; gap:8px; flex-wrap: wrap; }
+.pf-aside .pf-ico{
+  display:grid; place-items:center;
+  width:36px; height:36px; border-radius:10px;
+  background: var(--glass-weak);
+  border:1px solid var(--line-weak);
+  color:#fff;
+  transition: .25s ease;
+}
+.pf-aside .pf-ico:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(0,0,0,.3);
+}
+
+/* Aísla la pila del item para controlar z-index internos */
+.pf-aside .pf-nav-item{
+  isolation: isolate;           /* << clave */
+  position: relative;
+  overflow: hidden;             /* ya lo tienes para el sheen */
+}
+
+/* Texto e icono SIEMPRE arriba del glow */
+.pf-aside .pf-nav-ico,
+.pf-aside .pf-nav-label {
+  position: relative;
+  z-index: 2;                   /* por encima del brillo */
+}
+
+/* Pseudo-elementos de brillo por DEBAJO del contenido */
+.pf-aside .pf-nav-item::before,   /* barra glow inferior/superior */
+.pf-aside .pf-nav-item::after {   /* sheen diagonal */
+  z-index: 1;                     /* debajo de texto (2) */
+  pointer-events: none;           /* no bloquear clicks/hover */
+}
+
+/* (Opcional) el “bridge” no debe tapar texto ni capturar eventos */
+.pf-aside .pf-nav-item .pf-bridge{
+  z-index: 0;
+  pointer-events: none;
+}

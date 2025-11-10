@@ -1,0 +1,271 @@
+/* ===== Vars esperadas en globals =====
+--base, --panel, --panel-strong, --side-bg, --primary, --text, --text-weak,
+--line, --line-weak, --primary-grad, --elev-1, --elev-2, --ring, --glass, --glass-weak
+*/
+
+/* ===== Layout general ===== */
+/* ===== Variables & Layout ===== */
+.pf{
+  --gap-bridge: 17px;
+  --aside-w: 300px;
+
+  /* El contenedor ocupa todo el ancho disponible */
+  width: 100%;
+  max-width: none;           /* quita el 60% que lo hacía ver pequeño */
+  margin: 0 auto;
+
+  /* Como el aside está FIXED, dejamos espacio a la izquierda para el contenido */
+  padding: 16px;
+  padding-left: calc(var(--aside-w) + var(--gap-bridge));
+}
+
+/* Área principal con un ancho máximo cómodo y centrado */
+.pf-main{
+  max-width: 1200px;
+  margin-inline: auto;
+  display: grid;
+  gap: 16px;
+}
+
+/* ===== Sidebar FIXED ===== */
+.pf-aside{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--aside-w);
+  height: 100vh;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  background: var(--side-bg);
+  border-right: 1px solid var(--line-weak);
+  padding: 24px 16px 20px;
+  z-index: 30;
+
+  transform: translateX(0);       /* desktop visible */
+  transition: transform .22s ease;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1200px){
+  .pf-main{ max-width: 1000px; }
+}
+
+@media (max-width: 980px){
+  /* En móvil el sidebar se esconde fuera de pantalla */
+  .pf{
+    padding-left: 16px;           /* ya no reservamos espacio al aside */
+  }
+  .pf-aside{
+    transform: translateX(-100%); /* oculto por defecto */
+    width: 88vw;                  /* panel off-canvas cómodo */
+    max-width: 360px;
+  }
+  /* Si usas una clase en el body o en .pf para abrir el menú (por ejemplo .pf--menuOpen) */
+  .pf.pf--menuOpen .pf-aside{
+    transform: translateX(0);
+  }
+}
+
+/* Opcional: que el contenido no se “encoge” demasiado en pantallas muy anchas */
+@media (min-width: 1400px){
+  .pf-main{ max-width: 1280px; }
+}
+
+/* Espaciado del main para dejar sitio a la barra fija */
+.pf-main{
+  margin-left: calc(10px+ var(--gap-bridge));
+  display: grid;
+  gap: 16px;
+}
+
+/* Marca */
+.pf-brand{
+  color: #fff; font-weight: 900; letter-spacing: .6px; font-size: 18px;
+  margin: 6px 8px 14px;
+}
+
+/* ===== NAV con effect Curved Outside ===== */
+.pf-nav{ margin-top: 4px; }
+.pf-menu{
+  list-style: none;
+  margin: 0;
+  padding: 10px 0 10px 14px;
+  display: grid;
+  gap: 12px;
+}
+.pf-menu li{ position: relative; }
+
+.pf-nav-item{
+  display: flex; align-items: center; gap: 10px;
+  position: relative;
+  padding: 16px 16px 16px 12px;
+  border-radius: 14px 0 0 14px;
+  text-decoration: none;
+  font-weight: 700; font-size: 15px;
+
+  background: transparent;      /* solo activo usa color */
+  color: #EFF0FF;
+  transition: transform .12s ease, filter .15s ease, background .15s ease, color .15s ease;
+}
+.pf-nav-item:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+.pf-nav-ico{ font-size: 20px; color: #E6E6FF; }
+.pf-nav-label{ line-height: 1; }
+
+.pf-nav-item.is-active{
+  background: var(--base);
+  color: var(--text);
+  box-shadow: var(--elev-1);
+}
+.pf-nav-item.is-active .pf-nav-ico{ color: var(--primary); }
+
+/* Bridge que rellena el gap entre sidebar y contenido */
+.pf-nav-item .pf-bridge{
+  position: absolute; top: 0; right: calc(-1 * var(--gap-bridge));
+  width: var(--gap-bridge); height: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+.pf-nav-item.is-active .pf-bridge{ background: var(--base); }
+
+/* Curvas superiores/inferiores pegadas al bridge */
+.pf-menu li .pf-nav-item.is-active::after,
+.pf-menu li .pf-nav-item.is-active::before{
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  right: calc(-1 * var(--gap-bridge));
+  z-index: 2;
+}
+.pf-menu li .pf-nav-item.is-active::after{
+  top: -18px;
+  background: radial-gradient(circle at top left, var(--side-bg) 18px, var(--panel) 19px);
+}
+.pf-menu li .pf-nav-item.is-active::before{
+  bottom: -18px;
+  background: radial-gradient(circle at bottom left, var(--side-bg) 18px, var(--panel) 19px);
+}
+
+/* Footer del aside */
+.pf-aside-foot{ align-self: end; margin-top: 16px; }
+.pf-socials{ display: flex; gap: 8px; flex-wrap: wrap; }
+.pf-ico{
+  display: grid; place-items: center;
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--glass);
+  border: 1px solid var(--line-weak);
+  color: #fff;
+}
+.pf-ico--bar{ background: var(--glass-weak); color: var(--text); border-color: var(--line); }
+
+/* ===== Panel genérico ===== */
+.pf-panel{
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: var(--elev-1);
+}
+.pf-head h2{
+  margin: 0 0 10px;
+  color: var(--text);
+  font-weight: 900;
+  font-size: clamp(18px, 2.4vw, 22px);
+}
+
+/* ===== Perfil ===== */
+.pf-profile{
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+.pf-avatar{
+  width: 140px; height: 140px; border-radius: 999px; overflow: hidden;
+  border: 4px solid var(--ring); box-shadow: var(--elev-2);
+  background: linear-gradient(135deg, #8B5CF6 0%, #22D3EE 100%);
+}
+.pf-avatar img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.pf-initials{ width: 100%; height: 100%; display: grid; place-items: center; color:#fff; font-weight:900; font-size: 42px; }
+
+.pf-info{ display: grid; gap: 6px; }
+.pf-name{ margin: 0; color: var(--text); font-size: clamp(20px, 3vw, 28px); }
+.pf-role{ margin: 0; color: #6b6f85; }
+
+.pf-meta{ display: grid; gap: 4px; padding: 0; margin: 0; list-style: none; color: var(--text); }
+.pf-meta a{ color: var(--primary); text-decoration: none; }
+.pf-meta a:hover{ text-decoration: underline; }
+
+.pf-contactbar{
+  display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;
+}
+
+/* ===== Timeline ===== */
+.pf-timeline{ list-style:none; padding:0; margin:0; display:grid; gap:14px; }
+.pf-timeline li{ display:grid; grid-template-columns: 24px 1fr; gap:10px; }
+.tl-dot{ width:10px; height:10px; border-radius:999px; background: var(--primary); margin-top:10px; box-shadow: 0 0 0 4px rgba(108,92,231,.15); }
+.tl-card{ background: var(--panel-strong); border:1px solid var(--line); border-radius:12px; padding:10px; }
+.tl-card h3{ margin:0 0 4px; }
+.tl-time{ display:inline-block; font-size:.85rem; color:#6b6f85; margin-bottom:4px; }
+
+/* ===== Proyectos ===== */
+.cards-grid{ display:grid; gap:12px; grid-template-columns: repeat(3,1fr); }
+@media (max-width: 1024px){ .cards-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 640px){ .cards-grid{ grid-template-columns: 1fr; } }
+.card{ background: var(--panel-strong); border:1px solid var(--line); border-radius:14px; padding:12px; }
+.btn{
+  display:inline-block; margin-top:6px; text-decoration:none; font-weight:800;
+  color:#fff; background: var(--primary-grad); border-radius:12px; padding:10px 14px; box-shadow: var(--elev-2);
+}
+
+/* ===== Educación / Skills / Logros / Contacto ===== */
+.tags{ list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:8px; }
+.tags li{
+  padding:8px 12px; border-radius:999px;
+  background:#eef1ff; border:1px solid rgba(108,92,231,.25); color:#2a2e43; font-weight:700;
+}
+.bullets{ list-style: disc; margin: 0 0 0 18px; padding: 0; color:#2a2e43; }
+.pf-edu{ margin:0; padding-left: 18px; display: grid; gap: 6px; color: var(--text); }
+.contact{ display:grid; gap:10px; max-width: 520px; }
+.in{ border:1px solid var(--line); border-radius:12px; padding:10px 12px; background:#fff; color:#1d2233; }
+
+/* ===== Hamburguesa (móvil) ===== */
+.pf-hamburger{
+  position: fixed;
+  top: 12px; left: 12px;
+  width: 44px; height: 44px;
+  border-radius: 10px; border: 1px solid var(--line-weak);
+  background: var(--panel); color: var(--text);
+  display: none; /* solo móvil */
+  z-index: 40;
+}
+.pf-overlay{
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 25;
+}
+.pf-overlay.is-on{ opacity: 1; pointer-events: auto; }
+
+/* ===== Responsive ===== */
+@media (max-width: 980px){
+  .pf{
+    grid-template-columns: 1fr;
+    --gap-bridge: 14px;
+    --aside-w: 280px;
+  }
+  /* ocultamos barra fija y usamos drawer */
+  .pf-aside{
+    transform: translateX(-100%);
+    border-right: none;
+    border-radius: 0 18px 18px 0;
+  }
+  .pf-aside.is-open{ transform: translateX(0); }
+  .pf-main{ margin-left: 0; }
+
+  .pf-hamburger{ display: grid; place-items: center; }
+}
+
+@media (max-width: 560px){
+  .pf-profile{ grid-template-columns: 1fr; text-align:center; }
+  .pf-avatar{ margin-inline: auto; }
+}

@@ -1,0 +1,244 @@
+/* ===== Scope ===== */
+.ctc{
+  --bg:#0e0f15;
+  --panel:#14151d;
+  --panel-2:#10121a;
+  --line:#1d2233;
+  --text:#eaf0ff;
+  --muted:#cfd3f9;
+
+  --pink:#ff1f71;
+  --blue:#2db2ff;
+  --green:#1eff45;
+
+  background: radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.25), transparent 50%),
+              radial-gradient(1200px 600px at 110% 120%, rgba(0,140,255,.18), transparent 50%),
+              linear-gradient(180deg, #0b0c11, #0e0f15 60%, #0b0c11);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.35);
+  color: var(--text);
+  isolation: isolate; /* asegura capas internas independientes */
+}
+
+.ctc-head{ text-align:center; margin-bottom: 12px; }
+.ctc-title{
+  margin:0;
+  font-size: clamp(22px, 3.2vw, 30px);
+  font-weight: 900;
+  letter-spacing:.4px;
+}
+.ctc-sub{ margin:.2rem 0 0; color: var(--muted); }
+
+/* ===== Layout ===== */
+.ctc-grid{
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 18px;
+}
+@media (max-width: 960px){
+  .ctc-grid{ grid-template-columns: 1fr; }
+}
+
+/* ===== Tarjeta de contacto ===== */
+.ctc-card{
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 14px;
+  background:
+    radial-gradient(ellipse at right top, rgba(0,69,143,.56) 0%, var(--panel) 45%, var(--panel) 100%);
+  box-shadow: 0 12px 34px rgba(0,0,0,.45);
+  overflow: hidden;
+}
+.ctc-card::before{
+  content:""; position:absolute; inset:0;
+  border: 2px solid transparent; border-radius: 20px; z-index:-1;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out; mask-composite: exclude;
+  background: linear-gradient(45deg, #0e0f15, #0e0f15, #0e0f15, #0e0f15, #1890ff) border-box;
+}
+.ctc-card.tone-blue::before{
+  background: linear-gradient(45deg, #0e0f15, #0e0f15, #0e0f15, #0e0f15, #1890ff) border-box;
+}
+
+.ctc-card-head{
+  display:flex; align-items:center; gap:12px; margin: 4px 0 8px;
+}
+.ctc-avatar{
+  width:56px; height:56px; border-radius:16px; display:grid; place-items:center;
+  background: linear-gradient(135deg, #8B5CF6 0%, #22D3EE 100%);
+  font-weight: 900; color: #fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,.18);
+}
+.ctc-card-meta h3{ margin:0; font-size: 1.05rem; font-weight: 900; }
+.ctc-card-meta p{ margin:2px 0 0; color: var(--muted); font-size:.95rem; }
+
+.ctc-lines{ list-style:none; padding:0; margin:10px 0 12px; display:grid; gap:8px; }
+.ctc-lines li{
+  display:grid; grid-template-columns: 22px 1fr auto; gap:10px; align-items:center;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px;
+}
+.ctc-lines svg{ font-size: 18px; color:#a8b2ff; }
+.link{ color:#a1c4ff; text-decoration:none; }
+.link:hover{ text-decoration: underline; }
+.link-ghost{
+  border: 1px dashed rgba(255,255,255,.2);
+  background: transparent;
+  color:#dfe6ff; padding: 6px 10px; border-radius: 10px; cursor: pointer;
+  display: inline-flex; gap:6px; align-items:center;
+}
+
+/* ===== Acciones (glassmorphism buttons) ===== */
+.ctc-actions{
+  display:flex; gap:12px; flex-wrap: wrap; margin-top: 6px;
+}
+
+/* ========== GLOW BUTTON (Glassmorphism con capas corregidas) ========== */
+/* Soporta:
+   - Contenido directo (<span> y/o <svg>)  -> se fuerza a z-index 3
+   - Contenido envuelto (.glow-content)    -> preferido, también z-index 3
+   - Sheen opcional como <i> o .glow-sheen -> z-index 1
+*/
+.glow-btn{
+  --clr: var(--pink);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 18px;
+  border-radius: 30px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: .3px;
+  background: rgba(255,255,255,.05);
+  border-top: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 15px 15px rgba(0,0,0,.30);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transition: letter-spacing .5s;
+  overflow: hidden;
+  isolation: isolate;     /* crea stacking context para controlar z-index internos */
+}
+.glow-btn.pink { --clr: #ff1f71; }
+.glow-btn.blue { --clr: #2db2ff; }
+.glow-btn.green{ --clr: #1eff45; }
+
+/* Texto/íconos SIEMPRE arriba de todo */
+.glow-btn > .glow-content,
+.glow-btn > span,
+.glow-btn > svg{
+  position: relative;
+  z-index: 3;                          /* capa superior garantizada */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.65); /* mejora contraste durante el glow */
+  transform: translateZ(0);              /* evita artefactos en GPU */
+}
+
+/* Brillos superior/inferior: debajo del contenido */
+.glow-btn::before,
+.glow-btn::after{
+  content:"";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px; height: 10px;
+  background: var(--clr);
+  border-radius: 10px;
+  box-shadow:
+    0 0 5px var(--clr),
+    0 0 15px var(--clr),
+    0 0 30px var(--clr),
+    0 0 60px var(--clr);
+  transition: .5s;
+  z-index: 0;                           /* SIEMPRE por debajo del texto */
+  pointer-events: none;                 /* no bloquear hover/click del contenido */
+}
+.glow-btn::before{ bottom: -5px; }
+.glow-btn::after { top: -5px; }
+
+.glow-btn:hover{
+  letter-spacing: 1.2px;
+}
+.glow-btn:hover::before{
+  bottom: 0; height: 50%; width: 82%; border-radius: 30px;
+}
+.glow-btn:hover::after{
+  top: 0; height: 50%; width: 82%; border-radius: 30px;
+}
+
+/* Sheen diagonal (si usas <i> o .glow-sheen) — queda ENTRE el glow y el texto */
+.glow-btn > i,
+.glow-btn > .glow-sheen{
+  position: absolute;
+  inset: 0;
+  z-index: 1;                           /* por encima de ::before/::after (0) y debajo del texto (3) */
+  pointer-events: none;
+  background: linear-gradient(to left, rgba(255,255,255,0.18), transparent);
+  transform: skewX(45deg) translateX(0);
+  transition: transform .5s;
+  filter: none;                         /* evitar nuevos stacking contexts por filtros */
+}
+.glow-btn:hover > i,
+.glow-btn:hover > .glow-sheen{
+  transform: skewX(45deg) translateX(200px);
+}
+
+/* ===== Form ===== */
+.ctc-form{
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 16px;
+  background:
+    radial-gradient(ellipse at right top, rgba(16,118,103,.93) 0%, var(--panel) 47%, var(--panel) 100%);
+  box-shadow: 0 12px 34px rgba(0,0,0,.45);
+}
+.ctc-form::before{
+  content:""; position:absolute; inset:0;
+  border: 2px solid transparent; border-radius: 20px; z-index:-1;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out; mask-composite: exclude;
+  background: linear-gradient(45deg, #0e0f15, #0e0f15, #0e0f15, #0e0f15, #01c3a8) border-box;
+}
+.ctc-form-title{
+  display:flex; align-items:center; gap:8px; margin:0 0 10px;
+  font-weight: 900;
+}
+.ctc-form form{ display:grid; gap: 10px; }
+.ctc-form .row{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 620px){ .ctc-form .row{ grid-template-columns: 1fr; } }
+
+.in{
+  display:grid; gap:6px;
+}
+.in span{ font-size:.9rem; color:#d7ddff; }
+.in input, .in textarea{
+  width:100%; border-radius: 12px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color:#fff; padding: 10px 12px; outline: none;
+}
+.in input::placeholder, .in textarea::placeholder{ color: #9aa4ce; }
+
+.form-actions{
+  display:flex; gap:12px; align-items:center; flex-wrap: wrap; margin-top: 4px;
+}
+.form-ok{ color:#9cffb3; margin: 6px 0 0; }
+.form-err{ color:#ff9aa8; margin: 6px 0 0; }
+
+/* Safari/WebKit: asegura el blur */
+@supports (-webkit-backdrop-filter: blur(0)){
+  .glow-btn{ -webkit-backdrop-filter: blur(15px); }
+}
+
+
+.texto-btn{
+  position: relative;
+  z-index: 3;                          /* capa superior garantizada */
+}
