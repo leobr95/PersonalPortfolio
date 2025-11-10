@@ -1,0 +1,279 @@
+/* ===== Scope Perfil ===== */
+.prf{
+  --bg:#0e0f15;
+  --panel:#14151d;
+  --panel-2:#10121a;
+  --line:#1d2233;
+  --text:#eaf0ff;
+  --muted:#cfd3f9;
+
+  --pink:#ff1f71;
+  --blue:#2db2ff;
+  --green:#1eff45;
+
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px;
+  color: var(--text);
+
+  background:
+    radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.25), transparent 50%),
+    radial-gradient(1200px 600px at 110% 120%, rgba(0,140,255,.18), transparent 50%),
+    linear-gradient(180deg, #0b0c11, #0e0f15 60%, #0b0c11);
+
+  box-shadow: 0 10px 28px rgba(0,0,0,.35);
+}
+
+/* Card cristal principal */
+.prf-card{
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(16px, 3vw, 24px);
+  background:
+    radial-gradient(ellipse at right top, rgba(0,69,143,.56) 0%, var(--panel) 45%, var(--panel) 100%);
+  box-shadow: 0 12px 34px rgba(0,0,0,.45);
+  overflow: hidden;
+}
+.prf-card::before{
+  content:""; position:absolute; inset:0;
+  border: 2px solid transparent; border-radius: 20px; z-index:0;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out; mask-composite: exclude;
+  background: linear-gradient(45deg, #0e0f15, #0e0f15, #0e0f15, #0e0f15, #1890ff) border-box;
+}
+
+/* Titulación */
+.prf-head{ position: relative; z-index: 1; text-align: center; }
+.prf-eyebrow{
+  margin:0 0 6px; letter-spacing:.34em; font-weight:900; opacity:.8; font-size:.8rem;
+}
+.prf-title{
+  margin: 0 0 8px;
+  line-height: 1.05;
+  display: grid;
+  gap: 4px;
+}
+.prf-title .ghost{
+  font-size: clamp(18px, 3.6vw, 28px);
+  color: var(--muted);
+}
+.prf-title .name{
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: 900;
+  letter-spacing: .3px;
+  background: linear-gradient(90deg, #E7E9FF 0%, #9AC6FF 60%, #77F9E6 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 rgba(0,0,0,.2);
+}
+.prf-sub{
+  margin: 4px auto 0;
+  max-width: 900px;
+  font-size: clamp(14px, 2.2vw, 18px);
+  color: var(--muted);
+}
+
+/* Acciones de secciones (nav) */
+.prf-actions{
+  position: relative; z-index: 1;
+  margin-top: 14px;
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+}
+
+/* Línea separadora */
+.prf-sep{
+  height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+  margin: 14px 0 10px;
+}
+
+/* Acciones de contacto */
+.prf-contact{
+  position: relative; z-index: 1;
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+}
+
+/* ========== Botón Glow (reutilizado del contacto, scopeado) ========== */
+.prf .glow-btn{
+  --clr: var(--blue);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 30px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: .3px;
+  background: rgba(255,255,255,.05);
+  border-top: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 15px 15px rgba(0,0,0,.30);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transition: .5s;
+  overflow: hidden;
+  isolation: isolate; /* garantiza que z-index internos funcionen */
+}
+
+/* Variantes */
+.prf .glow-btn.pink { --clr: var(--pink); }
+.prf .glow-btn.blue { --clr: var(--blue); }
+.prf .glow-btn.green{ --clr: var(--green); }
+
+/* Aletas de luz */
+.prf .glow-btn::before,
+.prf .glow-btn::after{
+  content:"";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px; height: 10px;
+  background: var(--clr);
+  border-radius: 10px;
+  box-shadow:
+    0 0 5px var(--clr),
+    0 0 15px var(--clr),
+    0 0 30px var(--clr),
+    0 0 60px var(--clr);
+  transition: .5s;
+  z-index: 0;            /* <— por debajo del contenido */
+  mix-blend-mode: screen; /* suaviza el glow sin tapar texto */
+}
+.prf .glow-btn::before{ bottom: -5px; }
+.prf .glow-btn::after { top: -5px; }
+
+/* Brillo diagonal interno */
+.prf .glow-btn > i{
+  content:"";
+  position:absolute; inset:0; z-index: 0;
+  background: linear-gradient(to left, rgba(255,255,255,0.18), transparent);
+  transform: skewX(45deg) translateX(0);
+  transition: .5s; filter: blur(0);
+}
+
+/* Contenido SIEMPRE visible encima */
+.prf .glow-btn > span,
+.prf .glow-btn > svg{
+  position: relative;
+  z-index: 2;              /* <— texto e icono por encima */
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+  font-weight: 800;
+}
+
+/* Hover */
+.prf .glow-btn:hover{ letter-spacing: 1.2px; }
+.prf .glow-btn:hover::before{
+  bottom: 0; height: 50%; width: 82%; border-radius: 30px;
+}
+.prf .glow-btn:hover::after{
+  top: 0; height: 50%; width: 82%; border-radius: 30px;
+}
+.prf .glow-btn:hover > i{
+  transform: skewX(45deg) translateX(200px);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 980px){
+  .prf{ padding: 16px; }
+}
+@media (max-width: 620px){
+  .prf-actions, .prf-contact{ justify-content: flex-start; }
+  .prf-card{ padding: 14px; }
+}
+/* ====== HERO a dos columnas ====== */
+.prf-hero{
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: clamp(16px, 4vw, 36px);
+  min-height: clamp(520px, 60vh, 680px);
+  z-index: 1;
+}
+
+.prf-copy{
+  display: grid;
+  gap: 12px;
+}
+
+/* ====== Figura/personaje derecha ====== */
+.prf-figure{
+  position: relative;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  isolation: isolate; /* asegura capas internas */
+}
+
+/* Halo degradado detrás del personaje */
+.prf-orb{
+  position: absolute;
+  width: clamp(320px, 40vw, 520px);
+  height: clamp(320px, 40vw, 520px);
+  border-radius: 999px;
+  background:
+    radial-gradient(closest-side, rgba(157, 115, 255, .75), rgba(77, 206, 255, .45), transparent 70%),
+    radial-gradient(closest-side, rgba(255, 192, 203, .28), transparent 60%);
+  filter: blur(0.2px);
+  z-index: 0;
+  transform: translateY(6px);
+  box-shadow:
+    0 0 120px rgba(99,102,241,.25),
+    inset 0 0 80px rgba(255,255,255,.06);
+}
+
+/* Imagen del personaje */
+.prf-char{
+  position: relative;
+  z-index: 1;
+  width: min(100%, 520px);
+  height: auto;
+  transform: translateZ(0); /* acelera */
+  filter:
+    drop-shadow(0 30px 40px rgba(0, 0, 0, .45))
+    drop-shadow(0 10px 18px rgba(0, 0, 0, .25));
+}
+
+/* Chips flotantes decorativos (opcionales) */
+.prf-badge{
+  position: absolute;
+  width: 64px; height: 64px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.06)),
+    rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 12px 34px rgba(0,0,0,.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 2;
+  animation: floatY 6s ease-in-out infinite;
+}
+.prf-badge--one{ top: 14%; left: 6%; animation-delay: .1s; }
+.prf-badge--two{ bottom: 10%; right: 6%; animation-delay: .6s; }
+
+@keyframes floatY{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-10px); }
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 1024px){
+  .prf-hero{
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+  .prf-figure{
+    order: -1;             /* personaje arriba en móviles */
+    margin-bottom: 6px;
+  }
+  .prf-orb{
+    width: clamp(260px, 70vw, 420px);
+    height: clamp(260px, 70vw, 420px);
+  }
+  .prf-char{ width: min(86%, 440px); }
+}
