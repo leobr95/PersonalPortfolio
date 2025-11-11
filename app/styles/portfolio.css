@@ -193,6 +193,30 @@
   .pf-hamburger{ display:grid; place-items:center; }
   .pf-profile{ grid-template-columns: 1fr; text-align:center; }
   .pf-avatar{ margin-inline:auto; }
+  .pf-hamburger{
+    /* Mover a la esquina superior derecha respetando el notch */
+    left: auto;
+    right: max(12px, env(safe-area-inset-right));
+    top:  max(12px, env(safe-area-inset-top));
+
+    /* Un poco más “tappable” en móviles */
+    width: 46px;
+    height: 46px;
+
+    /* Asegura que quede por encima del contenido y del sidebar abierto */
+    z-index: 50;
+
+    /* No se superponga con el borde redondeado del drawer */
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(0,0,0,.35);
+  }
+
+  /* Cuando el menú está abierto, la hamburguesa sigue fija en la derecha */
+  .pf--menuOpen .pf-hamburger{
+    right: max(12px, env(safe-area-inset-right));
+    left: auto;
+  }
+
 }
 
 /* Ajuste fino para iPad vertical, opcional */
