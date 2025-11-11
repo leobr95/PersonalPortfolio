@@ -4,9 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { JSX, useMemo } from 'react';
 import {
-  FaGithub, FaLinkedin, FaPhoneAlt, FaWhatsapp,
+  FaGithub, FaLinkedin, FaPhoneAlt, FaWhatsapp, FaRegListAlt,
 } from 'react-icons/fa';
-import { FaRegListAlt } from 'react-icons/fa';
 import { MdEmail, MdWorkOutline, MdFolderOpen, MdSchool } from 'react-icons/md';
 
 import imageProfile from '@/app/logos/profile-photo.png';
@@ -88,7 +87,6 @@ export default function PerfilPage(): JSX.Element {
           {/* Columna derecha: personaje */}
           <div className="prf-figure" aria-hidden="true">
             <div className="prf-orb" />
-            {/* Coloca tu PNG de personaje con fondo transparente en /public/character.png */}
             <Image
               src={imageProfile}
               alt="Ilustración de Leonardo trabajando en su laptop"
@@ -97,7 +95,6 @@ export default function PerfilPage(): JSX.Element {
               height={560}
               priority
             />
-            {/* Badges decorativos opcionales */}
             <div className="prf-badge prf-badge--one" />
             <div className="prf-badge prf-badge--two" />
           </div>

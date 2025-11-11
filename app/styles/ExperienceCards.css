@@ -1,127 +1,188 @@
-/* ===== Scope ExperienceCards ===== */
+/* ===== Grid contenedor ===== */
 .xpSec{
+  --bg:#232228;
   --panel:#151419;
-  --panel-2:#10121a;
+  --panel-soft:#1a1920;
   --line:#292929;
   --text:#fff;
   --muted:#ddd;
 
-  --green:#01c3a8;   --green-rad: rgba(16,118,103,0.93);
-  --blue:#1890ff;    --blue-rad: rgba(0,69,143,0.56);
-  --orange:#ffb741;  --orange-rad: rgba(255,183,65,0.58);
-  --red:#a63d2a;     --red-rad: rgba(166,61,42,0.51);
+  --green:#01c3a8;
+  --green-rad: rgba(16,118,103,0.93);
+  --blue:#1890ff;
+  --blue-rad: rgba(0,69,143,0.56);
+  --orange:#ffb741;
+  --orange-rad: rgba(255,183,65,0.58);
+  --red:#a63d2a;
+  --red-rad: rgba(166,61,42,0.51);
 
+  --gap: 3.25rem;
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 3.25rem;
-  margin-top: 18px;
+  gap: var(--gap);
 }
 
-/* Card base (glass) */
+/* ===== Card base ===== */
 .xpSec .xp-card{
   position: relative;
-  z-index: 1;
   width: 100%;
   max-width: 100%;
   min-height: 20rem;
-  display: grid;
-  place-items: start center;
-  text-align: center;
-  box-shadow: 0.063em 0.75em 1.563em rgb(0 0 0 / 78%);
   border-radius: 2.25rem;
   padding: 1.1rem 1.25rem 1rem;
-  color: var(--text);
+  box-sizing: border-box;
   border: 1px solid var(--line);
-  background: var(--panel);
+  box-shadow: 0.063em 0.75em 1.563em rgb(0 0 0 / 78%);
+  color: var(--text);
   overflow: hidden;
-  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
-}
-.xpSec .xp-card::before{
-  content: "";
-  position: absolute; inset: 0;
-  border: 0.155rem solid transparent; border-radius: 2.25rem; z-index: -1;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out; mask-composite: exclude;
+  transform: translateY(0) scale(1);
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    filter .22s ease,
+    border-color .22s ease;
+  will-change: transform, box-shadow, filter;
 }
 
-/* Tones (fondo radial) */
+/* Borde-acento en máscara */
+.xpSec .xp-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 0.155rem solid transparent;
+  border-radius: 2.25rem;
+  z-index: -1;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+          mask-composite: exclude;
+}
+
+/* Tonos (fondo radial + borde) */
 .xpSec .xp-card.tone-green{
   background: radial-gradient(ellipse at right top, var(--green-rad) 0%, var(--panel) 47%, var(--panel) 100%);
 }
-.xpSec .xp-card.tone-green::before{ background: linear-gradient(45deg,#232228,#232228,#232228,#232228,var(--green)) border-box; }
+.xpSec .xp-card.tone-green::before{
+  background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--green)) border-box;
+}
 
 .xpSec .xp-card.tone-blue{
   background: radial-gradient(ellipse at right top, var(--blue-rad) 0%, var(--panel) 45%, var(--panel) 100%);
 }
-.xpSec .xp-card.tone-blue::before{ background: linear-gradient(45deg,#232228,#232228,#232228,#232228,var(--blue)) border-box; }
+.xpSec .xp-card.tone-blue::before{
+  background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--blue)) border-box;
+}
 
 .xpSec .xp-card.tone-orange{
   background: radial-gradient(ellipse at right top, var(--orange-rad) 0%, var(--panel) 47%, var(--panel) 100%);
 }
-.xpSec .xp-card.tone-orange::before{ background: linear-gradient(45deg,#232228,#232228,#232228,#232228,var(--orange)) border-box; }
+.xpSec .xp-card.tone-orange::before{
+  background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--orange)) border-box;
+}
 
 .xpSec .xp-card.tone-red{
   background: radial-gradient(ellipse at right top, var(--red-rad) 0%, var(--panel) 47%, var(--panel) 100%);
 }
-.xpSec .xp-card.tone-red::before{ background: linear-gradient(45deg,#232228,#232228,#232228,#232228,var(--red)) border-box; }
-
-/* Estado activo: resaltar aunque no haya hover */
-.xpSec .xp-card.is-active{
-  transform: translateY(-2px);
-  box-shadow:
-    0 16px 34px rgba(0,0,0,.45),
-    0 0 0 2px rgba(255,255,255,.08),
-    inset 0 0 0 1px rgba(255,255,255,.08);
-  filter: brightness(1.03);
+.xpSec .xp-card.tone-red::before{
+  background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--red)) border-box;
 }
 
-/* Logo */
-.xpSec .xp-card-logo{ display:grid; place-items:center; margin: 4px 0 10px; }
+/* ===== Hover: más notorio ===== */
+@media (hover:hover) {
+  .xpSec .xp-card:hover{
+    transform: translateY(-6px) scale(1.012);
+    box-shadow:
+      0 18px 36px rgba(0,0,0,.55),
+      0 0 0 1px rgba(255,255,255,.06) inset;
+    filter: brightness(1.05);
+    border-color: rgba(255,255,255,.16);
+  }
+  .xpSec .xp-card:hover .xp-title{
+    text-shadow: 0 4px 18px rgba(0,0,0,.45);
+    filter: saturate(1.1);
+  }
+  .xpSec .xp-card:hover .xp-pill{
+    background:#35343c;
+    border-color:#4a4954;
+    box-shadow: 0 6px 18px rgba(0,0,0,.28);
+  }
+  .xpSec .xp-card:hover .xp-btn{
+    filter: brightness(1.06);
+    box-shadow: 0 10px 22px rgba(0,0,0,.35);
+  }
+}
+
+/* Preferencia de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .xpSec .xp-card{ transition:none; }
+}
+
+/* ===== Logo ===== */
+.xpSec .xp-card-logo{
+  display:grid; place-items:center; margin: 4px 0 10px;
+}
 .xpSec .xp-card-logo img{
   width: 96px; height: 96px; object-fit: contain; border-radius: 18px;
-  background: var(--panel-2); border: 1px solid var(--line); padding: 8px;
+  background: #16161c; border: 1px solid #2b2b33;
+  padding: 8px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.35);
 }
 
-/* Headings */
-.xpSec .xp-card-head{ display:grid; gap:.25rem; width:100%; }
-.xpSec .xp-title{ margin:0; font-size:1.375rem; font-weight:700; }
+/* ===== Titulado y meta ===== */
+.xpSec .xp-card-head{ display:grid; gap:.25rem; width:100%; text-align:center; }
+.xpSec .xp-title{ margin:0; font-size:1.375rem; font-weight:800; letter-spacing:.2px; }
 .xpSec .xp-sub{ margin:0; color:var(--muted); font-size:1rem; }
 .xpSec .xp-period{ display:block; color:var(--muted); font-weight:600; margin-top:.15rem; }
 
-/* Pills */
+/* ===== Pills ===== */
 .xpSec .xp-pills{
-  list-style:none; margin:.85rem 0 .4rem; padding:0;
+  list-style:none; margin: .85rem 0 .4rem; padding:0;
   display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap;
 }
 .xpSec .xp-pill{
   background:#2b2a31; color:#fff; border:1px solid #3a3942;
   padding:.45rem .7rem; border-radius: 999px; font-weight:700; font-size:.85rem;
+  transition: background .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
 
-/* Button */
+/* ===== Botón y panel ===== */
 .xpSec .xp-actions{ display:flex; justify-content:center; width:100%; }
 .xpSec .xp-btn{
   display:flex; align-items:center; gap:.4rem;
   border:0; cursor:pointer; color:#fff; background:#222127;
   padding:.6rem 1.2rem; border-radius: 2rem; font-weight:800;
-  transition: filter .15s ease, background .15s ease;
+  transition: filter .15s ease, box-shadow .18s ease, transform .12s ease;
 }
 .xpSec .tone-green .xp-btn:hover{ background: var(--green); }
 .xpSec .tone-blue  .xp-btn:hover{ background: var(--blue); }
 .xpSec .tone-orange .xp-btn:hover{ background: var(--orange); }
 .xpSec .tone-red   .xp-btn:hover{ background: var(--red); }
 
-/* Duties (collapsible) */
+/* ===== Contenido expandible ===== */
 .xpSec .xp-duties{
-  width:100%; background:#151419; border-top:1px solid #292929; margin-top:.7rem;
-  border-bottom-left-radius:2.25rem; border-bottom-right-radius:2.25rem;
-  padding:0 1rem; max-height:0; overflow:hidden;
+  width:100%;
+  background:#151419;
+  border-top: 1px solid #292929;
+  margin-top:.7rem;
+  border-bottom-left-radius: 2.25rem;
+  border-bottom-right-radius: 2.25rem;
+  padding: 0 1rem;
+  max-height: 0;
+  overflow: hidden;
   transition: max-height .35s ease, padding .25s ease;
 }
-.xpSec .xp-duties.is-open{ padding:.9rem 1rem 1rem; max-height:1200px; }
-.xpSec .xp-duties ul{ margin:0; padding-left:1.1rem; display:grid; gap:.45rem; color:#fff; text-align:left; }
+.xpSec .xp-duties.is-open{
+  padding: .9rem 1rem 1rem;
+  max-height: 1200px;
+}
+.xpSec .xp-duties ul{
+  margin:0; padding-left: 1.1rem;
+  display:grid; gap:.45rem; color:#fff; text-align:left;
+}
 
-/* Responsive */
+/* ===== Responsive ===== */
+@media (max-width: 900px){
+  .xpSec{ grid-template-columns: 1fr; }
+}
 @media (max-width: 520px){
   .xpSec .xp-card{ padding: 1rem .9rem; }
   .xpSec .xp-title{ font-size: 1.2rem; }

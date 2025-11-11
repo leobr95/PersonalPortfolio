@@ -116,7 +116,7 @@
   -webkit-backdrop-filter: blur(15px);
   transition: .5s;
   overflow: hidden;
-  isolation: isolate; /* garantiza que z-index internos funcionen */
+  isolation: isolate;
 }
 
 /* Variantes */
@@ -140,8 +140,8 @@
     0 0 30px var(--clr),
     0 0 60px var(--clr);
   transition: .5s;
-  z-index: 0;            /* <— por debajo del contenido */
-  mix-blend-mode: screen; /* suaviza el glow sin tapar texto */
+  z-index: 0;
+  mix-blend-mode: screen;
 }
 .prf .glow-btn::before{ bottom: -5px; }
 .prf .glow-btn::after { top: -5px; }
@@ -159,7 +159,7 @@
 .prf .glow-btn > span,
 .prf .glow-btn > svg{
   position: relative;
-  z-index: 2;              /* <— texto e icono por encima */
+  z-index: 2;
   filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
   font-weight: 800;
 }
@@ -176,14 +176,6 @@
   transform: skewX(45deg) translateX(200px);
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 980px){
-  .prf{ padding: 16px; }
-}
-@media (max-width: 620px){
-  .prf-actions, .prf-contact{ justify-content: flex-start; }
-  .prf-card{ padding: 14px; }
-}
 /* ====== HERO a dos columnas ====== */
 .prf-hero{
   position: relative;
@@ -206,7 +198,7 @@
   height: 100%;
   display: grid;
   place-items: center;
-  isolation: isolate; /* asegura capas internas */
+  isolation: isolate;
 }
 
 /* Halo degradado detrás del personaje */
@@ -232,7 +224,7 @@
   z-index: 1;
   width: min(100%, 520px);
   height: auto;
-  transform: translateZ(0); /* acelera */
+  transform: translateZ(0);
   filter:
     drop-shadow(0 30px 40px rgba(0, 0, 0, .45))
     drop-shadow(0 10px 18px rgba(0, 0, 0, .25));
@@ -261,19 +253,104 @@
   50%{ transform: translateY(-10px); }
 }
 
-/* ====== Responsive ====== */
+/* ===== Responsive ===== */
+@media (max-width: 1200px){
+  .prf-hero{
+    grid-template-columns: 1fr 0.9fr;
+  }
+}
 @media (max-width: 1024px){
   .prf-hero{
     grid-template-columns: 1fr;
     min-height: unset;
   }
+  /* >>> ÚNICO CAMBIO: personaje ABAJO del texto en iPad/medianos <<< */
   .prf-figure{
-    order: -1;             /* personaje arriba en móviles */
-    margin-bottom: 6px;
+    order: 1;             /* antes: -1 (arriba); ahora: 1 (abajo) */
+    margin-top: 6px;
   }
   .prf-orb{
     width: clamp(260px, 70vw, 420px);
     height: clamp(260px, 70vw, 420px);
   }
   .prf-char{ width: min(86%, 440px); }
+}
+@media (max-width: 620px){
+  .prf{ padding: 16px; }
+  .prf-actions, .prf-contact{ justify-content: flex-start; }
+  .prf-card{ padding: 14px; }
+}
+
+/* ===== Compacto en iPad / medianos: solo íconos (sidebar) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .pf-aside{
+    --aside-w: 84px;
+    padding: 16px 10px;
+  }
+
+  .pf-aside .pf-brand{ display: none; }
+  .pf-aside .pf-menu{ padding: 10px 0; }
+
+  .pf-aside .pf-nav-item{
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .pf-aside .pf-nav-label{
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .pf-aside .pf-nav-ico{ font-size: 22px; }
+  .pf-aside .pf-nav-item::before{ width: 60%; }
+  .pf-aside .pf-nav-item:hover::before{ width: 76%; }
+  .pf-aside .pf-socials{ justify-content: center; }
+}
+
+/* ===== Aún más compacto en <= 820px (iPad en vertical, opcional) ===== */
+@media (max-width: 820px){
+  .pf-aside{
+    --aside-w: 76px;
+  }
+  .pf-aside .pf-nav-ico{ font-size: 20px; }
+}
+
+/* --- Anti-jitter para botones del perfil --- */
+
+/* 1) Evita que crezca el ancho por texto: fija un ancho mínimo y evita cortes */
+.prf .glow-btn{
+  min-width: 148px;        /* puedes subirlo a 160–172 si tus labels son largos */
+  white-space: nowrap;     /* no permitas salto dentro del botón */
+}
+
+/* 2) En pantallas donde hay riesgo de wrap, no cambies el letter-spacing en hover.
+      En su lugar usa un scale suave (transform no provoca reflow). */
+@media (max-width: 1280px){
+  .prf .glow-btn:hover{
+    letter-spacing: .3px;  /* igual que estado base: NO crece */
+    transform: scale(1.02);/* feedback visual sin alterar layout del flex */
+  }
+}
+
+/* 3) Si quieres el mismo comportamiento en iPad y móvil, amplía el rango: */
+@media (max-width: 1024px){
+  .prf .glow-btn{ min-width: 156px; } /* un pelín más de colchón */
+  .prf-actions, .prf-contact{
+    justify-content: center;
+    gap: 12px;             /* un poco más de espacio entre botones */
+  }
+}
+
+/* 4) Opcional: haz que el “glow” no empuje visualmente nada */
+.prf .glow-btn::before,
+.prf .glow-btn::after{
+  pointer-events: none;
+  will-change: transform, opacity;
 }

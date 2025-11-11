@@ -1,12 +1,11 @@
 'use client';
 
-import { StaticImageData } from 'next/image';
-import { useState, type JSX } from 'react';
+import type { StaticImageData } from 'next/image';
+import { useMemo, useState, type JSX } from 'react';
 
 import ExperienceCards from './ExperienceCards';
 import ExperienceCircle from './ExperienceCircle';
 
-// LOGOS
 import devinmotion from '@/app/logos/devinmotion.png';
 import gvs from '@/app/logos/gvs.svg';
 import megadev from '@/app/logos/megadevf.png';
@@ -15,141 +14,150 @@ import qvision from '@/app/logos/qvisionf.webp';
 import smartfinancial from '@/app/logos/smartf.png';
 import vass from '@/app/logos/vass.png';
 
-export type YM = { y: number; m: number }; // m:1..12
+export type YM = { y: number; m: number };
+
 export type ExpItem = {
-  from: YM;
-  to: YM;
+  id: number;
   company: string;
   role: string;
+  from: YM;
+  to: YM;
   color?: string;
-  // Extras para tarjetas
-  periodLabel: string;
-  clients?: string;
   logo?: StaticImageData;
-  tone: 'green' | 'blue' | 'orange' | 'red';
-  tags: string[];
-  duties: string[];
+  // para las tarjetas:
+  period?: string;
+  clients?: string;
+  tone?: 'green' | 'blue' | 'orange' | 'red';
+  tags?: string[];
+  duties?: string[];
 };
 
+/** Rango visible del timeline */
 export const MIN_YEAR = 2015;
-export const MAX_YEAR = 2026;
+export const MAX_YEAR = 2026; // inclusive
 
-const DATA: ExpItem[] = [
+const DATA_RAW: ExpItem[] = [
   {
-    from: { y: 2015, m: 11 }, to: { y: 2018, m: 3 },
-    company: 'Procesos y Tecnología', role: 'Analista QA', color: '#c1d72f',
-    periodLabel: 'Nov 2015 – Mar 2018', logo: pyt, tone: 'blue',
-    tags: ['QA', 'Oracle', 'Mantis/TestLink'],
-    duties: [
-      'Pruebas funcionales y de usabilidad en web/móvil.',
-      'Despliegues en GlassFish (Linux) y consultas en Oracle R12.',
-      'Gestión y documentación en Mantis, TestLink y DokuWiki.'
-    ],
-  },
-  {
-    from: { y: 2018, m: 3 }, to: { y: 2020, m: 11 },
-    company: 'Smart Financial Systems', role: 'Analista Desarrollador', color: '#f59e0b',
-    periodLabel: 'Mar 2018 – Nov 2020', logo: smartfinancial, tone: 'red',
-    tags: ['C#/.NET', 'EF', 'SQL Server'],
-    duties: [
-      'Backend C# con EF e Identity.',
-      'MVC con Kendo/Telerik, jQuery y Bootstrap.',
-      'SQL Server 2017 y coordinación del equipo.'
-    ],
-  },
-  {
-    from: { y: 2020, m: 12 }, to: { y: 2021, m: 3 },
-    company: 'MEGADEV (CELSIA)', role: 'Desarrollador & Soporte', color: '#60a5fa',
-    periodLabel: 'Dic 2020 – Mar 2021', logo: megadev, tone: 'orange',
-    tags: ['Oracle', 'Vue.js', 'Scrum'],
-    duties: [
-      'Operación y soporte de aplicativos internos; coordinación con proveedores.',
-      'Consultas especializadas en Oracle y despliegues en servidores.',
-      'Módulos de frontend con Vue.js bajo prácticas Scrum.'
-    ],
-  },
-  {
-    from: { y: 2021, m: 3 }, to: { y: 2021, m: 6 },
-    company: 'Devinmotion (ALTIPAL)', role: 'Analista Desarrollador', color: '#ef4444',
-    periodLabel: 'Mar 2021 – Jun 2021', logo: devinmotion, tone: 'green',
-    tags: ['REST', 'DevOps', 'Xamarin'],
-    duties: [
-      'Diseño de contratos REST y pruebas de integración.',
-      'Automatización de pipeline en DevOps.',
-      'Frontend con Blazor/Razor; app móvil Xamarin.'
-    ],
-  },
-  {
-    from: { y: 2021, m: 6 }, to: { y: 2021, m: 9 },
-    company: 'Q-Vision (Colmena)', role: 'Analista Desarrollador', color: '#22c55e',
-    periodLabel: 'Jun 2021 – Sep 2021', logo: qvision, tone: 'blue',
-    tags: ['ASP.NET Core', 'SQL Server', 'Blazor'],
-    duties: [
-      'Servicios API con ASP.NET Core y optimización de SQL Server (SPs, índices).',
-      'Interfaces con Blazor/Razor Pages y componentes Kendo/Telerik.'
-    ],
-  },
-  {
-    from: { y: 2021, m: 12 }, to: { y: 2022, m: 1 },
-    company: 'MEGADEV (CELSIA)', role: 'Analista Desarrollador', color: '#38bdf8',
-    periodLabel: 'Dic 2021 – Ene 2022', logo: megadev, tone: 'red',
-    tags: ['ASP.NET MVC', 'Kendo UI', 'DevOps'],
-    duties: [
-      'ASP.NET Core MVC con Identity, jQuery, Bootstrap y Kendo UI.',
-      'Estimaciones técnicas y coordinación con DevOps.'
-    ],
-  },
-  {
-    from: { y: 2022, m: 2 }, to: { y: 2022, m: 6 },
-    company: 'GVS Colombia', role: 'Analista Desarrollador', color: '#a78bfa',
-    periodLabel: 'Feb 2022 – Jun 2022', logo: gvs, tone: 'orange',
-    tags: ['Angular 12', '.NET Core API', 'SQL Server'],
-    duties: [
-      'Aplicaciones de comercio exterior (Angular + .NET API).',
-      'Integración de facturación SAP; optimización SQL.'
-    ],
-  },
-  {
+    id: 8,
+    company: 'VASS LATAM',
+    role: 'Analista Desarrollador',
     from: { y: 2022, m: 6 }, to: { y: 2025, m: 4 },
-    company: 'VASS LATAM', role: 'Analista Desarrollador', color: '#14b8a6',
-    periodLabel: 'Jun 2022 – Abr 2025', logo: vass, tone: 'green',
+    color: '#14b8a6', logo: vass, period: 'Jun 2022 – Abr 2025',
+    clients: 'Colmena (CO), Fashion Park, Caja 18 (CL)',
+    tone: 'green',
     tags: ['.NET Core', 'React TS', 'Azure DevOps'],
     duties: [
-      'Microservicios REST (Docker/IIS/App Services) con Clean Architecture.',
-      'CI/CD en Azure DevOps y versionado git.',
-      'Integraciones SAP, Azure Key Vault, SSRS (RDL) y SQL Server.',
-      'Front en React TS / Angular según cliente.'
+      'Microservicios REST (Clean Architecture) en Docker/AppService.',
+      'CI/CD con Azure DevOps, Git/TFS/GitLab.',
+      'Integraciones SAP y Azure Key Vault; SSRS/SQL Server.',
+      'Frontend React TS / Angular según cliente.',
     ],
   },
   {
-    from: { y: 2025, m: 5 }, to: { y: 2025, m: 11 },
-    company: 'FREELANCE DEVELOPER', role: 'Freelance', color: '#3c37a7',
-    periodLabel: 'May 2025 – Nov 2025', logo: undefined, tone: 'blue',
-    tags: ['React', 'Next.js', 'API .NET'],
+    id: 7,
+    company: 'GVS Colombia',
+    role: 'Analista Desarrollador',
+    from: { y: 2022, m: 2 }, to: { y: 2022, m: 6 },
+    color: '#a78bfa', logo: gvs, period: 'Feb 2022 – Jun 2022',
+    tone: 'orange',
+    tags: ['Angular 12', '.NET Core API', 'SQL Server'],
     duties: [
-      'Proyectos a medida para clientes PYME.',
-      'Stack full-stack con React/Next + .NET + SQL.'
+      'Apps de comercio exterior (Angular + .NET Core API).',
+      'Integración de facturación SAP.',
+      'Optimización de SQL Server.',
     ],
+  },
+  {
+    id: 6,
+    company: 'MEGADEV (CELSIA)',
+    role: 'Analista Desarrollador',
+    from: { y: 2021, m: 12 }, to: { y: 2022, m: 1 },
+    color: '#38bdf8', logo: megadev, period: 'Dic 2021 – Ene 2022',
+    clients: 'Cliente: CELSIA',
+    tone: 'red',
+    tags: ['ASP.NET MVC', 'Kendo UI', 'DevOps'],
+    duties: ['ASP.NET Core MVC + Kendo UI', 'Planificación y coordinación DevOps'],
+  },
+  {
+    id: 5,
+    company: 'Q-Vision (Colmena)',
+    role: 'Analista Desarrollador',
+    from: { y: 2021, m: 6 }, to: { y: 2021, m: 9 },
+    color: '#22c55e', logo: qvision, period: 'Jun 2021 – Sep 2021',
+    clients: 'Cliente: Colmena (CO)',
+    tone: 'blue',
+    tags: ['ASP.NET Core', 'SQL Server', 'Blazor'],
+    duties: ['APIs .NET Core', 'Optimización de SQL', 'Interfaces Blazor/Razor'],
+  },
+  {
+    id: 4,
+    company: 'Devinmotion (ALTIPAL)',
+    role: 'Analista Desarrollador',
+    from: { y: 2021, m: 3 }, to: { y: 2021, m: 6 },
+    color: '#ef4444', logo: devinmotion, period: 'Mar 2021 – Jun 2021',
+    tone: 'green',
+    tags: ['REST', 'DevOps', 'Xamarin'],
+    duties: ['Contratos REST/pruebas', 'Automatización CI/CD', 'Blazor + Xamarin'],
+  },
+  {
+    id: 3,
+    company: 'MEGADEV (CELSIA)',
+    role: 'Desarrollador & Soporte',
+    from: { y: 2020, m: 12 }, to: { y: 2021, m: 3 },
+    color: '#60a5fa', logo: megadev, period: 'Dic 2020 – Mar 2021',
+    tone: 'orange',
+    tags: ['Oracle', 'Vue.js', 'Scrum'],
+    duties: ['Soporte y operación', 'Consultas Oracle', 'Módulos Vue.js'],
+  },
+  {
+    id: 2,
+    company: 'Smart Financial Systems',
+    role: 'Analista Desarrollador',
+    from: { y: 2018, m: 3 }, to: { y: 2020, m: 11 },
+    color: '#f59e0b', logo: smartfinancial, period: 'Mar 2018 – Nov 2020',
+    tone: 'red',
+    tags: ['C#/.NET', 'EF', 'SQL Server'],
+    duties: ['Backend C# EF', 'MVC + Kendo', 'SQL Server 2017'],
+  },
+  {
+    id: 1,
+    company: 'Procesos y Tecnología',
+    role: 'Analista QA',
+    from: { y: 2015, m: 11 }, to: { y: 2018, m: 3 },
+    color: '#c1d72f', logo: pyt, period: 'Nov 2015 – Mar 2018',
+    tone: 'blue',
+    tags: ['QA', 'Oracle', 'Mantis/TestLink'],
+    duties: ['Pruebas funcionales/usabilidad', 'GlassFish + Oracle', 'Gestión Mantis/TestLink'],
   },
 ];
 
 export default function ExperienceSection(): JSX.Element {
-  const [active, setActive] = useState<number | null>(null);
+  // ← estado compartido
+  const [activeId, setActiveId] = useState<number | null>(null);
+
+  // Para tarjetas: más reciente → más antiguo (por fecha fin)
+  const itemsForCards = useMemo(() => {
+    const endStamp = (d: ExpItem) => new Date(d.to.y, d.to.m - 1, 1).getTime();
+    return [...DATA_RAW].sort((a, b) => endStamp(b) - endStamp(a));
+  }, []);
+
+  // Para timeline: ordenados por inicio (o como prefieras), sin perder el id
+  const itemsForCircle = useMemo(() => {
+    const startStamp = (d: ExpItem) => new Date(d.from.y, d.from.m - 1, 1).getTime();
+    return [...DATA_RAW].sort((a, b) => startStamp(a) - startStamp(b));
+  }, []);
 
   return (
-    <section className="expSection" aria-label="Experiencia">
-      {/* TIMELINE */}
+    <section className="exp-wrap" style={{ display: 'grid', gap: 16 }}>
       <ExperienceCircle
-        items={DATA}
-        activeIndex={active}
-        onActivate={setActive}
+        items={itemsForCircle}
+        activeId={activeId}
+        onActivate={setActiveId}
       />
-
-      {/* TARJETAS */}
       <ExperienceCards
-        items={DATA}
-        activeIndex={active}
-        onActivate={setActive}
+        items={itemsForCards}
+        activeId={activeId}
+        onActivate={setActiveId}
       />
     </section>
   );

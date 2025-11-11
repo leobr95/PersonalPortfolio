@@ -68,7 +68,7 @@
 
 /* ===== Item con efecto GLASS + GLOW (como botones) ===== */
 .pf-aside .pf-nav-item{
-  --clr: var(--clr-1); /* por defecto, se redefine por nth-child abajo */
+  --clr: var(--clr-1);
 
   position: relative;
   display:flex; align-items:center; gap:10px;
@@ -86,16 +86,23 @@
 
   transition: .45s ease;
   overflow: hidden;
+  isolation: isolate;
 }
 
-/* Icono */
+/* Icono y texto sobre el glow */
+.pf-aside .pf-nav-ico,
+.pf-aside .pf-nav-label {
+  position: relative;
+  z-index: 2;
+}
+
 .pf-aside .pf-nav-ico{ font-size: 20px; color: #E6E6FF; }
 .pf-aside .pf-nav-label{ line-height: 1; }
 
-/* Brillo diagonal interno (sheen) usando ::after */
+/* Brillo diagonal interno (sheen) */
 .pf-aside .pf-nav-item::after{
   content:"";
-  position:absolute; inset:0; z-index:0;
+  position:absolute; inset:0; z-index:1;
   background: linear-gradient(to left, rgba(255,255,255,0.15), transparent);
   transform: skewX(45deg) translateX(-40%);
   transition: transform .5s ease;
@@ -105,7 +112,7 @@
   transform: skewX(45deg) translateX(140%);
 }
 
-/* Glow “barras” superior/inferior (como en tus glass buttons) */
+/* Glow “barras” superior/inferior */
 .pf-aside .pf-nav-item::before{
   content:"";
   position:absolute; left:50%; transform: translateX(-50%);
@@ -118,12 +125,12 @@
     0 0 60px var(--clr);
   transition: .5s;
 }
-.pf-aside .pf-nav-item .pf-bridge{ /* mantiene el “curved outside” si lo usas */
+.pf-aside .pf-nav-item .pf-bridge{
   position: absolute; top: 0; right: calc(-1 * var(--gap-bridge));
   width: var(--gap-bridge); height: 100%; background: transparent; pointer-events: none;
 }
 
-/* Hover: leve separación y despliegue de glow */
+/* Hover */
 .pf-aside .pf-nav-item:hover{
   letter-spacing: .3px;
   filter: brightness(1.05);
@@ -132,7 +139,7 @@
   bottom: 0; height: 50%; width: 86%; border-radius: 14px;
 }
 
-/* Estado activo: énfasis + borde luminoso */
+/* Activo */
 .pf-aside .pf-nav-item.is-active{
   color:#fff;
   box-shadow:
@@ -146,15 +153,15 @@
   bottom: 0; height: 55%; width: 90%; border-radius: 14px;
 }
 
-/* Colores por posición (según tu NAV orden) */
-.pf-aside .pf-menu li:nth-child(1) .pf-nav-item{ --clr: var(--clr-1); } /* Perfil */
-.pf-aside .pf-menu li:nth-child(2) .pf-nav-item{ --clr: var(--clr-2); } /* Experiencia */
-.pf-aside .pf-menu li:nth-child(3) .pf-nav-item{ --clr: var(--clr-3); } /* Proyectos */
-.pf-aside .pf-menu li:nth-child(4) .pf-nav-item{ --clr: var(--clr-4); } /* Habilidades */
-.pf-aside .pf-menu li:nth-child(5) .pf-nav-item{ --clr: var(--clr-5); } /* Educación */
-.pf-aside .pf-menu li:nth-child(6) .pf-nav-item{ --clr: var(--clr-6); } /* Contacto */
+/* Colores por posición */
+.pf-aside .pf-menu li:nth-child(1) .pf-nav-item{ --clr: var(--clr-1); }
+.pf-aside .pf-menu li:nth-child(2) .pf-nav-item{ --clr: var(--clr-2); }
+.pf-aside .pf-menu li:nth-child(3) .pf-nav-item{ --clr: var(--clr-3); }
+.pf-aside .pf-menu li:nth-child(4) .pf-nav-item{ --clr: var(--clr-4); }
+.pf-aside .pf-menu li:nth-child(5) .pf-nav-item{ --clr: var(--clr-5); }
+.pf-aside .pf-menu li:nth-child(6) .pf-nav-item{ --clr: var(--clr-6); }
 
-/* ===== Social icons del footer ===== */
+/* Footer socials */
 .pf-aside .pf-aside-foot{ align-self:end; margin-top: 16px; }
 .pf-aside .pf-socials{ display:flex; gap:8px; flex-wrap: wrap; }
 .pf-aside .pf-ico{
@@ -170,29 +177,7 @@
   box-shadow: 0 10px 18px rgba(0,0,0,.3);
 }
 
-/* Aísla la pila del item para controlar z-index internos */
-.pf-aside .pf-nav-item{
-  isolation: isolate;           /* << clave */
-  position: relative;
-  overflow: hidden;             /* ya lo tienes para el sheen */
-}
-
-/* Texto e icono SIEMPRE arriba del glow */
-.pf-aside .pf-nav-ico,
-.pf-aside .pf-nav-label {
-  position: relative;
-  z-index: 2;                   /* por encima del brillo */
-}
-
-/* Pseudo-elementos de brillo por DEBAJO del contenido */
-.pf-aside .pf-nav-item::before,   /* barra glow inferior/superior */
-.pf-aside .pf-nav-item::after {   /* sheen diagonal */
-  z-index: 1;                     /* debajo de texto (2) */
-  pointer-events: none;           /* no bloquear clicks/hover */
-}
-
-/* (Opcional) el “bridge” no debe tapar texto ni capturar eventos */
-.pf-aside .pf-nav-item .pf-bridge{
-  z-index: 0;
-  pointer-events: none;
+/* iPad / medianos: asegúrate que el aside no tape contenido */
+@media (max-width: 1200px){
+  .pf-aside{ --aside-w: 280px; }
 }

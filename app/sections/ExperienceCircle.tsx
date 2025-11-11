@@ -1,67 +1,65 @@
 'use client';
 
 import Image from 'next/image';
-import type { JSX, CSSProperties } from 'react';
+import type { CSSProperties, JSX } from 'react';
 
-import { ExpItem, MIN_YEAR, MAX_YEAR } from './ExperienceSection';
+import { MIN_YEAR, MAX_YEAR, type ExpItem, type YM } from './ExperienceSection';
 import '@/app/styles/ExperienceCircle.css';
 
-const MES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] as const;
-const fmtYM = ({ y, m }: { y:number; m:number }) => `${MES[m - 1]} ${y}`;
-const ymToFraction = ({ y, m }: { y:number; m:number }) => y + (Math.max(1, Math.min(12, m)) - 1) / 12;
-const posPct = (f:number) => ((f - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100;
+const MES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const fmtYM = ({ y, m }: YM) => `${MES[m - 1]} ${y}`;
+const ymToFraction = ({ y, m }: YM) => y + (Math.max(1, Math.min(12, m)) - 1) / 12;
+const posPct = (f: number) => ((f - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100;
 
 function assignLanes(items: { start: number; end: number }[], minGap = 0.0015): number[] {
-  const lanesEnd: number[] = []; const lanes: number[] = [];
+  const lanesEnd: number[] = [];
+  const lanes: number[] = [];
   items.forEach(({ start, end }) => {
-    let laneIdx = lanesEnd.findIndex(lastEnd => start >= lastEnd + minGap);
-    if (laneIdx === -1) { laneIdx = lanesEnd.length; lanesEnd.push(end); }
-    else { lanesEnd[laneIdx] = end; }
-    lanes.push(laneIdx + 1);
+    let i = lanesEnd.findIndex(lastEnd => start >= lastEnd + minGap);
+    if (i === -1) { i = lanesEnd.length; lanesEnd.push(end); }
+    else { lanesEnd[i] = end; }
+    lanes.push(i + 1);
   });
   return lanes;
 }
 
-/** CSS vars que usa la barra */
+// CSS variables tipadas
 type BarVars = CSSProperties & {
-  ['--left']: string;
-  ['--width']: string;
-  ['--bar-color']: string;
+  ['--left']?: string;
+  ['--width']?: string;
+  ['--bar-color']?: string;
 };
 
 export default function ExperienceCircle({
   items,
-  activeIndex,
+  activeId,
   onActivate,
 }: {
   items: ExpItem[];
-  activeIndex: number | null;
-  onActivate: (i: number | null) => void;
+  activeId: number | null;
+  onActivate: (id: number | null) => void;
 }): JSX.Element {
-  const withFrac = items.map((d, i) => ({
+  // convertir a fracciones y mantener id
+  const withFrac = items.map(d => ({
     ...d,
-    idx: i,
     startF: ymToFraction(d.from),
     endF: ymToFraction(d.to),
   }));
-  const sorted = [...withFrac].sort((a, b) => a.startF - b.startF);
-  const lanes = assignLanes(sorted.map(s => ({ start: s.startF, end: s.endF })));
-  const laneByKey = new Map(sorted.map((s, i) => [s.idx, lanes[i]]));
 
-  const years = Array.from({ length: (MAX_YEAR - MIN_YEAR) + 1 }).map((_, i) => MIN_YEAR + i);
-
+  const lanes = assignLanes(withFrac.map(s => ({ start: s.startF, end: s.endF })));
+  // lane por índice actual (ya viene ordenado por el padre)
   return (
     <section className="xt2">
       <h2 className="xt2-title">Timeline</h2>
 
       <div className="xt2-viewport" role="region" aria-label="Línea de tiempo de experiencia">
         <ul className="xt2-bars" role="list">
-          {sorted.map((e) => {
+          {withFrac.map((e, idx) => {
             const left = posPct(e.startF);
             const width = Math.max(posPct(e.endF) - posPct(e.startF), 1.2);
-            const lane = laneByKey.get(e.idx) ?? 1;
+            const lane = lanes[idx] ?? 1;
             const title = `${fmtYM(e.from)} – ${fmtYM(e.to)} • ${e.company} • ${e.role}`;
-            const isActive = activeIndex === e.idx;
+            const isActive = activeId === e.id;
 
             const style: BarVars = {
               '--left': `${left}%`,
@@ -71,14 +69,14 @@ export default function ExperienceCircle({
 
             return (
               <li
-                key={`${e.company}-${e.idx}`}
+                key={e.id}
                 className={`xt2-bar lane-${lane} ${isActive ? 'is-active' : ''}`}
                 style={style}
-                onMouseEnter={() => onActivate(e.idx)}
-                onFocus={() => onActivate(e.idx)}
+                onMouseEnter={() => onActivate(e.id)}
+                onFocus={() => onActivate(e.id)}
                 onMouseLeave={() => onActivate(null)}
                 onBlur={() => onActivate(null)}
-                onClick={() => onActivate(isActive ? null : e.idx)}
+                onClick={() => onActivate(isActive ? null : e.id)}
               >
                 {e.logo && (
                   <div className="xt2-logo" aria-hidden="true">
@@ -97,11 +95,12 @@ export default function ExperienceCircle({
           })}
         </ul>
 
-        {/* Años — en móvil ocultamos algunos vía CSS para evitar “apeñusque” */}
+        {/* Años (en móvil se ocultan algunos via CSS para no “apeñuscar”) */}
         <ul className="xt2-years" aria-hidden="true">
-          {years.map((y, idx) => {
+          {Array.from({ length: (MAX_YEAR - MIN_YEAR) + 1 }).map((_, i) => {
+            const y = MIN_YEAR + i;
             const left = posPct(y);
-            return <li key={y} style={{ left: `${left}%` }} data-index={idx}>{y}</li>;
+            return <li key={y} style={{ left: `${left}%` }} data-index={i}>{y}</li>;
           })}
         </ul>
       </div>

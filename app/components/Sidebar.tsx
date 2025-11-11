@@ -9,8 +9,8 @@ import {
 import {
   MdWorkOutline, MdFolderOpen, MdChatBubbleOutline, MdEmail, MdSchool,
 } from 'react-icons/md';
-import '@/app/styles/Sidebar.css';
 
+import '@/app/styles/Sidebar.css';
 
 type NavItem = { href: string; label: string; icon: JSX.Element };
 
@@ -25,6 +25,7 @@ const NAV: NavItem[] = [
 
 export default function Sidebar({ open, onClose }: { open: boolean; onClose: () => void; }) {
   const pathname = usePathname() || '/perfil';
+
   const socials = useMemo(() => ([
     { href: 'tel:+573236504428', label: 'Teléfono', icon: <FaPhoneAlt /> },
     { href: 'mailto:br.david@outlook.com', label: 'Email', icon: <MdEmail /> },
