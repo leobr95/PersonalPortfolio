@@ -354,3 +354,61 @@
   pointer-events: none;
   will-change: transform, opacity;
 }
+
+
+/* ===== Móviles pequeños (iPhone) — 2 botones por fila ===== */
+@media (max-width: 480px){
+  /* 2 columnas fijas para acciones y contactos */
+  .prf-actions,
+  .prf-contact{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    justify-content: stretch;
+    align-items: stretch;
+  }
+
+  /* Botón compacto y elástico dentro de la grilla */
+  .prf .glow-btn{
+    width: 100%;
+    min-width: 0;              /* anula el min-width grande de desktop */
+    height: 42px;              /* un poco más bajo */
+    padding: 0 12px;           /* acolchado más compacto */
+    font-size: 13px;           /* texto más pequeño */
+    gap: 6px;                  /* menos separación icono/texto */
+    white-space: nowrap;       /* evita cortes internos */
+    border-radius: 26px;
+
+    /* iOS: evita que el esmerilado/glow “sangre” fuera del borde */
+    overflow: hidden;                  /* clave */
+    -webkit-mask-image: -webkit-radial-gradient(white, black); /* hack iOS */
+    contain: paint;                    /* evita artefactos de pintado */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Ícono ligeramente más pequeño */
+  .prf .glow-btn > svg{ font-size: 16px; }
+
+  /* Hover sin reflow (no cambies letter-spacing en móviles) */
+  .prf .glow-btn:hover{ transform: scale(1.01); }
+
+  /* Domar el glow en móviles (que no se salga visualmente) */
+  .prf .glow-btn::before,
+  .prf .glow-btn::after{
+    width: 58%;                /* más corto que en desktop */
+    height: 7px;
+    border-radius: 18px;
+    filter: saturate(0.9);     /* menos intenso para pantallas chicas */
+  }
+}
+
+/* Extra-compacto para teléfonos muy estrechos (<=360px) */
+@media (max-width: 360px){
+  .prf .glow-btn{
+    height: 40px;
+    font-size: 12px;
+    padding: 0 10px;
+  }
+  .prf .glow-btn > svg{ font-size: 15px; }
+}

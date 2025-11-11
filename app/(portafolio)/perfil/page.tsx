@@ -27,10 +27,10 @@ export default function PerfilPage(): JSX.Element {
     () => [
       { href: 'tel:+573236504428', label: 'Llamar', icon: <FaPhoneAlt aria-hidden />, tone: 'green' },
       { href: 'mailto:br.david@outlook.com', label: 'Email', icon: <MdEmail aria-hidden />, tone: 'blue' },
-      { href: 'https://wa.me/573236504428', label: 'WhatsApp (personal)', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
-      { href: 'https://wa.me/message/TU_ID_EMPRESA', label: 'WhatsApp (empresa)', icon: <FaWhatsapp aria-hidden />, tone: 'pink' },
+      { href: 'https://wa.me/573236504428', label: 'WhatsApp', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
+      { href: 'https://wa.me/message/TU_ID_EMPRESA', label: 'WA empresa', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
       { href: 'https://github.com/leobr95', label: 'GitHub', icon: <FaGithub aria-hidden />, tone: 'blue' },
-      { href: 'https://www.linkedin.com/in/leonardoburbano', label: 'LinkedIn', icon: <FaLinkedin aria-hidden />, tone: 'pink' },
+      { href: 'https://www.linkedin.com/in/leonardoburbano', label: 'LinkedIn', icon: <FaLinkedin aria-hidden />, tone: 'blue' },
     ],
     []
   );
