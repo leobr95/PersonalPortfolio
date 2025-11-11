@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'cerveceria7estrellas.com', pathname: '/wp-content/uploads/**' },
       { protocol: 'https', hostname: 'www.cerveceria7estrellas.com', pathname: '/wp-content/uploads/**' },
+
+      { protocol: 'https', hostname: 'images.pexels.com', pathname: '/photos/**' }
     ],
   },
   // NO pongas output: 'export' si usas App Router/SSR
