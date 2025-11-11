@@ -49,18 +49,18 @@ function diffYM(a: YM, b: YM): { years: number; months: number; label: string } 
 /** Datos: una fila por tecnología (ajústalas cuando quieras) */
 const SKILLS: Skill[] = [
   { name: 'C#',                 icon: <TbBrandCSharp />,          from: { y: 2018, m: 11 }, to: { y: 2025, m: 11 }, color: '#7c4dff' },
-  { name: '.NET / ASP.NET',     icon: <SiDotnet />,               from: { y: 2018, m: 3 },  to: { y: 2026, m: 1 }, color: '#512da8' },
-  { name: 'SQL Server',         icon: <DiMsqlServer />,           from: { y: 2016, m: 6 },  to: { y: 2026, m: 1 }, color: '#ef4444' },
-  { name: 'Docker',             icon: <SiDocker />,               from: { y: 2020, m: 6 },  to: { y: 2026, m: 1 }, color: '#38bdf8' },
-  { name: 'Azure DevOps',       icon: <VscAzureDevops />,         from: { y: 2020, m: 6 },  to: { y: 2026, m: 1 }, color: '#3b82f6' },
-  { name: 'Azure (App/KV)',     icon: <VscAzure />,               from: { y: 2021, m: 6 },  to: { y: 2026, m: 1 }, color: '#2563eb' },
-  { name: 'React',              icon: <SiReact />,                from: { y: 2021, m: 1 },  to: { y: 2026, m: 1 }, color: '#22d3ee' },
-  { name: 'TypeScript',         icon: <SiTypescript />,           from: { y: 2021, m: 1 },  to: { y: 2026, m: 1 }, color: '#60a5fa' },
-  { name: 'Next.js',            icon: <SiNextdotjs />,            from: { y: 2022, m: 1 },  to: { y: 2026, m: 1 }, color: '#9ca3af' },
-  { name: 'Angular',            icon: <SiAngular />,              from: { y: 2021, m: 2 },  to: { y: 2025, m: 6 }, color: '#f87171' },
-  { name: 'MongoDB',            icon: <SiMongodb />,              from: { y: 2024, m: 7 },  to: { y: 2026, m: 1 }, color: '#22c55e' },
-  { name: 'Git / GitLab / TFS', icon: <SiGit />,                  from: { y: 2016, m: 1 },  to: { y: 2026, m: 1 }, color: '#f97316' },
-  { name: 'RDL / SSRS',         icon: <FaDatabase />,             from: { y: 2018, m: 5 },  to: { y: 2025, m: 4 }, color: '#a78bfa' },
+  { name: '.NET / ASP.NET',     icon: <SiDotnet />,               from: { y: 2018, m: 3 },  to: { y: 2026, m: 1 },  color: '#512da8' },
+  { name: 'SQL Server',         icon: <DiMsqlServer />,           from: { y: 2016, m: 6 },  to: { y: 2026, m: 1 },  color: '#ef4444' },
+  { name: 'Docker',             icon: <SiDocker />,               from: { y: 2020, m: 6 },  to: { y: 2026, m: 1 },  color: '#38bdf8' },
+  { name: 'Azure DevOps',       icon: <VscAzureDevops />,         from: { y: 2020, m: 6 },  to: { y: 2026, m: 1 },  color: '#3b82f6' },
+  { name: 'Azure (App/KV)',     icon: <VscAzure />,               from: { y: 2021, m: 6 },  to: { y: 2026, m: 1 },  color: '#2563eb' },
+  { name: 'React',              icon: <SiReact />,                from: { y: 2021, m: 1 },  to: { y: 2026, m: 1 },  color: '#22d3ee' },
+  { name: 'TypeScript',         icon: <SiTypescript />,           from: { y: 2021, m: 1 },  to: { y: 2026, m: 1 },  color: '#60a5fa' },
+  { name: 'Next.js',            icon: <SiNextdotjs />,            from: { y: 2022, m: 1 },  to: { y: 2026, m: 1 },  color: '#9ca3af' },
+  { name: 'Angular',            icon: <SiAngular />,              from: { y: 2021, m: 2 },  to: { y: 2025, m: 6 },  color: '#f87171' },
+  { name: 'MongoDB',            icon: <SiMongodb />,              from: { y: 2024, m: 7 },  to: { y: 2026, m: 1 },  color: '#22c55e' },
+  { name: 'Git / GitLab / TFS', icon: <SiGit />,                  from: { y: 2016, m: 1 },  to: { y: 2026, m: 1 },  color: '#f97316' },
+  { name: 'RDL / SSRS',         icon: <FaDatabase />,             from: { y: 2018, m: 5 },  to: { y: 2025, m: 4 },  color: '#a78bfa' },
 ];
 
 export default function SkillsTimeline(): JSX.Element {
@@ -85,7 +85,7 @@ export default function SkillsTimeline(): JSX.Element {
           })}
         </ul>
 
-        {/* Grid de filas: etiqueta (icono+nombre) + barra */}
+        {/* Filas: etiqueta (icono+nombre) + barra */}
         <ul className="skl2-rows" role="list">
           {rows.map((e) => {
             const left = posPct(e.startF);
@@ -96,7 +96,7 @@ export default function SkillsTimeline(): JSX.Element {
 
             return (
               <li key={e.name} className="skl2-row">
-                {/* Etiqueta izquierda (icono + nombre + rango resumido) */}
+                {/* Etiqueta izquierda */}
                 <div className="skl2-label">
                   <span className="skl2-ico" aria-hidden>{e.icon}</span>
                   <div className="skl2-meta">
@@ -105,21 +105,22 @@ export default function SkillsTimeline(): JSX.Element {
                   </div>
                 </div>
 
-                {/* Barra temporal (derecha) */}
-                <div className="skl2-barwrap">
+                {/* Barra temporal (variables en el WRAP para que las lea el tooltip) */}
+                <div
+                  className="skl2-barwrap"
+                  style={
+                    {
+                      '--left': `${left}%`,
+                      '--width': `${width}%`,
+                      '--bar-color': e.color ?? '#60a5fa',
+                    } as React.CSSProperties
+                  }
+                >
                   <button
                     className="skl2-bar"
-                    style={
-                      {
-                        '--left': `${left}%`,
-                        '--width': `${width}%`,
-                        '--bar-color': e.color ?? '#60a5fa',
-                      } as React.CSSProperties
-                    }
                     title={title}
                     aria-label={title}
                   />
-                  {/* Tooltip on hover/focus */}
                   <div className="skl2-tip" role="tooltip" aria-hidden="true">
                     <span className="skl2-tip-name">{e.name}</span>
                     <span className="skl2-tip-range">{spanText}</span>

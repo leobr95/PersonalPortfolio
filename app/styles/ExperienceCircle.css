@@ -1,189 +1,110 @@
-/* ===== Contenedor oscuro ===== */
+/* ===== Contenedor oscuro + glass ===== */
 .xt2{
   position: relative;
-  background: linear-gradient(180deg, #0d0e13, #0b0c11);
-  border: 1px solid var(--line, #1d2233);
+  background: radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.25), transparent 50%),
+              radial-gradient(1200px 600px at 110% 120%, rgba(0,140,255,.18), transparent 50%),
+              linear-gradient(180deg, #0d0e13, #0b0c11);
+  border: 1px solid rgba(255,255,255,.08);
   border-radius: 16px;
   padding: 28px 16px 18px;
-  box-shadow: var(--elev-1, 0 10px 28px rgba(0,0,0,.25));
+  box-shadow: 0 10px 28px rgba(0,0,0,.25);
   overflow: hidden;
 }
-
-/* líneas de fondo sutiles */
 .xt2::before{
-  content:"";
-  position:absolute; inset:0;
+  content:""; position:absolute; inset:0;
   background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 80px 100%;
-  opacity:.18;
-  pointer-events:none;
+  opacity:.18; pointer-events:none;
 }
-
 .xt2-title{
-  text-align:center;
-  color:#f6f7ff;
-  letter-spacing:.6px;
-  font-size:clamp(18px,3.4vw,28px);
-  font-weight:800;
-  margin:0 0 10px;
+  text-align:center; color:#f6f7ff; letter-spacing:.6px;
+  font-size:clamp(18px,3.4vw,28px); font-weight:800; margin:0 0 10px;
 }
 
 .xt2-viewport{
   position:relative;
-  overflow-x: clip;     /* <— evita scrollbar horizontal */
+  overflow-x: auto;        /* móvil: scroll horizontal */
   overflow-y: hidden;
-  padding-bottom:6px;
+  padding-bottom:10px;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 /* ===== Barras ===== */
 .xt2-bars{
   --track-h: 10px;
   --fade: 26px;
-
-  position:relative;
-  list-style:none;
-  margin:32px 0 12px;
-  padding:40px 0 0;   /* espacio para labels (aparecen al hover) */
-  height:140px;
+  position:relative; list-style:none; margin:32px 0 12px; padding:40px 0 0; height:160px;
+  min-width: 740px;   /* evita apeñusque en móviles */
 }
+.xt2-bar{ position:absolute; left:var(--left); width:var(--width); height:var(--track-h); transform: translateY(-50%); }
+.xt2-bar.lane-1{ top:40%; } .xt2-bar.lane-2{ top:58%; } .xt2-bar.lane-3{ top:76%; }
 
-.xt2-bar{
-  position:absolute;
-  left:var(--left);
-  width:var(--width);
-  height:var(--track-h);
-  transform: translateY(-50%);
-}
-
-/* Hacemos la “pista” un botón para accesibilidad (hover/focus) */
 .xt2-track{
-  position:absolute;
-  inset:0;
-  display:block;
-  border: none;
-  border-radius:999px;
-  background: var(--bar-color, #60a5fa);
-  box-shadow:
-    0 10px 28px rgba(0,0,0,.35),
-    inset 0 0 0 1px rgba(255,255,255,.05);
-  cursor: pointer;
-  -webkit-mask-image: linear-gradient(
-    to right, transparent 0, black var(--fade), black calc(100% - var(--fade)), transparent 100%
-  );
-          mask-image: linear-gradient(
-    to right, transparent 0, black var(--fade), black calc(100% - var(--fade)), transparent 100%
-  );
-  /* feedback */
+  position:absolute; inset:0; display:block; border:none; border-radius:999px; cursor:pointer;
+  background: var(--bar-color,#60a5fa);
+  box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black var(--fade), black calc(100% - var(--fade)), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, black var(--fade), black calc(100% - var(--fade)), transparent 100%);
   transition: filter .15s ease, transform .12s ease;
 }
-.xt2-track:hover,
-.xt2-track:focus-visible{ filter: brightness(1.05); transform: translateY(-1px); outline: none; }
+.xt2-track:hover, .xt2-track:focus-visible{ filter:brightness(1.05); transform: translateY(-1px); outline:none; }
 
-/* Lanes (no se pisan) */
-.xt2-bar.lane-1{ top:40%; }
-.xt2-bar.lane-2{ top:58%; }
-.xt2-bar.lane-3{ top:76%; }
+/* ===== Estado activo (sin hover) ===== */
+.xt2-bar.is-active .xt2-track{
+  filter: brightness(1.15);
+  box-shadow:
+    0 16px 34px rgba(0,0,0,.45),
+    0 0 0 2px rgba(255,255,255,.08),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.xt2-bar.is-active .xt2-label{ opacity:1; transform: translateY(0); }
 
-/* ===== Etiquetas: ocultas por defecto, visibles en hover/focus ===== */
+/* Logos centrados sobre la barra */
+.xt2-logo{
+  position:absolute; bottom: calc(100% + 18px); left:0; width:100%;
+  display:grid; place-items:center; pointer-events:none;
+}
+.xt2-logo img{
+  width: 28px; height: 28px; object-fit: contain; border-radius: 8px;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,.35); padding: 3px;
+}
+
+/* Etiquetas */
 .xt2-label{
-  position:absolute;
-  left:0;
-  bottom:calc(100% + 6px);
-  color:#fff;
-  font-size:11.5px;
-  line-height:1.15;
-  white-space:nowrap;
-  text-shadow:0 1px 0 rgba(0,0,0,.55);
-
-  opacity: 0;
-  transform: translateY(4px);
-  pointer-events: none;
-  transition: opacity .18s ease, transform .18s ease;
+  position:absolute; left:0; bottom:calc(100% + 6px);
+  color:#fff; font-size:11.5px; line-height:1.15; white-space:nowrap; text-shadow:0 1px 0 rgba(0,0,0,.55);
+  opacity:0; transform: translateY(4px); pointer-events:none; transition: opacity .18s ease, transform .18s ease;
 }
-
-/* Mostrar al interactuar */
-.xt2-bar:hover .xt2-label,
-.xt2-bar:focus-within .xt2-label{
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.xt2-bar:hover .xt2-label, .xt2-bar:focus-within .xt2-label{ opacity:1; transform: translateY(0); }
 .xt2-period{ color:#b9c1ff; font-weight:700; }
 .xt2-company{ color:#ffffff; font-weight:900; }
 .xt2-role{ font-style:italic; opacity:.95; }
 
-/* ===== Marcas de años (uniforme) ===== */
+/* ===== Años: reducimos densidad en móvil ===== */
 .xt2-years{
-  position:relative;
-  list-style:none;
-  margin:6px 0 0;
-  padding:10px 0 0;
-  height:18px;
-  border-top:1px solid rgba(255,255,255,.08);
-  color:#c6cbe6;
-  font-size:12px;
+  position:relative; list-style:none; margin:6px 0 0; padding:10px 0 0; height:22px;
+  border-top:1px solid rgba(255,255,255,.08); color:#c6cbe6; font-size:12px;
+  min-width: 740px; /* acompaña al ancho mínimo de barras */
 }
-.xt2-years li{
-  position:absolute;
-  top:0;
-  transform: translateX(-50%);
-  padding-left:4px;
-}
-.xt2-years li::after{
-  content:"";
-  position:absolute; top:-10px; left:50%;
-  width:1px; height:10px; background:rgba(255,255,255,.12);
-  transform: translateX(-50%);
+.xt2-years li{ position:absolute; top:0; transform: translateX(-50%); padding-left:4px; }
+.xt2-years li::after{ content:""; position:absolute; top:-10px; left:50%; width:1px; height:10px; background:rgba(255,255,255,.12); transform: translateX(-50%); }
+
+/* En <= 700px muestra un año sí, uno no */
+@media (max-width: 700px){
+  .xt2::before{ background-size:56px 100%; }
+  .xt2-bars{ height:170px; }
+  .xt2-label{ font-size:10.5px; }
+  .xt2-years{ font-size:11px; }
+  .xt2-years li:nth-child(even){ display:none; }
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 900px){
-  .xt2::before{ background-size: 64px 100%; }
-}
-@media (max-width: 700px){
-  .xt2::before{ background-size: 56px 100%; }
-  .xt2-bars{ height: 150px; }
-  .xt2-label{ font-size: 10.5px; }
-}
+/* En <= 520px muestra sólo 1 de cada 3 para máxima legibilidad */
 @media (max-width: 520px){
-  .xt2::before{ background-size: 48px 100%; }
-  .xt2-title{ font-size: 20px; }
-  .xt2-label{ font-size: 10px; }
+  .xt2::before{ background-size:48px 100%; }
+  .xt2-title{ font-size:20px; }
+  .xt2-years{ font-size:10px; }
+  .xt2-years li{ display:none; }
+  .xt2-years li:nth-child(3n+1){ display:block; }
 }
-
-/* Logo centrado arriba de cada barra */
-.xt2-logo{
-  position: absolute;
-  bottom: calc(100% + 22px); /* altura sobre la barra */
-  left: 0;
-  width: 100%;
-  display: grid;
-  place-items: center;
-  pointer-events: none; /* no bloquear hover en la barra */
-}
-
-.xt2-logo img{
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 6px 16px rgba(0,0,0,.35);
-  padding: 3px;
-}
-
-/* Si el timeline queda muy compacto, baja un poco el logo */
-@media (max-width: 700px){
-  .xt2-logo{ bottom: calc(100% + 16px); }
-  .xt2-logo img{ width: 22px; height: 22px; border-radius: 6px; }
-}
-
-/* Si prefieres scroll horizontal en móviles (opcional):
-.xt2-viewport{
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-.xt2-bars{ min-width: 640px; }
-*/
