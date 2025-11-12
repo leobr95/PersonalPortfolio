@@ -74,17 +74,94 @@
 }
 .prj-desc{ margin: 0; color: var(--muted); }
 
-/* Pills cristal */
+/* ===== Pills cristal (diferenciadas de glow-btn) ===== */
 .prj-pills{
-  list-style: none; padding: 0; margin: 2px 0 0; display: flex; flex-wrap: wrap; gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
+
+/* Chip estilo “frosted” con aro interno y micro-textura */
 .pill{
-  padding: 8px 12px;
+  --pill-fg: #e9edff;
+  --pill-bg: rgba(255,255,255,.055);
+  --pill-stroke: rgba(255,255,255,.16);
+  --pill-inner: rgba(255,255,255,.08);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 12px;              /* más pequeño que los botones */
+  border-radius: 12px;            /* menos redondo que glow-btn */
+  color: var(--pill-fg);
+  font-weight: 700;
+  font-size: .88rem;
+  letter-spacing: .2px;
+  text-decoration: none;
+
+  background:
+    radial-gradient(120% 120% at 10% 0%, rgba(255,255,255,.08) 0%, transparent 40%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)),
+    var(--pill-bg);
+  border: 1px solid var(--pill-stroke);
+
+  /* aro interno (no rails) */
+  box-shadow:
+    inset 0 0 0 1px var(--pill-inner),
+    0 6px 14px rgba(0,0,0,.28);
+
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+
+  transition: transform .12s ease, filter .15s ease, box-shadow .15s ease;
+  overflow: hidden;
+}
+
+/* puntito decorativo a la izquierda */
+.pill::before{
+  content: "";
+  width: 6px; height: 6px;
   border-radius: 999px;
-  background: var(--pill-bg);
-  border: 1px solid rgba(255,255,255,.12);
-  color: #e9edff; font-weight: 700; font-size: .92rem;
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  background: rgba(169,180,255,.9);
+  box-shadow: 0 0 8px rgba(169,180,255,.6);
+  flex: 0 0 auto;
+  transform: translateY(.5px);
+  opacity: .95;
+}
+
+/* Highlight superior muy fino */
+.pill::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(to bottom, rgba(255,255,255,.12), transparent 40%);
+  opacity: .35;
+  pointer-events: none;
+}
+
+/* Hover/active sin “ensanchamiento” */
+.pill:hover{ filter: brightness(1.06); transform: translateY(-1px); }
+.pill:active{ transform: translateY(0); filter: brightness(1.02); }
+
+/* Variantes sutiles por tono (opcional) */
+.pill--blue   { --pill-inner: rgba(45,178,255,.18);  --pill-stroke: rgba(45,178,255,.28); }
+.pill--green  { --pill-inner: rgba(30,255,69,.18);   --pill-stroke: rgba(30,255,69,.28);  }
+.pill--pink   { --pill-inner: rgba(255,31,113,.18);  --pill-stroke: rgba(255,31,113,.28); }
+.pill--orange { --pill-inner: rgba(255,183,65,.18);  --pill-stroke: rgba(255,183,65,.28); }
+
+/* Compacto en móviles */
+@media (max-width: 520px){
+  .pill{
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: .82rem;
+    gap: 6px;
+  }
+  .pill::before{ width: 5px; height: 5px; }
 }
 
 /* Botones (reutiliza glow-btn del tema de contacto) */
@@ -154,6 +231,7 @@
   .prj-card{ grid-template-columns: 1fr; }
 }
 
+/* ===== Botón glow (existente, no se toca) ===== */
 .glow-btn{
   --clr: #2db2ff; /* default */
   position: relative;

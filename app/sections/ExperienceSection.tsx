@@ -8,11 +8,13 @@ import ExperienceCircle from './ExperienceCircle';
 
 import devinmotion from '@/app/logos/devinmotion.png';
 import gvs from '@/app/logos/gvs.svg';
+import lbcodeworks from '@/app/logos/lbcodeworks.png';
 import megadev from '@/app/logos/megadevf.png';
 import pyt from '@/app/logos/pyt.png';
 import qvision from '@/app/logos/qvisionf.webp';
 import smartfinancial from '@/app/logos/smartf.png';
 import vass from '@/app/logos/vass.png';
+
 
 export type YM = { y: number; m: number };
 
@@ -37,7 +39,23 @@ export const MIN_YEAR = 2015;
 export const MAX_YEAR = 2026; // inclusive
 
 const DATA_RAW: ExpItem[] = [
-  {
+    {
+    id: 9,
+    company: 'ld.codeworks',
+    role: 'Desarrollador Full Stack Freelance',
+    from: { y: 2025, m: 5 }, to: { y: 2025, m: 11 },
+    color: '#9a14b8ff', logo: lbcodeworks, period: 'Abr 2022 – Actualmente',
+    clients: 'Emprendimiento propio (Colombia) Workana',
+    tone: 'red',
+    tags: ['.NET Core', 'Next JS', 'Vercel'],
+    duties: [
+      'Microservicios REST (Clean Architecture) en Docker.',
+      'CI/CD con Azure DevOps, Git/TFS/GitLab.',
+      'SSRS/SQL Server.',
+      'Frontend React TS / Angular según cliente.',
+    ],
+  },
+    {
     id: 8,
     company: 'VASS LATAM',
     role: 'Analista Desarrollador',
