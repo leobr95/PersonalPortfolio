@@ -28,6 +28,7 @@
   letter-spacing: .2px;
 }
 
+/* ====== Agrupaciones ====== */
 .edu-group{ display: grid; gap: 12px; }
 .edu-group-title{
   margin: 6px 0 0;
@@ -47,7 +48,7 @@
   .edu-grid{ grid-template-columns: 1fr; }
 }
 
-/* ===== Card base (similar a ExperienceCards) ===== */
+/* ===== Card base (alineado a ExperienceCards) ===== */
 .edu-card{
   position: relative;
   z-index: 1;
@@ -61,9 +62,10 @@
   border: 1px solid var(--line);
   background: var(--panel);
   overflow: hidden;
+  isolation: isolate;
 }
 
-/* borde/halo */
+/* borde/halo brillante con máscara (igual filosofía que experiencia) */
 .edu-card::before{
   content: "";
   position: absolute;
@@ -122,19 +124,69 @@
 .edu-sub{ margin:0; color:var(--muted); font-size:.98rem; }
 .edu-period{ display:block; color:#b9c1ff; font-weight:700; margin-top:.2rem; }
 
-/* Botón y detalle */
+/* ===== Botón y detalle (feel similar a xp-btn) ===== */
 .edu-actions{ display:flex; justify-content:center; width:100%; margin-top: .5rem; }
+
+/* Botón “cristal” con glow en hover (no cambia el ancho en hover para evitar reflow) */
 .edu-btn{
-  display:flex; align-items:center; gap:.4rem;
-  border:0; cursor:pointer; color:#fff; background:#222127;
-  padding:.6rem 1.1rem; border-radius: 2rem; font-weight:800;
+  --clr:#1890ff;               /* cambia según el tone abajo */
+  display:inline-flex; align-items:center; gap:.5rem;
+  border:0; cursor:pointer; color:#fff;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 999px;
+  padding: .58rem 1.1rem;      /* padding fijo para no empujar layout en hover */
+  font-weight:800;
+  letter-spacing:.2px;
+  box-shadow: 0 15px 15px rgba(0,0,0,.30);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   transition: filter .15s ease, transform .12s ease;
 }
-.edu-card.tone-blue   .edu-btn:hover{ background: var(--blue); }
-.edu-card.tone-green  .edu-btn:hover{ background: var(--green); }
-.edu-card.tone-orange .edu-btn:hover{ background: var(--orange); }
-.edu-card.tone-red    .edu-btn:hover{ background: var(--red); }
+.edu-btn::before,
+.edu-btn::after{
+  content:"";
+  position:absolute; left:50%; transform:translateX(-50%);
+  width:28px; height:10px; border-radius:10px;
+  background: var(--clr);
+  box-shadow:
+    0 0 5px var(--clr),
+    0 0 15px var(--clr),
+    0 0 30px var(--clr),
+    0 0 60px var(--clr);
+  transition: .5s; z-index:0; mix-blend-mode: screen;
+}
+.edu-btn::before{ bottom:-6px; }
+.edu-btn::after{ top:-6px; }
+.edu-btn > i{
+  content:""; position:absolute; inset:0; z-index:0;
+  background: linear-gradient(to left, rgba(255,255,255,.18), transparent);
+  transform: skewX(45deg) translateX(-40%);
+  transition:.5s; filter: blur(0);
+}
+.edu-btn > span{ position:relative; z-index:2; }
 
+/* hover/focus */
+.edu-btn:hover,
+.edu-btn:focus-visible{
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  outline: none;
+}
+.edu-btn:hover::before{ bottom:0; height:50%; width:78%; border-radius:999px; }
+.edu-btn:hover::after{ top:0; height:50%; width:78%; border-radius:999px; }
+.edu-btn:hover > i{ transform: skewX(45deg) translateX(160%); }
+
+/* color segun tone del card */
+.edu-card.tone-blue   .edu-btn{ --clr: var(--blue); }
+.edu-card.tone-green  .edu-btn{ --clr: var(--green); }
+.edu-card.tone-orange .edu-btn{ --clr: var(--orange); }
+.edu-card.tone-red    .edu-btn{ --clr: var(--red); }
+
+/* Panel detalle */
 .edu-detail{
   width:100%;
   background:#151419;
@@ -157,9 +209,9 @@
 }
 .edu-empty{ color:#bbb; margin:.4rem 0 0; text-align:center; }
 
-/* Responsivo */
+/* ===== Responsivo ===== */
 @media (max-width: 520px){
   .edu-title{ font-size: 1.12rem; }
   .edu-card{ padding: 1rem .9rem; }
+  .edu-btn{ font-size:.92rem; padding:.52rem 1rem; }
 }
-

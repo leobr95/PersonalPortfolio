@@ -1,0 +1,129 @@
+/* ===== Floating Action Button (FAB) para descargar CV ===== */
+
+.cv-fab{
+  position: fixed;
+  right: clamp(12px, 2.8vw, 22px);
+  bottom: clamp(12px, 2.8vw, 22px);
+  z-index: 50; /* por encima del contenido normal */
+  pointer-events: none; /* el wrapper no captura eventos */
+}
+
+.cv-fab-btn{
+  --clr: #2db2ff; /* azul en línea con tu glass styling */
+
+  pointer-events: auto; /* el botón sí captura eventos */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+
+  color: #fff;
+  background: rgba(255,255,255,.06);
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: .2px;
+  box-shadow: 0 15px 26px rgba(0,0,0,.35);
+
+  /* glass */
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+
+  transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
+  isolation: isolate; /* que los pseudos no tapen el contenido */
+  overflow: hidden;   /* para el sheen */
+}
+
+/* Ícono */
+.cv-fab-btn svg{
+  font-size: 18px;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+}
+
+/* Texto */
+.cv-fab-btn .cv-fab-label{
+  white-space: nowrap;
+  font-size: 14px;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+  position: relative;
+  z-index: 2;
+}
+
+/* Glow superior/inferior en sintonía con tus botones glass */
+.cv-fab-btn::before,
+.cv-fab-btn::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+  width: 32px; height: 10px;
+  border-radius: 10px;
+  background: var(--clr);
+  box-shadow:
+    0 0 5px var(--clr),
+    0 0 15px var(--clr),
+    0 0 30px var(--clr),
+    0 0 60px var(--clr);
+  transition: .45s;
+  z-index: 1;
+  mix-blend-mode: screen;
+}
+.cv-fab-btn::before{ bottom: -6px; }
+.cv-fab-btn::after { top: -6px; }
+
+/* Sheen diagonal */
+.cv-fab-btn > i{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index: 1;
+  background: linear-gradient(to left, rgba(255,255,255,0.18), transparent);
+  transform: skewX(45deg) translateX(-30%);
+  transition: .5s;
+}
+
+/* Hover/Active */
+.cv-fab-btn:hover{
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 18px 32px rgba(0,0,0,.4);
+}
+.cv-fab-btn:hover::before{
+  bottom: 0; height: 50%; width: 86%;
+}
+.cv-fab-btn:hover::after{
+  top: 0; height: 50%; width: 86%;
+}
+.cv-fab-btn:hover > i{
+  transform: skewX(45deg) translateX(200px);
+}
+.cv-fab-btn:active{
+  transform: translateY(0);
+}
+
+/* ===== Responsivo ===== */
+
+/* En móviles: versión compacta (icono + texto corto), y que no tape el contenido */
+@media (max-width: 520px){
+  .cv-fab{
+    right: 12px;
+    bottom: 12px;
+  }
+  .cv-fab-btn{
+    height: 44px;
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .cv-fab-btn .cv-fab-label{
+    font-size: 13px;
+  }
+}
+
+/* Si el teclado móvil puede estorbar (inputs), elevamos un poco */
+@media (max-height: 680px){
+  .cv-fab{ bottom: 16dvh; }
+}

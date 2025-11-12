@@ -73,7 +73,7 @@ export default function SkillsTimeline(): JSX.Element {
 
   return (
     <section className="skl2">
-      <h2 className="skl2-title">Habilidades (2015–2026)</h2>
+      <h2 className="skl2-title"> (2015–2026)</h2>
 
       <div className="skl2-viewport" role="region" aria-label="Timeline de habilidades">
         {/* Cabecera: marcas de años */}

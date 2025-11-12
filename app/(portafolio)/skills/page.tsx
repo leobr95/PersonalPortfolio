@@ -7,10 +7,12 @@ import '@/app/styles/SkillsTimeline.css';
 
 export default function SkillsPage(): JSX.Element {
   return (
-    <main className="skl-page">
-      <h1 className="skl-page-title">Habilidades</h1>
-      <p className="skl-page-sub">Experiencia consolidada por tecnología (2015–2026)</p>
+    <section className="ctc">
+      <header className="ctc-head">
+        <h1 className="ctc-title">Habilidades</h1>
+        <p className="ctc-sub">Experiencia consolidada por tecnología (2015–2026)</p>
+      </header>
       <SkillsTimeline />
-    </main>
+    </section>
   );
 }

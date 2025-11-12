@@ -160,14 +160,11 @@ function ProjectCard({ p }: { p: Project }) {
 
 export default function ProjectsPage() {
   return (
-    <section className="prj">
-      <header className="prj-top">
-        <h1 className="prj-title-main">Proyectos</h1>
-        <p className="prj-sub">
-          Algunos trabajos destacados. Mitad texto (lo que hice) y mitad visual.
-        </p>
+  <section className="ctc">
+      <header className="ctc-head">
+        <h1 className="ctc-title">Proyectos</h1>
+        <p className="ctc-sub">Te cuento acerca de los proyectos en los que he participado y lo que he conseguido.</p>
       </header>
-
       <section className="prj-section">
         <h2 className="prj-section-title">Proyectos laborales</h2>
         <div className="prj-grid">

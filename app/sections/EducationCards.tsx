@@ -1,19 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import Image, { type StaticImageData } from 'next/image';
+import { useState, type JSX } from 'react';
 
 import '@/app/styles/EducationCards.css';
 import sena from '@/app/logos/sena.png';
 import smartFinancial from '@/app/logos/smartf.png';
-import udemy from '@/app/logos/udemy.jpg'
+import udemy from '@/app/logos/udemy.jpg';
 import universidad from '@/app/logos/universidad.webp';
 
-// eslint-disable-next-line import/order
-import { StaticImageData } from 'next/dist/shared/lib/image-external';
+type YM = { y: number; m: number };                 // m: 1..12
+type Period = { from: YM; to: YM };
 
-// eslint-disable-next-line import/order
-import Image from 'next/image';
-type Period = { from: { y: number; m: number }; to: { y: number; m: number } };
 type Study = {
   degree: string;
   institution: string;
@@ -23,6 +21,7 @@ type Study = {
   details?: string[];
   tone?: 'blue' | 'green' | 'orange' | 'red';
 };
+
 type Course = {
   name: string;
   provider: string;
@@ -34,7 +33,8 @@ type Course = {
 };
 
 const MES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-const fmtYM = ({ y, m }: { y:number; m:number }) => `${MES[Math.max(1, Math.min(12, m)) - 1]} ${y}`;
+const guard = (n:number) => Math.max(1, Math.min(12, n));
+const fmtYM = ({ y, m }: YM) => `${MES[guard(m) - 1]} ${y}`;
 
 const STUDIES: Study[] = [
   {
@@ -46,12 +46,12 @@ const STUDIES: Study[] = [
     details: [
       'Fundamentos sólidos en desarrollo de software y bases de datos.',
       'Proyectos con .NET, SQL Server y patrones de arquitectura.',
-      'Trabajos de investigación orientados a aplicaciones empresariales.'
+      'Trabajos de investigación orientados a aplicaciones empresariales.',
     ],
     tone: 'blue',
   },
   {
-    degree: 'Tecnólogo ADSI(Analisis y Desarrollo de Sistemas de Información)',
+    degree: 'Tecnólogo ADSI (Análisis y Desarrollo de Sistemas de Información)',
     institution: 'SENA',
     period: { from: { y: 2014, m: 1 }, to: { y: 2016, m: 12 } },
     location: 'Colombia',
@@ -59,7 +59,7 @@ const STUDIES: Study[] = [
     details: [
       'Análisis y Desarrollo de Software (ADSI).',
       'Frontend y Backend con enfoque práctico.',
-      'Metodologías ágiles y trabajo colaborativo.'
+      'Metodologías ágiles y trabajo colaborativo.',
     ],
     tone: 'red',
   },
@@ -78,14 +78,14 @@ const STUDIES: Study[] = [
 
 const COURSES: Course[] = [
   {
-    name: 'Curso de Ingles',
+    name: 'Curso de Inglés',
     provider: 'Udemy / Pluralsight',
     period: { from: { y: 2021, m: 5 }, to: { y: 2021, m: 9 } },
     logo: smartFinancial,
     mode: 'Online',
     details: [
       'Capas Domain, Application, Infrastructure y API.',
-      'Buenas prácticas, SOLID, inyección de dependencias.'
+      'Buenas prácticas, SOLID, inyección de dependencias.',
     ],
     tone: 'red',
   },
@@ -97,7 +97,7 @@ const COURSES: Course[] = [
     mode: 'Online',
     details: [
       'Estado, hooks, performance y patrones.',
-      'Buenas prácticas con TS y tooling moderno.'
+      'Buenas prácticas con TS y tooling moderno.',
     ],
     tone: 'blue',
   },
@@ -109,7 +109,7 @@ const COURSES: Course[] = [
     mode: 'Online',
     details: [
       'Despliegues en App Service y pipelines en Azure DevOps.',
-      'Gestión segura de secretos con Key Vault.'
+      'Gestión segura de secretos con Key Vault.',
     ],
     tone: 'green',
   },
@@ -122,6 +122,7 @@ function EduCard({
   logo,
   details,
   tone = 'blue',
+  priority = false,
 }: {
   title: string;
   subtitle: string;
@@ -129,15 +130,22 @@ function EduCard({
   logo?: StaticImageData;
   details?: string[];
   tone?: 'blue' | 'green' | 'orange' | 'red';
-}) {
+  priority?: boolean;
+}): JSX.Element {
   const [open, setOpen] = useState(false);
 
   return (
     <article className={`edu-card tone-${tone}`}>
       <div className="edu-card-logo">
         {logo ? (
-          // imagen de ejemplo para reemplazar por tu ruta local
-          <Image src={logo} alt="" />
+          <Image
+            src={logo}
+            alt={`${title} · ${subtitle}`}
+            width={92}
+            height={92}
+            sizes="(max-width: 860px) 92px, 92px"
+            priority={priority}
+          />
         ) : (
           <div className="edu-logo-fallback" aria-hidden>EDU</div>
         )}
@@ -152,12 +160,22 @@ function EduCard({
       </header>
 
       <div className="edu-actions">
-        <button className="edu-btn" onClick={() => setOpen(v => !v)} aria-expanded={open}>
-          {open ? 'Ocultar detalles' : 'Ver detalles'}
+        <button
+          type="button"
+          className="edu-btn"
+          onClick={() => setOpen(v => !v)}
+          aria-expanded={open}
+          aria-controls={`edu-detail-${title.replace(/\s+/g, '-')}`}
+        >
+          <span>{open ? 'Ocultar detalles' : 'Ver detalles'}</span>
+          <i aria-hidden />
         </button>
       </div>
 
-      <div className={`edu-detail ${open ? 'is-open' : ''}`}>
+      <div
+        id={`edu-detail-${title.replace(/\s+/g, '-')}`}
+        className={`edu-detail ${open ? 'is-open' : ''}`}
+      >
         {details?.length ? (
           <ul>
             {details.map((d, i) => <li key={i}>{d}</li>)}
@@ -170,9 +188,9 @@ function EduCard({
   );
 }
 
-export default function EducationCards() {
+export default function EducationCards(): JSX.Element {
   return (
-    <section className="eduSec">
+    <section className="eduSec" aria-label="Educación">
       <header className="eduSec-head">
         <h2>Educación</h2>
       </header>
@@ -189,6 +207,7 @@ export default function EducationCards() {
               logo={s.logo}
               details={s.details}
               tone={s.tone}
+              priority={idx === 0}
             />
           ))}
         </div>
@@ -206,6 +225,7 @@ export default function EducationCards() {
               logo={c.logo}
               details={c.details}
               tone={c.tone}
+              priority={idx === 0}
             />
           ))}
         </div>
