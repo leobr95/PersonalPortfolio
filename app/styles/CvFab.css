@@ -9,7 +9,7 @@
 }
 
 .cv-fab-btn{
-  --clr: #2db2ff; /* azul en línea con tu glass styling */
+  --clr: #717171; /* azul en línea con tu glass styling */
 
   pointer-events: auto; /* el botón sí captura eventos */
   position: relative;
@@ -98,32 +98,62 @@
 .cv-fab-btn:hover::after{
   top: 0; height: 50%; width: 86%;
 }
-.cv-fab-btn:hover > i{
-  transform: skewX(45deg) translateX(200px);
-}
 .cv-fab-btn:active{
   transform: translateY(0);
 }
 
 /* ===== Responsivo ===== */
 
-/* En móviles: versión compacta (icono + texto corto), y que no tape el contenido */
+/* Móviles: pegado al borde inferior (safe-area iPhone) y tamaño más compacto */
 @media (max-width: 520px){
   .cv-fab{
-    right: 12px;
-    bottom: 12px;
+    /* A TOPE abajo, respetando notch/safe area */
+    right: max(8px, env(safe-area-inset-right, 0px) + 8px);
+    /* constant() es fallback para iOS antiguos; env() para los actuales */
+    bottom: max(8px,
+                env(safe-area-inset-bottom, 0px) + 8px);
   }
+
   .cv-fab-btn{
-    height: 44px;
-    padding: 0 12px;
+    height: 40px;          /* más bajo */
+    padding: 0 12px;       /* menos ancho */
     gap: 8px;
+    border-radius: 16px;   /* un poco menos redondo para compactar */
+
+    /* sombra más corta para que no “levite” demasiado en pantallas chicas */
+    box-shadow: 0 10px 18px rgba(0,0,0,.32);
   }
+
+  .cv-fab-btn svg{
+    font-size: 16px;       /* ícono más pequeño */
+  }
+
   .cv-fab-btn .cv-fab-label{
-    font-size: 13px;
+    font-size: 12.5px;     /* texto ligeramente menor */
+    letter-spacing: .1px;
+  }
+
+  /* Glow más corto para que no sobresalga del botón pequeño */
+  .cv-fab-btn::before,
+  .cv-fab-btn::after{
+    width: 70%;
+    height: 46%;
+    border-radius: 14px;
+  }
+  .cv-fab-btn::before{ bottom: 0; }
+  .cv-fab-btn::after { top: 0; }
+
+  /* Sheen ajustado para que no se vea “por fuera” del botón */
+  .cv-fab-btn > i{
+    transform: skewX(45deg) translateX(-40%);
+    filter: blur(0.2px);
   }
 }
 
-/* Si el teclado móvil puede estorbar (inputs), elevamos un poco */
+/* Evita que el botón suba cuando la ventana es baja;
+   lo dejamos a tope y confiamos en el safe-area. */
 @media (max-height: 680px){
-  .cv-fab{ bottom: 16dvh; }
+  .cv-fab{
+    bottom: max(8px, env(safe-area-inset-bottom, 0px) + 8px);
+  }
 }
