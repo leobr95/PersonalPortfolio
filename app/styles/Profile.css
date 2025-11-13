@@ -225,6 +225,7 @@
   width: min(100%, 520px);
   height: auto;
   transform: translateZ(0);
+  transform: rotateY(180deg);
   filter:
     drop-shadow(0 30px 40px rgba(0, 0, 0, .45))
     drop-shadow(0 10px 18px rgba(0, 0, 0, .25));
@@ -278,8 +279,9 @@
 @media (max-width: 620px){
   .prf{ padding: 16px; }
   .prf-actions, .prf-contact{ justify-content: flex-start; }
-  .prf-card{ padding: 14px; }
+  .prf-card{ padding: 14px;}
 }
+
 
 /* ===== Compacto en iPad / medianos: solo íconos (sidebar) ===== */
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -346,6 +348,8 @@
     justify-content: center;
     gap: 12px;             /* un poco más de espacio entre botones */
   }
+      .prf-char{transform: rotateY(0);} 
+
 }
 
 /* 4) Opcional: haz que el “glow” no empuje visualmente nada */
@@ -366,7 +370,9 @@
     gap: 10px;
     justify-content: stretch;
     align-items: stretch;
+    
   }
+
 
   /* Botón compacto y elástico dentro de la grilla */
   .prf .glow-btn{
