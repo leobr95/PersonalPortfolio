@@ -9,7 +9,7 @@
 }
 
 .cv-fab-btn{
-  --clr: #717171; /* azul en línea con tu glass styling */
+  --clr: #091a46; /* azul en línea con tu glass styling */
 
   pointer-events: auto; /* el botón sí captura eventos */
   position: relative;

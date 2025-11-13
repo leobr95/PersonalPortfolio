@@ -271,7 +271,7 @@ const TOOL_SKILLS: Skill[] = [
     { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
   ]},
 ];
-function Group({ title, skills }: { title: string; skills: Skill[] }) {
+function Group({ skills }: { skills: Skill[] }) {
   // Normaliza, calcula periodos y TOTAL (en meses)
   const rows = skills
     .map(s => {
@@ -292,8 +292,6 @@ function Group({ title, skills }: { title: string; skills: Skill[] }) {
 
   return (
     <div className="skl2-group">
-      <div className="skl2-sep" aria-hidden="true" />
-      <h3 className="skl2-group-title">{title}</h3>
 
       <ul className="skl2-rows" role="list">
         {rows.map((e) => (
@@ -341,23 +339,38 @@ function Group({ title, skills }: { title: string; skills: Skill[] }) {
 /* ====== Componente principal ====== */
 export default function SkillsTimeline(): JSX.Element {
   return (
-    <section className="skl2">
-      <div className="skl2-viewport" role="region" aria-label="Timeline de habilidades">
-        {/* Marcas de años */}
-        <ul className="skl2-years" aria-hidden="true">
+<section className="skl2">
+  <div className="skl2-grid">
+    
+    {/* Columna 1: Habilidades técnicas */}
+    <div className="skl2-col">
+            <h3>Habilidades técnicas</h3>
+
+     <ul className="skl2-years" aria-hidden="true">
           {Array.from({ length: (MAX_YEAR - MIN_YEAR) + 1 }).map((_, i) => {
             const y = MIN_YEAR + i;
             const left = posPct(y);
             return <li key={y} style={{ left: `${left}%` }}>{y}</li>;
           })}
-        </ul>
-
-        {/* Grupo: técnicas */}
-        <Group title="Habilidades técnicas" skills={TECH_SKILLS} />
-
-        {/* Grupo: herramientas */}
-        <Group title="Uso de herramientas" skills={TOOL_SKILLS} />
+        </ul>      <div className="skl2-viewport">
+        <Group skills={TECH_SKILLS} />
       </div>
-    </section>
+    </div>
+
+    {/* Columna 2: Herramientas */}
+    <div className="skl2-col">
+      <h3>Uso de herramientas</h3>
+     <ul className="skl2-years" aria-hidden="true">
+          {Array.from({ length: (MAX_YEAR - MIN_YEAR) + 1 }).map((_, i) => {
+            const y = MIN_YEAR + i;
+            const left = posPct(y);
+            return <li key={y} style={{ left: `${left}%` }}>{y}</li>;
+          })}
+        </ul>      <div className="skl2-viewport">
+        <Group skills={TOOL_SKILLS} />
+      </div>
+    </div>
+  </div>
+</section>
   );
 }
