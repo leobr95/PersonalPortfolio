@@ -8,9 +8,12 @@ import {
    SiDocker, SiGit,
 } from 'react-icons/si';
 import { TbBrandCSharp } from 'react-icons/tb';
+// eslint-disable-next-line import/order
 import { VscAzureDevops, VscAzure } from 'react-icons/vsc';
 
 import '@/app/styles/SkillsTimeline.css';
+// eslint-disable-next-line import/order
+import { StaticImageData } from 'next/image';
 
 /** Ventana visible del timeline */
 const MIN_YEAR = 2015;
@@ -26,7 +29,21 @@ type Skill = {
   /** uno o más rangos (permite huecos) */
   segments: Segment[];
 };
-
+export type ExpItem = {
+  id: number;
+  company: string;
+  role: string;
+  from: YM;
+  to: YM;
+  color?: string;
+  logo?: StaticImageData;
+  // para las tarjetas:
+  period?: string;
+  clients?: string;
+  tone?: 'green' | 'blue' | 'orange' | 'red';
+  tags?: string[];
+  duties?: string[];
+};
 const MES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
 /* ===== Helpers ===== */
