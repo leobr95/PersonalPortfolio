@@ -291,3 +291,4 @@
 .glow-btn:hover::before{ bottom:0; height:50%; width:82%; border-radius:30px; }
 .glow-btn:hover::after { top:0;    height:50%; width:82%; border-radius:30px; }
 .glow-btn:hover > i{ transform: skewX(45deg) translateX(200px); }
+

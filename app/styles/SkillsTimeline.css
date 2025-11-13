@@ -1,22 +1,24 @@
-/* ===== Skills Timeline (oscuro + cristal, consistente con Contacto/Perfil) ===== */
+/* ===== Skills Timeline (oscuro + cristal) ===== */
 .skl2{
   position: relative;
-  background: radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.25), transparent 50%),
-              radial-gradient(1200px 600px at 110% 120%, rgba(0,140,255,.18), transparent 50%),
-              linear-gradient(180deg, #0d0e13, #0b0c11);
-  border: 1px solid rgba(255,255,255,.08);
   border-radius: 16px;
   padding: 22px 16px 18px;
   box-shadow: 0 10px 28px rgba(0,0,0,.25);
   overflow: hidden;
   isolation: isolate;
+
+  /* fondo compatible con tu tema */
+  background:
+    radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.25), transparent 50%),
+    radial-gradient(1200px 600px at 110% 120%, rgba(0,140,255,.18), transparent 50%),
+    linear-gradient(180deg, #0d0e13, #0b0c11);
 }
 .skl2::before{
   content:"";
   position:absolute; inset:0;
   background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 80px 100%;
-  opacity:.18;
+  opacity:.16;
   pointer-events:none;
 }
 
@@ -29,13 +31,13 @@
   margin:0 0 8px;
 }
 
-/* ===== Viewport general ===== */
+/* ===== Viewport ===== */
 .skl2-viewport{
   position: relative;
   padding: 10px 8px 8px;
 }
 
-/* ===== Marcas de años (superior) ===== */
+/* ===== Marcas de años ===== */
 .skl2-years{
   position: relative;
   list-style: none;
@@ -59,41 +61,84 @@
   transform: translateX(-50%);
 }
 
-/* ===== Filas ===== */
+/* ===== Grupo (separador + título) ===== */
+.skl2-group{ margin-top: 14px; }
+.skl2-sep{
+  height: 1px;
+  margin: 10px 0 8px;
+  background:
+    linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent),
+    rgba(255,255,255,.04);
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(0,0,0,.22);
+  box-shadow: inset 0 8px 22px rgba(0,0,0,.25);
+  border-radius: 999px;
+}
+.skl2-group-title{
+  margin: 0 0 8px;
+  color:#eaf0ff;
+  font-weight: 900;
+  letter-spacing: .3px;
+  font-size: clamp(16px, 2.8vw, 20px);
+}
+
+/* ===== Filas (APILADO SIEMPRE) ===== */
 .skl2-rows{
   list-style: none;
   margin: 0;
   padding: 6px 0 4px;
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .skl2-row{
   display: grid;
-  grid-template-columns: 240px 1fr; /* etiqueta izquierda + timeline barra */
-  gap: 12px;
-  align-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto; /* etiqueta arriba, barra abajo */
+  gap: 8px;
+  align-items: start;
 }
 
-/* Etiqueta izquierda */
+/* Etiqueta (icono + meta) */
 .skl2-label{
   display: grid;
-  grid-template-columns: 36px 1fr;
+  grid-template-columns: 40px 1fr;
   align-items: center;
   gap: 10px;
   color: #fff;
 }
+
+/* Icono con tinte de la barra + cristal */
 .skl2-ico{
   display: grid; place-items: center;
-  width: 36px; height: 36px;
-  border-radius: 10px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background:
+    radial-gradient(110% 110% at 20% 10%, rgba(255,255,255,.18), transparent 40%),
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04)),
+    color-mix(in hsl, var(--bar-color, #60a5fa) 26%, #14151d);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.06),
+    0 10px 20px rgba(0,0,0,.35);
   font-size: 20px;
+  color: #fff;
+  transition: transform .12s ease, filter .15s ease, box-shadow .15s ease;
 }
+
+/* Hover al row: glow suave del color */
+.skl2-row:hover .skl2-ico{
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    0 0 0 1px color-mix(in hsl, var(--bar-color, #60a5fa) 28%, transparent),
+    0 12px 26px rgba(0,0,0,.38),
+    0 0 28px -8px color-mix(in hsl, var(--bar-color, #60a5fa) 55%, transparent);
+}
+
 .skl2-name{
-  display: block;
+  display:block;
   font-weight: 800; letter-spacing:.2px;
 }
 .skl2-span{
@@ -103,94 +148,50 @@
   margin-top: 2px;
 }
 
-/* Barra (derecha) */
-.skl2-barwrap{
+/* ===== Pista multi-segmento (huecos visibles) ===== */
+.skl2-barwrap--multi{
   position: relative;
-  height: 18px;
-  /* variables vienen inline desde el componente */
-}
-.skl2-bar{
-  position: absolute;
-  left: var(--left);
-  width: var(--width);
-  height: 10px;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-
-  background: var(--bar-color, #60a5fa);
+  height: 20px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border-radius: 6px;
   box-shadow:
-    0 10px 28px rgba(0,0,0,.35),
-    inset 0 0 0 1px rgba(255,255,255,.05);
-
-  -webkit-mask-image: linear-gradient(
-    to right, transparent 0, black 26px, black calc(100% - 26px), transparent 100%
-  );
-          mask-image: linear-gradient(
-    to right, transparent 0, black 26px, black calc(100% - 26px), transparent 100%
-  );
-
-  transition: filter .15s ease, transform .12s ease;
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    0 8px 18px rgba(0,0,0,.28);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
 }
-.skl2-bar:hover,
-.skl2-bar:focus-visible{
-  filter: brightness(1.06);
+
+/* Cada tramo (chunk) coloreado – los huecos quedan vacíos */
+.skl2-chunk{
+  position: absolute;
+  top: 5px;
+  height: 10px;
+  background:
+    radial-gradient(80% 80% at 20% 0%, rgba(255,255,255,.30), transparent 60%),
+    var(--bar-color, #60a5fa);
+  box-shadow:
+    0 12px 28px color-mix(in srgb, var(--bar-color, #60a5fa) 30%, transparent),
+    0 0 0 1px rgba(255,255,255,.06) inset,
+    0 0 18px -6px color-mix(in srgb, var(--bar-color, #60a5fa) 55%, transparent);
+  transition: filter .15s ease, transform .12s ease, box-shadow .15s ease;
+}
+.skl2-chunk:hover{
+  filter: brightness(1.08);
   transform: translateY(-1px);
-  outline: none;
-}
-
-/* Tooltip (lee --left y --width del contenedor) */
-.skl2-tip{
-  position: absolute;
-  top: -40px;
-  left: 0;
-  transform: translateX(calc(var(--left) + var(--width) / 2));
-  translate: -50% 0;
-  background: rgba(17,17,22,.92);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 10px;
-  padding: 6px 10px;
-  font-size: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.28);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .16s ease, transform .16s ease;
-  white-space: nowrap;
-  z-index: 2;
-}
-.skl2-tip::after{
-  content: "";
-  position: absolute;
-  bottom: -6px; left: 50%;
-  width:10px; height:10px;
-  background: rgba(17,17,22,.92);
-  border-left: 1px solid rgba(255,255,255,.10);
-  border-bottom: 1px solid rgba(255,255,255,.10);
-  transform: translateX(-50%) rotate(45deg);
-}
-
-/* Mostrar tooltip al hover/focus de la barra */
-.skl2-barwrap:hover .skl2-tip,
-.skl2-bar:focus-visible + .skl2-tip{
-  opacity: 1;
-  transform: translateX(calc(var(--left) + var(--width) / 2)) translateY(-2px);
+  box-shadow:
+    0 12px 32px color-mix(in srgb, var(--bar-color, #60a5fa) 38%, transparent),
+    0 0 0 1px rgba(255,255,255,.08) inset,
+    0 0 24px -6px color-mix(in srgb, var(--bar-color, #60a5fa) 65%, transparent);
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 980px){
-  .skl2::before{ background-size: 64px 100%; }
-}
 @media (max-width: 760px){
-  .skl2-row{ grid-template-columns: 1fr; gap: 8px; }
-  .skl2-label{ order: 1; }
-  .skl2-barwrap{ order: 2; height: 16px; }
-  .skl2-ico{ width: 34px; height: 34px; font-size: 18px; }
+  .skl2-label{ grid-template-columns: 36px 1fr; }
+  .skl2-ico{ width: 36px; height: 36px; font-size: 18px; }
   .skl2-years{ font-size: 11px; }
 }
 @media (max-width: 520px){
-  .skl2::before{ background-size: 48px 100%; }
   .skl2-title{ font-size: 20px; }
   .skl2-span{ font-size: 11px; }
-  .skl2-tip{ font-size: 11px; }
 }
