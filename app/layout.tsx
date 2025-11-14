@@ -4,8 +4,8 @@ import type { Metadata } from 'next';
 
 
 export const metadata: Metadata = {
-  title: 'lb.codeworks',
-  description: 'Desarrollo de software a la medida.'
+  title: 'Leonardo Burbano - Portafolio',
+  description: 'Desarrollador full-stack.'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

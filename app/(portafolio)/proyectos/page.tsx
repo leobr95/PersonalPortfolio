@@ -182,7 +182,7 @@ qvisionc1,
     title: 'Caja 18 (CL) – Core de Deuda & Seguridad',
     description:
       'Maquetación funcional (Figma → Front) y microservicios para deuda, seguridad y reportería. Ecosistema .NET Core con despliegues controlados.',
-    tech: ['.NET Core', 'Microservicios', 'Figma→Front', 'Reporting'],
+    tech: ['.NET Core', 'Microservicios', 'Figma→Front', 'Razor','Reporting'],
     images: [
       logoVass,
     ],
