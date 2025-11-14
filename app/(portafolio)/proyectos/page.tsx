@@ -9,6 +9,15 @@ import bebidassoftc2 from '@/app/capturas/babidasc2.png';
 import bebidassoftc1 from '@/app/capturas/bebidasc1.png';
 import bebidassoftc3 from '@/app/capturas/bebidasc3.png';
 import cerveceriac1 from '@/app/capturas/cerveceriac1.png';
+import debsc1 from '@/app/capturas/debsc1.png';
+import debsc2 from '@/app/capturas/debsc2.png';
+import debsc3 from '@/app/capturas/debsc3.png';
+import debsc4 from '@/app/capturas/debsc4.png';
+import debsc5 from '@/app/capturas/debsc5.png';
+import debsc6 from '@/app/capturas/debsc6.png';
+import debsc7 from '@/app/capturas/debsc7.png';
+import debsc8 from '@/app/capturas/debsc8.png';
+import debsc9 from '@/app/capturas/debsc9.png';
 import lbcodeworksc1 from '@/app/capturas/lbcodeworksc1.png';
 import lbcodeworksc2 from '@/app/capturas/lbcodeworksc2.png';
 
@@ -209,8 +218,15 @@ const FREELANCE: Project[] = [
       'Plataforma con microservicios en .NET Core (API REST documentada con Swagger) y frontend React/Next.js. Incluye tablero con Chart.js, autenticación, categorías y flujo de seguimiento de pagos. Pruebas unitarias en capa de dominio/servicios.',
     tech: ['.NET Core API', 'Swagger/OpenAPI', 'React/Next.js', 'Chart.js', 'Unit Tests'],
     images: [
-      'https://images.pexels.com/photos/669610/pexels-photo-669610.jpeg?auto=compress&cs=tinysrgb&w=1600',
-      'https://images.pexels.com/photos/1181317/pexels-photo-1181317.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      debsc1,
+      debsc2,
+      debsc3,
+      debsc4,
+      debsc5,
+      debsc6,
+      debsc7,
+      debsc8,
+      debsc9,
     ],
     // href: 'https://debs-demo.vercel.app' // opcional si tienes demo
   },
