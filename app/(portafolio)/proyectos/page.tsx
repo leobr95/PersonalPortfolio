@@ -5,8 +5,13 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
 import '@/app/styles/Projects.css';
+import bebidassoftc2 from '@/app/capturas/babidasc2.png';
+import bebidassoftc1 from '@/app/capturas/bebidasc1.png';
+import bebidassoftc3 from '@/app/capturas/bebidasc3.png';
+import cerveceriac1 from '@/app/capturas/cerveceriac1.png';
 import lbcodeworksc1 from '@/app/capturas/lbcodeworksc1.png';
 import lbcodeworksc2 from '@/app/capturas/lbcodeworksc2.png';
+
 
 
 type Project = {
@@ -191,8 +196,9 @@ const FREELANCE: Project[] = [
       'Frontend en Next.js para un back de microservicios de autenticación (JWT) y logística con pruebas unitarias. Gestión de inventario, envíos y administración de productos; módulos operativos y paneles de control.',
     tech: ['Next.js (React/TS)', '.NET 8 (Auth & Logistics)', 'JWT', 'Unit Tests'],
     images: [
-      'https://images.pexels.com/photos/6476586/pexels-photo-6476586.jpeg?auto=compress&cs=tinysrgb&w=1600',
-      'https://images.pexels.com/photos/669619/pexels-photo-669619.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      bebidassoftc1,
+      bebidassoftc2,
+      bebidassoftc3,
     ],
     // href: 'https://tusitio-bebidassoft.com' // si lo publicas, pon el enlace
   },
@@ -215,7 +221,7 @@ const FREELANCE: Project[] = [
       'Sitio full responsive con estética moderna, inspirado en identidad santandereana. Simulador de solicitud de bebidas artesanales, animaciones sutiles y SEO básico.',
     tech: ['Next.js', 'TypeScript', 'CSS Modules', 'SEO'],
     images: [
-      'https://images.pexels.com/photos/5532771/pexels-photo-5532771.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      cerveceriac1
     ],
     href: 'https://cerveceria-one.vercel.app/',
   },
