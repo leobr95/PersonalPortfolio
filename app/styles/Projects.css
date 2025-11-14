@@ -227,7 +227,7 @@
 .dot.is-active{ background: #a9b4ff; border-color: #a9b4ff; }
 
 /* ===== Responsive ===== */
-@media (max-width: 1024px){
+@media (max-width: 5000px){
   .prj-card{ grid-template-columns: 1fr; }
 }
 

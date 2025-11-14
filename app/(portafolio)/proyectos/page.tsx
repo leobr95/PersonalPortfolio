@@ -20,6 +20,7 @@ import debsc8 from '@/app/capturas/debsc8.png';
 import debsc9 from '@/app/capturas/debsc9.png';
 import lbcodeworksc1 from '@/app/capturas/lbcodeworksc1.png';
 import lbcodeworksc2 from '@/app/capturas/lbcodeworksc2.png';
+import portfolioc1 from '@/app/capturas/portfolioc1.png';
 
 
 
@@ -248,7 +249,7 @@ const FREELANCE: Project[] = [
       'Portafolio personal con diseño glassmorphism, accesibilidad, rendimiento y SEO. Secciones de proyectos, experiencia y skills; totalmente responsive.',
     tech: ['Next.js (React/TS)', 'Glassmorphism', 'Responsive', 'SEO'],
     images: [
-      'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      portfolioc1
     ],
     href: 'https://leonardoburbano-portfolio.vercel.app/',
   },
