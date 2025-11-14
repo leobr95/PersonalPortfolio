@@ -19,13 +19,18 @@ import debsc6 from '@/app/capturas/debsc6.png';
 import debsc7 from '@/app/capturas/debsc7.png';
 import debsc8 from '@/app/capturas/debsc8.png';
 import debsc9 from '@/app/capturas/debsc9.png';
+import devinmotionc1 from '@/app/capturas/devinmotionc1.png';
 import gcc1 from '@/app/capturas/gcc1.png';
+import gvsc1 from '@/app/capturas/gvsc1.png';
 import lbcodeworksc1 from '@/app/capturas/lbcodeworksc1.png';
 import lbcodeworksc2 from '@/app/capturas/lbcodeworksc2.png';
+import megadevc1 from '@/app/capturas/megadevc1.png';
 import ofc1 from '@/app/capturas/ofc1.png';
 import portfolioc1 from '@/app/capturas/portfolioc1.png';
+import pytc1 from '@/app/capturas/pytc1.png';
+import qvisionc1 from '@/app/capturas/qvisionc1.png';
+import smartfinancialc1 from '@/app/capturas/smartfinancialc1.png';
 import logoVass from '@/app/capturas/vassc1.png';
-
 
 
 type Project = {
@@ -44,8 +49,7 @@ const LABORAL: Project[] = [
       'Pruebas funcionales y de usabilidad sobre app web Java para consultas bancarias. Planificación de planes de prueba, gestión de ciclos, ejecución y seguimiento de incidencias. Soporte a despliegues en GlassFish y validaciones en Oracle R12.',
     tech: ['Java (app web)', 'Oracle R12', 'GlassFish', 'Mantis/TestLink', 'DokuWiki', 'QA Funcional'],
     images: [
-      '/logos/procesos-tecnologia.png',
-      'https://images.pexels.com/photos/210990/pexels-photo-210990.jpeg?auto=compress&cs=tinysrgb&w=1600'
+pytc1,
     ],
   },
   {
@@ -54,8 +58,7 @@ const LABORAL: Project[] = [
       'QA sobre core bancario: apertura de cuentas (ahorro/corriente), préstamos, CDT y garantías. Diseño de casos de prueba, ejecución end-to-end, análisis de regresiones y gestión de defectos. Integración con Oracle R12 y despliegues controlados en GlassFish.',
     tech: ['Core Bancario', 'Oracle R12', 'GlassFish', 'Mantis/TestLink', 'Pruebas E2E'],
     images: [
-      '/logos/procesos-tecnologia.png',
-      'https://images.pexels.com/photos/210990/pexels-photo-164527.jpeg?auto=compress&cs=tinysrgb&w=1600'
+pytc1,      
     ],
   },
 
@@ -66,8 +69,7 @@ const LABORAL: Project[] = [
       'Migración a ASP.NET Core con arquitectura por capas/repository, módulos web de administración, gateway de servicios y app Xamarin para datáfonos (ISO 8583). Uso de Telerik/Kendo/jQuery. Soporte a certificación PCI (metodología, evidencias OWASP Top 10) y coordinación Scrum.',
     tech: ['ASP.NET Core', 'Xamarin', 'Kendo UI/Telerik', 'jQuery', 'ISO 8583', 'PCI', 'SQL Server'],
     images: [
-      '/logos/smartfinancial.png',
-      'https://images.pexels.com/photos/7414017/pexels-photo-7414017.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      smartfinancialc1,
     ],
   },
 
@@ -78,9 +80,7 @@ const LABORAL: Project[] = [
       'Análisis de requerimientos, reprocesos y hallazgos del equipo funcional. Revisión de código en modo lectura, diagnóstico entre error de desarrollo vs. uso/parametrización y propuestas de solución (previas a escalar a desarrollo).',
     tech: ['Gestión de Requerimientos', 'Análisis de Incidentes', 'SQL/Oracle', 'Scrum'],
     images: [
-      '/logos/megadev.png',
-      'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1600'
-    ],
+      megadevc1,],
   },
   {
     title: 'App Interna CELSIA – Documentación & Front',
@@ -88,8 +88,7 @@ const LABORAL: Project[] = [
       'Desarrollo de funcionalidades con Vue.js y APIs .NET Core; Entity Framework y SQL Server. Entregables de documentación para áreas internas, buenas prácticas de versionamiento e integración.',
     tech: ['Vue.js', '.NET Core API', 'Entity Framework', 'SQL Server'],
     images: [
-      '/logos/megadev.png',
-      'https://images.pexels.com/photos/4974914/pexels-photo-4974914.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      megadevc1,
     ],
   },
 
@@ -100,8 +99,7 @@ const LABORAL: Project[] = [
       'Módulos .NET Core con front Telerik (HTML Helpers): carrito de compras, geolocalización de entregas y soporte operativo. Uso de Razor/Blazor, jQuery y Xamarin. Trabajo ágil con Scrum.',
     tech: ['.NET Core', 'Telerik', 'Razor/Blazor', 'Xamarin', 'jQuery', 'SQL Server', 'Scrum'],
     images: [
-      '/logos/devinmotion.png',
-      'https://images.pexels.com/photos/4246239/pexels-photo-4246239.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      devinmotionc1,
     ],
   },
 
@@ -112,8 +110,7 @@ const LABORAL: Project[] = [
       'Mantenimiento en .NET Framework 4.5 con SharePoint (arquitectura state). Creación/ajuste de procedimientos almacenados complejos y reportes RDL; despliegue en SQL Server Reporting Services 2008. Gestión de requerimientos con Scrum.',
     tech: ['.NET Framework', 'SharePoint', 'SQL Server', 'Stored Procedures', 'RDL/SSRS', 'Scrum'],
     images: [
-      '/logos/qvision.png',
-      'https://images.pexels.com/photos/669610/pexels-photo-669610.jpeg?auto=compress&cs=tinysrgb&w=1600'
+qvisionc1,
     ],
   },
 
@@ -124,8 +121,7 @@ const LABORAL: Project[] = [
       'Diseño y desarrollo de microservicios REST documentados con OpenAPI/Swagger, consumo desde Angular 12 y dashboards para facturas en tiempo real. Integración con SAP para visualización directa desde ERP.',
     tech: ['.NET Core (Microservicios)', 'Swagger/OpenAPI', 'Angular 12', 'SQL Server', 'SAP Integration'],
     images: [
-      '/logos/gvs.png',
-      'https://images.pexels.com/photos/669493/pexels-photo-669493.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      gvsc1,
     ],
   },
 
