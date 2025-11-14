@@ -6,6 +6,8 @@ import { useMemo, useState } from 'react';
 
 import '@/app/styles/Projects.css';
 import lbcodeworksc1 from '@/app/capturas/lbcodeworksc1.png';
+import lbcodeworksc2 from '@/app/capturas/lbcodeworksc2.png';
+
 
 type Project = {
   title: string;
@@ -179,8 +181,7 @@ const FREELANCE: Project[] = [
     tech: ['Next.js (React/TS)', 'Vercel', 'Neumorphism', 'i18n'],
     images: [
       lbcodeworksc1,
-      'https://images.pexels.com/photos/4974914/pexels-photo-4974914.jpeg?auto=compress&cs=tinysrgb&w=1600'
-    ],
+      lbcodeworksc2,],
     href: 'https://lbcodeworks.vercel.app/',
   },
 
