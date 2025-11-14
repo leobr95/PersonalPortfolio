@@ -9,6 +9,7 @@ import bebidassoftc2 from '@/app/capturas/babidasc2.png';
 import bebidassoftc1 from '@/app/capturas/bebidasc1.png';
 import bebidassoftc3 from '@/app/capturas/bebidasc3.png';
 import cerveceriac1 from '@/app/capturas/cerveceriac1.png';
+import cslogo1 from '@/app/capturas/cslogo1.png';
 import debsc1 from '@/app/capturas/debsc1.png';
 import debsc2 from '@/app/capturas/debsc2.png';
 import debsc3 from '@/app/capturas/debsc3.png';
@@ -18,9 +19,12 @@ import debsc6 from '@/app/capturas/debsc6.png';
 import debsc7 from '@/app/capturas/debsc7.png';
 import debsc8 from '@/app/capturas/debsc8.png';
 import debsc9 from '@/app/capturas/debsc9.png';
+import gcc1 from '@/app/capturas/gcc1.png';
 import lbcodeworksc1 from '@/app/capturas/lbcodeworksc1.png';
 import lbcodeworksc2 from '@/app/capturas/lbcodeworksc2.png';
+import ofc1 from '@/app/capturas/ofc1.png';
 import portfolioc1 from '@/app/capturas/portfolioc1.png';
+import logoVass from '@/app/capturas/vassc1.png';
 
 
 
@@ -132,9 +136,10 @@ const LABORAL: Project[] = [
       'Evolución de solución en SharePoint hacia React/Next.js. Integración con Power BI, Tailwind, pruebas unitarias y linter. Backend .NET Core y SQL Server para servicios de soporte.',
     tech: ['React', 'Next.js', 'Tailwind', '.NET Core', 'SQL Server', 'Power BI'],
     images: [
-      '/logos/vass.png',
-      'https://images.pexels.com/photos/326501/pexels-photo-326501.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      gcc1,
+      logoVass,
     ],
+    href: 'https://www.colmenaseguros.com/web/gestion-de-conocimiento',
   },
   {
     title: 'Colmena – Servicios .NET Core (SOAP/XML) & WSP',
@@ -142,9 +147,11 @@ const LABORAL: Project[] = [
       'Servicios SOAP/XML en .NET Core; empaquetado y despliegue de soluciones WSP en SharePoint. Integración con Azure App Service y Azure Key Vault. Soporte a pasarela de pagos y proyectos de “fábrica”.',
     tech: ['.NET Core', 'SOAP/XML', 'SharePoint WSP', 'Azure App Service', 'Azure Key Vault'],
     images: [
-      '/logos/vass.png',
-      'https://images.pexels.com/photos/373076/pexels-photo-373076.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      ofc1,
+      cslogo1,
+      logoVass
     ],
+    href: 'https://www.colmenaseguros.com/',
   },
   {
     title: 'Colmena – Citas con QR (Angular + Emailing)',
@@ -152,8 +159,9 @@ const LABORAL: Project[] = [
       'Módulo Angular para agendamiento con emisión de QR y envío de correo transaccional. Despliegue en Azure App Service y seguimiento de métricas.',
     tech: ['Angular', 'Email Service', 'Azure App Service', 'Key Vault'],
     images: [
-      '/logos/vass.png',
-      'https://images.pexels.com/photos/5077045/pexels-photo-5077045.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      cslogo1,
+            logoVass
+
     ],
   },
   {
@@ -162,8 +170,7 @@ const LABORAL: Project[] = [
       'Procesos alternativos a ETL para delta-migraciones multifuente (Oracle, SQL Server, planos) generando conversión y normalización hacia formatos compatibles con Salesforce.',
     tech: ['Oracle', 'SQL Server', 'Data Pipelines', 'Transformaciones', 'Archivos Planos'],
     images: [
-      '/logos/vass.png',
-      'https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      logoVass,
     ],
   },
   {
@@ -172,8 +179,7 @@ const LABORAL: Project[] = [
       'Servicios .NET Core para la operación logística/entrega de paquetería, despliegue en IIS y monitoreo básico de disponibilidad.',
     tech: ['.NET Core', 'IIS', 'Operación/Logística'],
     images: [
-      '/logos/vass.png',
-      'https://images.pexels.com/photos/4483610/pexels-photo-4483610.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      logoVass,
     ],
   },
   {
@@ -182,8 +188,7 @@ const LABORAL: Project[] = [
       'Maquetación funcional (Figma → Front) y microservicios para deuda, seguridad y reportería. Ecosistema .NET Core con despliegues controlados.',
     tech: ['.NET Core', 'Microservicios', 'Figma→Front', 'Reporting'],
     images: [
-      '/logos/vass.png',
-      'https://images.pexels.com/photos/669493/pexels-photo-669493.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      logoVass,
     ],
   },
 ];
