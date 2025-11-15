@@ -5,7 +5,7 @@ import { DiMsqlServer } from 'react-icons/di';
 import { FaDatabase } from 'react-icons/fa';
 import {
   SiDotnet, SiReact, SiTypescript, SiAngular, SiNextdotjs,
-   SiDocker, SiGit, SiMulesoft, SiJquery
+   SiDocker, SiGit, SiMulesoft, SiJquery, SiVercel
 } from 'react-icons/si';
 import { TbBrandCSharp } from 'react-icons/tb';
 import { VscAzureDevops, VscAzure } from 'react-icons/vsc';
@@ -74,11 +74,7 @@ function sumPeriods(periods: Period[]){
     : `${months} mes${months !== 1 ? 'es' : ''}`;
   return { years, months, label, totalMonths: total };
 }
-
-/* ===== TECH SKILLS (lenguajes / frameworks / bases / patrones) ===== */
-const TECH_SKILLS: Skill[] = [
-  { name: 'C#', icon: <TbBrandCSharp />, color: '#7c4dff', periods: [
-    /** Periodos laborales (para referencia de fechas) 
+        /** Periodos laborales (para referencia de fechas) 
  *  1) P&T:       2015-11 .. 2018-03
  *  2) SmartFin:  2018-03 .. 2020-11
  *  3) MegaDev:   2020-12 .. 2021-03
@@ -89,46 +85,32 @@ const TECH_SKILLS: Skill[] = [
  *  8) VASS:      2022-06 .. 2025-04
  *  9) ld.codew.: 2025-05 .. 2025-11
  */
-    { from: { y: 2018, m: 3 }, to: { y: 2020, m: 11 } }, // SmartFinancial
-    { from: { y: 2020, m: 12 }, to: { y: 2021, m: 3 } }, // MegaDev
-    { from: { y: 2021, m: 3 }, to: { y: 2021, m: 6 } },  // Devinmotion
-    { from: { y: 2021, m: 6 }, to: { y: 2021, m: 9 } }, // Q-Vision
-    { from: { y: 2021, m: 12 }, to: { y: 2022, m: 1 } }, // MegaDev
-    { from: { y: 2022, m: 1 }, to: { y: 2022, m: 5 } }, // GVS
-    { from: { y: 2022, m: 5 }, to: { y: 2025, m: 4 } },  // VASS
-    { from: { y: 2025, m: 4 }, to: { y: 2025, m: 11 } }, // ld.codeworks
+/* ===== TECH SKILLS (lenguajes / frameworks / bases / patrones) ===== */
+const TECH_SKILLS: Skill[] = [
+  { name: 'C#', icon: <TbBrandCSharp />, color: '#7c4dff', periods: [
+    { from: { y: 2018, m: 3 }, to: { y: 2025, m: 11 } }, 
 ]},
-  { name: '.NET / ASP.NET', icon: <SiDotnet />, color: '#512da8', periods: [
-    { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+  { name: '.NET / ASP.NET', icon: <SiDotnet />, color: '#2d58a8ff', periods: [
+
+    { from:{y:2018,m:3}, to:{y:2025,m:11} }, // SmartFinancial .. ld.codeworks
+  ]},
+  { name: 'Frontend Web', icon: <SiReact />, color: '#22d3ee', periods: [
+    { from:{y:2018,m:3}, to:{y:2025,m:11} }, // SmartFinancial .. ld.codeworks
   ]},
   { name: '.NET Core (APIs)', icon: <SiDotnet />, color: '#0ea5e9', periods: [
-    { from:{y:2020,m:12}, to:{y:2021,m:3} }, // MegaDev
-    { from:{y:2021,m:12}, to:{y:2022,m:1} }, // MegaDev
-    { from:{y:2022,m:2},  to:{y:2022,m:6} }, // GVS
-    { from:{y:2022,m:6},  to:{y:2025,m:4} }, // VASS
-    { from:{y:2025,m:5},  to:{y:2025,m:11} },// ld.codeworks
+    { from:{y:2020,m:12}, to:{y:2025,m:11} },// ld.codeworks
   ]},
   { name: 'APIs REST', icon: <SiDotnet />, color: '#10b981', periods: [
-    { from:{y:2020,m:12}, to:{y:2021,m:3} }, // MegaDev
-    { from:{y:2021,m:12}, to:{y:2022,m:1} }, // MegaDev
-    { from:{y:2022,m:2},  to:{y:2022,m:6} }, // GVS
-    { from:{y:2022,m:6},  to:{y:2025,m:4} }, // VASS
-    { from:{y:2025,m:5},  to:{y:2025,m:11} },// ld.codeworks
+    { from:{y:2020,m:12}, to:{y:2025,m:11} },// ld.codeworks
   ]},
   { name: 'React', icon: <SiReact />, color: '#22d3ee', periods: [
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2022,m:6}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'TypeScript', icon: <SiTypescript />, color: '#60a5fa', periods: [
-    { from:{y:2022,m:2}, to:{y:2022,m:6} }, // GVS
-    { from:{y:2022,m:6}, to:{y:2025,m:4} }, // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} },// ld.codeworks
+    { from:{y:2022,m:2}, to:{y:2025,m:11} },// ld.codeworks
   ]},
   { name: 'Next.js', icon: <SiNextdotjs />, color: '#9ca3af', periods: [
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS (según proyectos)
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2022,m:6}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'Angular', icon: <SiAngular />, color: '#f87171', periods: [
     { from:{y:2022,m:2}, to:{y:2022,m:6} }, // GVS
@@ -140,37 +122,37 @@ const TECH_SKILLS: Skill[] = [
     { from:{y:2022,m:6},  to:{y:2025,m:4} }, // VASS
   ]},
   { name: 'NestJS', icon: <SiReact />, color: '#e11d48', periods: [
-    { from:{y:2025,m:4}, to:{y:2025,m:11} }, // ld.codeworks (abril a nov)
+    { from:{y:2022,m:6},  to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'HTML / CSS / JavaScript', icon: <SiReact />, color: '#93c5fd', periods: [
-    { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2018,m:3}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'Entity Framework', icon: <SiDotnet />, color: '#7c4dff', periods: [
-    { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2018,m:3}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'LINQ', icon: <SiDotnet />, color: '#8b5cf6', periods: [
     { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2022,m:6}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'ASP.NET MVC / Razor', icon: <SiDotnet />, color: '#93c5fd', periods: [
     { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
     { from:{y:2021,m:3}, to:{y:2021,m:6} },  // Devinmotion (Razor)
+        { from:{y:2022,m:6},  to:{y:2025,m:4} }, // VASS
+
   ]},
   { name: 'Blazor', icon: <SiDotnet />, color: '#60a5fa', periods: [
     { from:{y:2021,m:3}, to:{y:2021,m:6} },  // Devinmotion
+        { from:{y:2022,m:6},  to:{y:2025,m:4} }, // VASS
+
   ]},
   { name: 'Xamarin', icon: <SiDotnet />, color: '#34d399', periods: [
+        { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
+
     { from:{y:2021,m:3}, to:{y:2021,m:6} },  // Devinmotion
   ]},
   { name: 'jQuery', icon: <SiJquery />, color: '#60a5fa', periods: [
     { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
-    { from:{y:2021,m:3}, to:{y:2021,m:6} },  // Devinmotion
-    { from:{y:2021,m:6}, to:{y:2021,m:9} },  // Q-Vision
+    { from:{y:2021,m:3}, to:{y:2021,m:9} },  // Q-Vision
     { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
   ]},
   { name: 'Kendo UI / Telerik', icon: <SiDotnet />, color: '#f59e0b', periods: [
@@ -183,37 +165,35 @@ const TECH_SKILLS: Skill[] = [
     { from:{y:2022,m:6},  to:{y:2025,m:4} }, // VASS
   ]},
   { name: 'SQL Server', icon: <DiMsqlServer />, color: '#ef4444', periods: [
-    { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
-    { from:{y:2022,m:2}, to:{y:2022,m:6} },  // GVS
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2018,m:3}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'Patrones de diseño', icon: <SiDotnet />, color: '#a78bfa', periods: [
-    { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2018,m:3}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'Microservicios', icon: <SiDotnet />, color: '#06b6d4', periods: [
     { from:{y:2022,m:2}, to:{y:2022,m:6} },  // GVS
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2022,m:6}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'SOAP', icon: <FaDatabase />, color: '#94a3b8', periods: [
     { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
     { from:{y:2021,m:6}, to:{y:2021,m:9} },  // Q-Vision
     { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
   ]},
+    { name: 'PostgreSQL', icon: <FaDatabase />, color: '#184584ff', periods: [
+    { from:{y:2022,m:6}, to:{y:2025,m:11} },  // VASS
+  ]},
+      { name: 'MongoDB', icon: <FaDatabase />, color: '#158d41ff', periods: [
+    { from:{y:2025,m:4}, to:{y:2025,m:11} },  // VASS
+  ]},
 ];
 
 /* ===== TOOL SKILLS (devops, testing, suites, azure, sharepoint, etc.) ===== */
 const TOOL_SKILLS: Skill[] = [
   { name: 'Docker', icon: <SiDocker />, color: '#38bdf8', periods: [
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2022,m:6}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'Azure DevOps', icon: <VscAzureDevops />, color: '#3b82f6', periods: [
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS (CI/CD)
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2018,m:3}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'Azure (App Service / Key Vault)', icon: <VscAzure />, color: '#2563eb', periods: [
     { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
@@ -221,21 +201,15 @@ const TOOL_SKILLS: Skill[] = [
   { name: 'Azure App Service (deploy)', icon: <VscAzure />, color: '#0ea5e9', periods: [
     { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
   ]},
-  { name: 'Visual Studio', icon: <SiDotnet />, color: '#7c3aed', periods: [
-    { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+  { name: 'Visual Studio/ VS CODE', icon: <SiDotnet />, color: '#7c3aed', periods: [
+    { from:{y:2018,m:3}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'SQL Server Management Studio', icon: <DiMsqlServer />, color: '#ef4444', periods: [
-    { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
-    { from:{y:2022,m:2}, to:{y:2022,m:6} },  // GVS
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2018,m:3}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
-  { name: 'RDL / SSRS / Report Builder', icon: <FaDatabase />, color: '#a78bfa', periods: [
+  { name: 'RDL  / Report Builder ReportingServices ', icon: <FaDatabase />, color: '#a78bfa', periods: [
     { from:{y:2021,m:6}, to:{y:2021,m:9} },  // Q-Vision
-    { from:{y:2022,m:6}, to:{y:2025,m:4} },  // VASS
-    { from:{y:2025,m:5}, to:{y:2025,m:11} }, // ld.codeworks
+    { from:{y:2022,m:6}, to:{y:2025,m:11} }, // ld.codeworks
   ]},
   { name: 'Software Testing (Funcional)', icon: <SiGit />, color: '#16a34a', periods: [
     { from:{y:2015,m:11}, to:{y:2018,m:3} }, // Procesos y Tecnología
@@ -269,6 +243,9 @@ const TOOL_SKILLS: Skill[] = [
   ]},
   { name: 'DevOps (soporte)', icon: <VscAzureDevops />, color: '#3b82f6', periods: [
     { from:{y:2018,m:3}, to:{y:2020,m:11} }, // SmartFinancial
+  ]},
+   { name: 'Vercel', icon: <SiVercel />, color: '#3b82f6', periods: [
+    { from:{y:2025,m:4}, to:{y:2025,m:11} }, // SmartFinancial
   ]},
 ];
 function Group({ skills }: { skills: Skill[] }) {
