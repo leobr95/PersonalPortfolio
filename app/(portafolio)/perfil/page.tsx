@@ -26,9 +26,9 @@ export default function PerfilPage(): JSX.Element {
   const contacts = useMemo(
     () => [
       { href: 'tel:+573236504428', label: 'Llamar', icon: <FaPhoneAlt aria-hidden />, tone: 'green' },
-      { href: 'mailto:br.david@outlook.com', label: 'Email', icon: <MdEmail aria-hidden />, tone: 'blue' },
       { href: 'https://wa.me/573236504428', label: 'WhatsApp', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
       { href: 'https://wa.me/message/TU_ID_EMPRESA', label: 'WA empresa', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
+      { href: 'mailto:br.david@outlook.com', label: 'Email', icon: <MdEmail aria-hidden />, tone: 'blue' },
       { href: 'https://github.com/leobr95', label: 'GitHub', icon: <FaGithub aria-hidden />, tone: 'blue' },
       { href: 'https://www.linkedin.com/in/leonardoburbano', label: 'LinkedIn', icon: <FaLinkedin aria-hidden />, tone: 'blue' },
     ],
@@ -48,15 +48,23 @@ export default function PerfilPage(): JSX.Element {
               <span className="name">Leonardo David Burbano</span>
             </h1>
             <p className="prf-sub">
-              Desarrollador <strong>Full-Stack .NET</strong> con foco en
-              <strong> APIs REST</strong>, <strong>React/Next.js</strong>,
-              <strong> SQL Server</strong> y <strong>Docker</strong>. Experiencia en
-              <strong> Azure</strong> y pipelines <strong>CI/CD</strong> (Clean Architecture).
+              Desarrollador <strong>Full-Stack .NET</strong>. Back: <strong>APIs REST</strong> y
+              <strong> microservicios .NET/Core</strong> (Clean Architecture), datos en
+              <strong> SQL Server/Oracle</strong> (EF Core, LINQ) y <strong>SSRS/RDL</strong>.
+              Front:<strong>TypeScript</strong> con
+              <strong> React/Next.js</strong>, <strong>Angular</strong> y <strong>Vue</strong>; <strong>Tailwind</strong>. DevOps:
+              <strong> Docker</strong>, <strong>Azure</strong> (App Service/Key Vault) y
+              <strong> CI/CD</strong> en Azure DevOps. Integraciones <strong>SOAP/REST</strong>,
+              <strong> SharePoint/WSP</strong> y servicios en <strong>NestJS</strong>. Prácticas
+              <strong> Scrum</strong>, foco en seguridad (PCI/OWASP) y calidad
+              (pruebas y trazabilidad).
             </p>
+
+
 
             <nav className="prf-actions" aria-label="Secciones principales">
               {nav.map((n) => (
-                <Link key={n.href} href={n.href} className="glow-btn blue" aria-label={n.label}>
+                <Link key={n.href} href={n.href} className="pf-glow-btn blue" aria-label={n.label}>
                   {n.icon}
                   <span>{n.label}</span>
                   <i aria-hidden />
@@ -73,7 +81,7 @@ export default function PerfilPage(): JSX.Element {
                   href={c.href}
                   target={c.href.startsWith('http') ? '_blank' : undefined}
                   rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className={`glow-btn ${c.tone}`}
+                  className={`pf-glow-btn ${c.tone}`}
                   aria-label={c.label}
                 >
                   {c.icon}

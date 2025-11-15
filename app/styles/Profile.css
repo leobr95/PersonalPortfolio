@@ -96,7 +96,7 @@
 }
 
 /* ========== Botón Glow (reutilizado del contacto, scopeado) ========== */
-.prf .glow-btn{
+.prf .pf-glow-btn{
   --clr: var(--blue);
   position: relative;
   display: inline-flex;
@@ -120,13 +120,13 @@
 }
 
 /* Variantes */
-.prf .glow-btn.pink { --clr: var(--pink); }
-.prf .glow-btn.blue { --clr: var(--blue); }
-.prf .glow-btn.green{ --clr: var(--green); }
+.prf .pf-glow-btn.pink { --clr: var(--pink); }
+.prf .pf-glow-btn.blue { --clr: var(--blue); }
+.prf .pf-glow-btn.green{ --clr: var(--green); }
 
 /* Aletas de luz */
-.prf .glow-btn::before,
-.prf .glow-btn::after{
+.prf .pf-glow-btn::before,
+.prf .pf-glow-btn::after{
   content:"";
   position: absolute;
   left: 50%;
@@ -143,11 +143,11 @@
   z-index: 0;
   mix-blend-mode: screen;
 }
-.prf .glow-btn::before{ bottom: -5px; }
-.prf .glow-btn::after { top: -5px; }
+.prf .pf-glow-btn::before{ bottom: -5px; }
+.prf .pf-glow-btn::after { top: -5px; }
 
 /* Brillo diagonal interno */
-.prf .glow-btn > i{
+.prf .pf-glow-btn > i{
   content:"";
   position:absolute; inset:0; z-index: 0;
   /* background: linear-gradient(to left, rgba(255,255,255,0.18), transparent); */
@@ -156,8 +156,8 @@
 }
 
 /* Contenido SIEMPRE visible encima */
-.prf .glow-btn > span,
-.prf .glow-btn > svg{
+.prf .pf-glow-btn > span,
+.prf .pf-glow-btn > svg{
   position: relative;
   z-index: 2;
   filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
@@ -165,14 +165,14 @@
 }
 
 /* Hover */
-.prf .glow-btn:hover{ letter-spacing: 1.2px; }
-.prf .glow-btn:hover::before{
+.prf .pf-glow-btn:hover{ letter-spacing: 1.2px; }
+.prf .pf-glow-btn:hover::before{
   bottom: 0; height: 50%; width: 82%; border-radius: 30px;
 }
-.prf .glow-btn:hover::after{
+.prf .pf-glow-btn:hover::after{
   top: 0; height: 50%; width: 82%; border-radius: 30px;
 }
-.prf .glow-btn:hover > i{
+.prf .pf-glow-btn:hover > i{
   transform: skewX(45deg) translateX(200px);
 }
 
@@ -327,7 +327,7 @@
 /* --- Anti-jitter para botones del perfil --- */
 
 /* 1) Evita que crezca el ancho por texto: fija un ancho mínimo y evita cortes */
-.prf .glow-btn{
+.prf .pf-glow-btn{
   min-width: 148px;        /* puedes subirlo a 160–172 si tus labels son largos */
   white-space: nowrap;     /* no permitas salto dentro del botón */
 }
@@ -335,7 +335,7 @@
 /* 2) En pantallas donde hay riesgo de wrap, no cambies el letter-spacing en hover.
       En su lugar usa un scale suave (transform no provoca reflow). */
 @media (max-width: 1280px){
-  .prf .glow-btn:hover{
+  .prf .pf-glow-btn:hover{
     letter-spacing: .3px;  /* igual que estado base: NO crece */
     transform: scale(1.02);/* feedback visual sin alterar layout del flex */
   }
@@ -343,7 +343,7 @@
 
 /* 3) Si quieres el mismo comportamiento en iPad y móvil, amplía el rango: */
 @media (max-width: 1024px){
-  .prf .glow-btn{ min-width: 156px; } /* un pelín más de colchón */
+  .prf .pf-glow-btn{ min-width: 156px; } /* un pelín más de colchón */
   .prf-actions, .prf-contact{
     justify-content: center;
     gap: 12px;             /* un poco más de espacio entre botones */
@@ -353,8 +353,8 @@
 }
 
 /* 4) Opcional: haz que el “glow” no empuje visualmente nada */
-.prf .glow-btn::before,
-.prf .glow-btn::after{
+.prf .pf-glow-btn::before,
+.prf .pf-glow-btn::after{
   pointer-events: none;
   will-change: transform, opacity;
 }
@@ -375,7 +375,7 @@
 
 
   /* Botón compacto y elástico dentro de la grilla */
-  .prf .glow-btn{
+  .prf .pf-glow-btn{
     width: 100%;
     min-width: 0;              /* anula el min-width grande de desktop */
     height: 42px;              /* un poco más bajo */
@@ -394,14 +394,14 @@
   }
 
   /* Ícono ligeramente más pequeño */
-  .prf .glow-btn > svg{ font-size: 16px; }
+  .prf .pf-glow-btn > svg{ font-size: 16px; }
 
   /* Hover sin reflow (no cambies letter-spacing en móviles) */
-  .prf .glow-btn:hover{ transform: scale(1.01); }
+  .prf .pf-glow-btn:hover{ transform: scale(1.01); }
 
   /* Domar el glow en móviles (que no se salga visualmente) */
-  .prf .glow-btn::before,
-  .prf .glow-btn::after{
+  .prf .pf-glow-btn::before,
+  .prf .pf-glow-btn::after{
     width: 58%;                /* más corto que en desktop */
     height: 7px;
     border-radius: 18px;
@@ -411,10 +411,10 @@
 
 /* Extra-compacto para teléfonos muy estrechos (<=360px) */
 @media (max-width: 360px){
-  .prf .glow-btn{
+  .prf .pf-glow-btn{
     height: 40px;
     font-size: 12px;
     padding: 0 10px;
   }
-  .prf .glow-btn > svg{ font-size: 15px; }
+  .prf .pf-glow-btn > svg{ font-size: 15px; }
 }

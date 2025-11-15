@@ -5,7 +5,8 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { MdEmail, MdPhone, MdContentCopy, MdCheckCircle } from 'react-icons/md';
 import '@/app/styles/ContactPanel.css';
 
-const WHATSAPP_PERSONAL = '573176820188';     // <- cámbialo si deseas
+const WHATSAPP_PERSONAL = '573176820188'; 
+const LLAMADAS = '573236504428';    // <- cámbialo si deseas
 const WHATSAPP_EMPRESA  = '573236504428';     // <- o pon el de tu WhatsApp Business
 const MAIL_TO            = 'br.david@outlook.com';
 
@@ -79,7 +80,7 @@ export default function ContactPanel() {
           <ul className="ctc-lines" role="list">
             <li>
               <MdPhone aria-hidden />
-              <span><strong>Llamadas:</strong> +57 {WHATSAPP_PERSONAL.replace(/^57/,'')}</span>
+              <span><strong>Llamadas:</strong> +57 {LLAMADAS.replace(/^57/,'')}</span>
               <button className="link-ghost" onClick={handleCopy} aria-label="Copiar número">
                 {copied ? <><MdCheckCircle/> Copiado</> : <><MdContentCopy/> Copiar</>}
               </button>
