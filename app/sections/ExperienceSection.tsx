@@ -39,7 +39,7 @@ export const MIN_YEAR = 2015;
 export const MAX_YEAR = 2026; // inclusive
 
 const DATA_RAW: ExpItem[] = [
-    {
+  {
     id: 9,
     company: 'ld.codeworks',
     role: 'Desarrollador Full Stack Freelance',
@@ -49,13 +49,16 @@ const DATA_RAW: ExpItem[] = [
     tone: 'red',
     tags: ['.NET Core', 'Next JS', 'Vercel'],
     duties: [
-      'Microservicios REST (Clean Architecture) en Docker.',
-      'CI/CD con Azure DevOps, Git/TFS/GitLab.',
-      'SSRS/SQL Server.',
-      'Frontend React TS / Angular según cliente.',
+      'Diseño e implementación de microservicios REST (.NET/Core) con Clean Architecture.',
+      'Dockerización, versionado Git y pipelines CI/CD (Azure DevOps).',
+      'Front en React/Next.js con TypeScript, SSR/ISR y optimización de rendimiento.',
+      'Modelado de datos, consultas avanzadas y reportes (SQL Server, SSRS/RDL).',
+      'Exposición de APIs con especificación OpenAPI/Swagger y testing automatizado.',
+      'Despliegues en Vercel/Azure App Service y monitoreo básico (logs/alerts).',
+      'Trabajo por encargo (Workana): landing corporativa, paneles operativos y ajustes UI.',
     ],
   },
-    {
+  {
     id: 8,
     company: 'VASS LATAM',
     role: 'Analista Desarrollador',
@@ -65,10 +68,14 @@ const DATA_RAW: ExpItem[] = [
     tone: 'green',
     tags: ['.NET Core', 'React TS', 'Angular'],
     duties: [
-      'Microservicios REST (Clean Architecture) en Docker/AppService.',
-      'CI/CD con Azure DevOps, Git/TFS/GitLab.',
-      'Integraciones SAP y Azure Key Vault; SSRS/SQL Server.',
-      'Frontend React TS / Angular según cliente.',
+      'Microservicios .NET/Core con Clean Architecture; despliegue en Docker/Azure App Service.',
+      'Integraciones empresariales: SAP, MuleSoft, y Azure Key Vault para secretos.',
+      'SharePoint/WSP: gestión del conocimiento (SQL, SP, procedimientos almacenados).',
+      'Proyecto QR (Angular): envío de correos con QR, agendamiento de visitas ARL.',
+      'Migración de datos (Oracle/SQL/planos) a formatos Salesforce como alternativa a ETL.',
+      'Reescritura de SharePoint a React/Next.js con Tailwind y tableros Power BI.',
+      'Fronts en React TS / Angular 12+: linting, unit tests y accesibilidad.',
+      'Despliegues IIS/Azure; monitoreo, trazabilidad y soporte continuo a fábrica de software.',
     ],
   },
   {
@@ -80,9 +87,11 @@ const DATA_RAW: ExpItem[] = [
     tone: 'orange',
     tags: ['Angular 12', '.NET Core', 'SQL Server'],
     duties: [
-      'Apps de comercio exterior (Angular + .NET Core API).',
-      'Integración de facturación SAP.',
-      'Optimización de SQL Server.',
+      'APIs REST .NET Core documentadas con OpenAPI/Swagger para comercio exterior.',
+      'Cliente Angular 12: migración funcional, rutas protegidas y guards.',
+      'Dashboard en tiempo real de facturas: estados, métricas y filtros.',
+      'Integración con SAP para consulta de facturación y estados.',
+      'Optimización de consultas y tuning de SQL Server.',
     ],
   },
   {
@@ -94,7 +103,11 @@ const DATA_RAW: ExpItem[] = [
     clients: 'Cliente: CELSIA',
     tone: 'red',
     tags: ['ASP.NET MVC', 'Kendo UI', 'DevOps'],
-    duties: ['ASP.NET Core MVC + Kendo UI', 'Planificación y coordinación DevOps'],
+    duties: [
+      'Desarrollo ASP.NET Core MVC con Kendo UI/Telerik (módulos internos).',
+      'Soporte a prácticas DevOps: empaquetado, versionado y promoción a entornos.',
+      'Documentación funcional/técnica para traspaso a operación.',
+    ],
   },
   {
     id: 5,
@@ -105,7 +118,12 @@ const DATA_RAW: ExpItem[] = [
     clients: 'Cliente: Colmena (CO)',
     tone: 'blue',
     tags: ['ASP.NET Core', 'SQL Server', 'Blazor'],
-    duties: ['APIs .NET Core', 'Optimización de SQL', 'Interfaces Blazor/Razor'],
+    duties: [
+      'Mantenimiento evolutivo .NET Framework/.NET Core y SharePoint (arquitectura state).',
+      'Diseño de SP complejos, vistas e índices para alto volumen (SQL Server).',
+      'Construcción y despliegue de reportes RDL (SSRS 2008).',
+      'Interfaces Blazor/Razor y soporte de requerimientos bajo Scrum.',
+    ],
   },
   {
     id: 4,
@@ -115,7 +133,13 @@ const DATA_RAW: ExpItem[] = [
     color: '#ef4444', logo: devinmotion, period: 'Mar 2021 – Jun 2021',
     tone: 'green',
     tags: ['REST', 'DevOps', 'Xamarin'],
-    duties: ['Contratos REST/pruebas', 'Automatización CI/CD', 'Blazor + Xamarin'],
+    duties: [
+      'Proyecto .NET Core con Telerik (HTML Helpers) para backoffice comercial.',
+      'Carrito de compras y geolocalización de entregas (integración mapa).',
+      'Blazor pages, Razor pages y soporte móvil con Xamarin.',
+      'Automatización CI/CD y buenas prácticas de ramas.',
+      'Trabajo ágil con Scrum: refinamientos, DoR/DoD y demos.',
+    ],
   },
   {
     id: 3,
@@ -125,7 +149,13 @@ const DATA_RAW: ExpItem[] = [
     color: '#60a5fa', logo: megadev, period: 'Dic 2020 – Mar 2021',
     tone: 'orange',
     tags: ['Oracle', 'Vue.js', 'Scrum'],
-    duties: ['Soporte y operación', 'Consultas Oracle', 'Módulos Vue.js'],
+    duties: [
+      'Soporte funcional: lectura de código, diagnóstico raíz y criterios de escalamiento.',
+      'Definición de workarounds y ajustes en BD (Oracle) cuando aplicaba.',
+      'Desarrollo Vue.js para módulos de documentación corporativa.',
+      'APIs .NET Core + EF y SQL Server; alineación con equipo funcional.',
+      'Seguimiento por sprints, tableros y ceremonias Scrum.',
+    ],
   },
   {
     id: 2,
@@ -135,7 +165,14 @@ const DATA_RAW: ExpItem[] = [
     color: '#f59e0b', logo: smartfinancial, period: 'Mar 2018 – Nov 2020',
     tone: 'red',
     tags: ['C#/.NET', 'EF', 'SQL Server'],
-    duties: ['Backend C# EF', 'MVC + Kendo', 'SQL Server 2017'],
+    duties: [
+      'Proyecto Omnipays (adquirencia/corresponsalía): migración a ASP.NET Core.',
+      'Arquitectura en capas/repository; Kendo UI/Telerik y jQuery en la web.',
+      'Gateway de servicios (consola) y app Xamarin tipo POS (ISO 8583).',
+      'Soporte a certificación PCI: evidencias, trazabilidad y mitigación OWASP Top 10.',
+      'Coordinación de equipo: planificación, asignación de HU y seguimiento.',
+      'SQL Server 2017: modelado, tuning y paquetes de despliegue.',
+    ],
   },
   {
     id: 1,
@@ -145,9 +182,17 @@ const DATA_RAW: ExpItem[] = [
     color: '#c1d72f', logo: pyt, period: 'Nov 2015 – Mar 2018',
     tone: 'blue',
     tags: ['QA', 'Oracle', 'Mantis/TestLink'],
-    duties: ['Pruebas funcionales/usabilidad', 'GlassFish + Oracle', 'Gestión Mantis/TestLink'],
+    duties: [
+      'Proyectos Banco e Inttegrio: pruebas funcionales y de usabilidad end-to-end.',
+      'Gestión de incidencias con Mantis/TestLink y documentación en DokuWiki.',
+      'Plan de pruebas y seguimiento por ciclos; diseño de casos y trazabilidad.',
+      'Despliegues a ambiente de pruebas en GlassFish y validaciones de smoke.',
+      'Consultas y soporte en Oracle R12; verificación de operaciones bancarias.',
+      'Bot de soporte (Facebook Messenger) para atención de usuarios del Banco.',
+    ],
   },
 ];
+
 
 export default function ExperienceSection(): JSX.Element {
   // ← estado compartido
