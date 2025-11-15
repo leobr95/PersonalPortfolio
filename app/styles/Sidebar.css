@@ -56,6 +56,14 @@
 .pf-aside .pf-brand{
   color:#fff; font-weight:900; letter-spacing:.6px; font-size:18px;
   margin: 6px 8px 14px;
+    font-size: clamp(14px, 3vw, 22px);
+  font-weight: 900;
+  letter-spacing: .3px;
+  background: linear-gradient(90deg, #E7E9FF 0%, #9AC6FF 40%, #77F9E6 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 rgba(0,0,0,.2);
 }
 
 /* ===== Menú ===== */

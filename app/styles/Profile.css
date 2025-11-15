@@ -150,7 +150,7 @@
 .prf .glow-btn > i{
   content:"";
   position:absolute; inset:0; z-index: 0;
-  background: linear-gradient(to left, rgba(255,255,255,0.18), transparent);
+  /* background: linear-gradient(to left, rgba(255,255,255,0.18), transparent); */
   transform: skewX(45deg) translateX(0);
   transition: .5s; filter: blur(0);
 }

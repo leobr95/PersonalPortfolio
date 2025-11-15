@@ -35,7 +35,7 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
 
   return (
     <aside className={`pf-aside ${open ? 'is-open' : ''}`} aria-label="Barra lateral">
-      <div className="pf-brand">PORTAFOLIO</div>
+      <div className="pf-brand ">PORTAFOLIO</div>
 
       <nav className="pf-nav" aria-label="Navegación principal">
         <ul className="pf-menu" role="list">

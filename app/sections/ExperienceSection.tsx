@@ -63,7 +63,7 @@ const DATA_RAW: ExpItem[] = [
     color: '#14b8a6', logo: vass, period: 'Jun 2022 – Abr 2025',
     clients: 'Colmena (CO), Fashion Park, Caja 18 (CL)',
     tone: 'green',
-    tags: ['.NET Core', 'React TS', 'Azure DevOps'],
+    tags: ['.NET Core', 'React TS', 'Angular'],
     duties: [
       'Microservicios REST (Clean Architecture) en Docker/AppService.',
       'CI/CD con Azure DevOps, Git/TFS/GitLab.',
@@ -78,7 +78,7 @@ const DATA_RAW: ExpItem[] = [
     from: { y: 2022, m: 2 }, to: { y: 2022, m: 6 },
     color: '#a78bfa', logo: gvs, period: 'Feb 2022 – Jun 2022',
     tone: 'orange',
-    tags: ['Angular 12', '.NET Core API', 'SQL Server'],
+    tags: ['Angular 12', '.NET Core', 'SQL Server'],
     duties: [
       'Apps de comercio exterior (Angular + .NET Core API).',
       'Integración de facturación SAP.',
