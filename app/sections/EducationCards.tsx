@@ -1,7 +1,7 @@
 'use client';
 
 import Image, { type StaticImageData } from 'next/image';
-import { useState, type JSX } from 'react';
+import { useEffect, useRef, useState, type JSX } from 'react';
 
 import '@/app/styles/EducationCards.css';
 import sena from '@/app/logos/sena.png';
@@ -115,6 +115,52 @@ const COURSES: Course[] = [
   },
 ];
 
+/** Hook para animar max-height a la altura real del contenido */
+function useExpandableHeight(isOpen: boolean, deps: unknown[] = []) {
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const apply = () => {
+      if (isOpen) {
+        el.style.maxHeight = `${el.scrollHeight}px`;
+      } else {
+        el.style.maxHeight = '0px';
+      }
+    };
+
+    apply();
+
+    const onResize = () => apply();
+    window.addEventListener('resize', onResize);
+
+    const ro = new ResizeObserver(() => {
+      if (isOpen) el.style.maxHeight = `${el.scrollHeight}px`;
+    });
+    ro.observe(el);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+      ro.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, ...deps]);
+
+  return ref;
+}
+
+type EduCardProps = {
+  title: string;
+  subtitle: string;
+  period: Period;
+  logo?: StaticImageData;
+  details?: string[];
+  tone?: 'blue' | 'green' | 'orange' | 'red';
+  priority?: boolean;
+};
+
 function EduCard({
   title,
   subtitle,
@@ -123,16 +169,10 @@ function EduCard({
   details,
   tone = 'blue',
   priority = false,
-}: {
-  title: string;
-  subtitle: string;
-  period: Period;
-  logo?: StaticImageData;
-  details?: string[];
-  tone?: 'blue' | 'green' | 'orange' | 'red';
-  priority?: boolean;
-}): JSX.Element {
-  const [open, setOpen] = useState(false);
+}: EduCardProps): JSX.Element {
+  const [open, setOpen] = useState<boolean>(false);
+  const detailId = `edu-detail-${title.replace(/\s+/g, '-')}`;
+  const detailRef = useExpandableHeight(open, [details?.length ?? 0, title]);
 
   return (
     <article className={`edu-card tone-${tone}`}>
@@ -165,7 +205,7 @@ function EduCard({
           className="edu-btn"
           onClick={() => setOpen(v => !v)}
           aria-expanded={open}
-          aria-controls={`edu-detail-${title.replace(/\s+/g, '-')}`}
+          aria-controls={detailId}
         >
           <span>{open ? 'Ocultar detalles' : 'Ver detalles'}</span>
           <i aria-hidden />
@@ -173,12 +213,22 @@ function EduCard({
       </div>
 
       <div
-        id={`edu-detail-${title.replace(/\s+/g, '-')}`}
+        id={detailId}
+        ref={detailRef}
         className={`edu-detail ${open ? 'is-open' : ''}`}
+        style={{ maxHeight: 0 }}
       >
         {details?.length ? (
           <ul>
-            {details.map((d, i) => <li key={i}>{d}</li>)}
+            {details.map((d, i) => (
+              <li
+                key={`${detailId}-${i}`}
+                className="edu-detail-item"
+                style={{ transitionDelay: open ? `${Math.min(i * 25, 150)}ms` : '0ms' }}
+              >
+                {d}
+              </li>
+            ))}
           </ul>
         ) : (
           <p className="edu-empty">Sin detalles adicionales.</p>
