@@ -35,7 +35,7 @@ export type ExpItem = {
 };
 
 /** Rango visible del timeline */
-export const MIN_YEAR = 2015;
+export const MIN_YEAR = 2016;
 export const MAX_YEAR = 2026; // inclusive
 
 const DATA_RAW: ExpItem[] = [
