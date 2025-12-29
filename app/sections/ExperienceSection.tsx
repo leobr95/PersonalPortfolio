@@ -7,6 +7,7 @@ import ExperienceCards from './ExperienceCards';
 import ExperienceCircle from './ExperienceCircle';
 
 import devinmotion from '@/app/logos/devinmotion.png';
+import fragansa from '@/app/logos/fragansac.png';
 import gvs from '@/app/logos/gvs.svg';
 import lbcodeworks from '@/app/logos/lbcodeworks.png';
 import megadev from '@/app/logos/megadevf.png';
@@ -14,7 +15,6 @@ import pyt from '@/app/logos/pyt.png';
 import qvision from '@/app/logos/qvisionf.webp';
 import smartfinancial from '@/app/logos/smartf.png';
 import vass from '@/app/logos/vass.png';
-
 
 export type YM = { y: number; m: number };
 
@@ -35,19 +35,45 @@ export type ExpItem = {
 };
 
 /** Rango visible del timeline */
-export const MIN_YEAR = 2016;
+export const MIN_YEAR = 2015;
 export const MAX_YEAR = 2026; // inclusive
 
+// Usa este "to" para roles "Actualidad" dentro del rango del timeline
+const TO_PRESENT: YM = { y: 2026, m: 12 };
+
 const DATA_RAW: ExpItem[] = [
+  {
+    id: 10,
+    company: 'Fragansa',
+    role: 'Desarrollador de Software',
+    from: { y: 2025, m: 11 },
+    to: TO_PRESENT,
+    color: '#0ea5e9',
+    logo: fragansa,
+    period: 'Nov 2025 – Actualidad',
+    clients: 'Core aplicativo (integración de procesos internos)',
+    tone: 'blue',
+    tags: ['.NET', 'React', 'Python', 'Integraciones'],
+    duties: [
+      'Desarrollo de APIs y servicios en .NET para estandarizar procesos y funcionalidades del core aplicativo.',
+      'Construcción de módulos web en React + TypeScript para flujos operativos y paneles administrativos.',
+      'Soporte y evolución de backend en Python para integraciones y procesos internos.',
+      'Integración con impresión térmica mediante ZPL para automatización de operaciones.',
+      'Documentación y pruebas de endpoints (OpenAPI/Swagger, Postman) y soporte a ambientes.',
+    ],
+  },
   {
     id: 9,
     company: 'ld.codeworks',
     role: 'Desarrollador Full Stack Freelance',
-    from: { y: 2025, m: 5 }, to: { y: 2025, m: 11 },
-    color: '#9a14b8ff', logo: lbcodeworks, period: 'Abr 2022 – Actualmente',
-    clients: 'Emprendimiento propio (Colombia) Workana',
+    from: { y: 2025, m: 5 },
+    to: TO_PRESENT,
+    color: '#9a14b8ff',
+    logo: lbcodeworks,
+    period: 'May 2025 – Actualidad',
+    clients: 'Emprendimiento propio (Colombia) • Workana',
     tone: 'red',
-    tags: ['.NET Core', 'Next JS', 'Vercel'],
+    tags: ['.NET Core', 'Next.js', 'Vercel'],
     duties: [
       'Diseño e implementación de microservicios REST (.NET/Core) con Clean Architecture.',
       'Dockerización, versionado Git y pipelines CI/CD (Azure DevOps).',
@@ -62,8 +88,11 @@ const DATA_RAW: ExpItem[] = [
     id: 8,
     company: 'VASS LATAM',
     role: 'Analista Desarrollador',
-    from: { y: 2022, m: 6 }, to: { y: 2025, m: 4 },
-    color: '#14b8a6', logo: vass, period: 'Jun 2022 – Abr 2025',
+    from: { y: 2022, m: 6 },
+    to: { y: 2025, m: 4 },
+    color: '#14b8a6',
+    logo: vass,
+    period: 'Jun 2022 – Abr 2025',
     clients: 'Colmena (CO), Fashion Park, Caja 18 (CL)',
     tone: 'green',
     tags: ['.NET Core', 'React TS', 'Angular'],
@@ -82,8 +111,11 @@ const DATA_RAW: ExpItem[] = [
     id: 7,
     company: 'GVS Colombia',
     role: 'Analista Desarrollador',
-    from: { y: 2022, m: 2 }, to: { y: 2022, m: 6 },
-    color: '#a78bfa', logo: gvs, period: 'Feb 2022 – Jun 2022',
+    from: { y: 2022, m: 2 },
+    to: { y: 2022, m: 6 },
+    color: '#a78bfa',
+    logo: gvs,
+    period: 'Feb 2022 – Jun 2022',
     tone: 'orange',
     tags: ['Angular 12', '.NET Core', 'SQL Server'],
     duties: [
@@ -98,8 +130,11 @@ const DATA_RAW: ExpItem[] = [
     id: 6,
     company: 'MEGADEV (CELSIA)',
     role: 'Analista Desarrollador',
-    from: { y: 2021, m: 12 }, to: { y: 2022, m: 1 },
-    color: '#38bdf8', logo: megadev, period: 'Dic 2021 – Ene 2022',
+    from: { y: 2021, m: 12 },
+    to: { y: 2022, m: 1 },
+    color: '#38bdf8',
+    logo: megadev,
+    period: 'Dic 2021 – Ene 2022',
     clients: 'Cliente: CELSIA',
     tone: 'red',
     tags: ['ASP.NET MVC', 'Kendo UI', 'DevOps'],
@@ -113,8 +148,11 @@ const DATA_RAW: ExpItem[] = [
     id: 5,
     company: 'Q-Vision (Colmena)',
     role: 'Analista Desarrollador',
-    from: { y: 2021, m: 6 }, to: { y: 2021, m: 9 },
-    color: '#22c55e', logo: qvision, period: 'Jun 2021 – Sep 2021',
+    from: { y: 2021, m: 6 },
+    to: { y: 2021, m: 9 },
+    color: '#22c55e',
+    logo: qvision,
+    period: 'Jun 2021 – Sep 2021',
     clients: 'Cliente: Colmena (CO)',
     tone: 'blue',
     tags: ['ASP.NET Core', 'SQL Server', 'Blazor'],
@@ -129,8 +167,11 @@ const DATA_RAW: ExpItem[] = [
     id: 4,
     company: 'Devinmotion (ALTIPAL)',
     role: 'Analista Desarrollador',
-    from: { y: 2021, m: 3 }, to: { y: 2021, m: 6 },
-    color: '#ef4444', logo: devinmotion, period: 'Mar 2021 – Jun 2021',
+    from: { y: 2021, m: 3 },
+    to: { y: 2021, m: 6 },
+    color: '#ef4444',
+    logo: devinmotion,
+    period: 'Mar 2021 – Jun 2021',
     tone: 'green',
     tags: ['REST', 'DevOps', 'Xamarin'],
     duties: [
@@ -145,8 +186,11 @@ const DATA_RAW: ExpItem[] = [
     id: 3,
     company: 'MEGADEV (CELSIA)',
     role: 'Desarrollador & Soporte',
-    from: { y: 2020, m: 12 }, to: { y: 2021, m: 3 },
-    color: '#60a5fa', logo: megadev, period: 'Dic 2020 – Mar 2021',
+    from: { y: 2020, m: 12 },
+    to: { y: 2021, m: 3 },
+    color: '#60a5fa',
+    logo: megadev,
+    period: 'Dic 2020 – Mar 2021',
     tone: 'orange',
     tags: ['Oracle', 'Vue.js', 'Scrum'],
     duties: [
@@ -161,8 +205,11 @@ const DATA_RAW: ExpItem[] = [
     id: 2,
     company: 'Smart Financial Systems',
     role: 'Analista Desarrollador',
-    from: { y: 2018, m: 3 }, to: { y: 2020, m: 11 },
-    color: '#f59e0b', logo: smartfinancial, period: 'Mar 2018 – Nov 2020',
+    from: { y: 2018, m: 3 },
+    to: { y: 2020, m: 11 },
+    color: '#f59e0b',
+    logo: smartfinancial,
+    period: 'Mar 2018 – Nov 2020',
     tone: 'red',
     tags: ['C#/.NET', 'EF', 'SQL Server'],
     duties: [
@@ -178,8 +225,11 @@ const DATA_RAW: ExpItem[] = [
     id: 1,
     company: 'Procesos y Tecnología',
     role: 'Analista QA',
-    from: { y: 2015, m: 11 }, to: { y: 2018, m: 3 },
-    color: '#c1d72f', logo: pyt, period: 'Nov 2015 – Mar 2018',
+    from: { y: 2015, m: 11 },
+    to: { y: 2018, m: 3 },
+    color: '#c1d72f',
+    logo: pyt,
+    period: 'Nov 2015 – Mar 2018',
     tone: 'blue',
     tags: ['QA', 'Oracle', 'Mantis/TestLink'],
     duties: [
@@ -193,9 +243,8 @@ const DATA_RAW: ExpItem[] = [
   },
 ];
 
-
 export default function ExperienceSection(): JSX.Element {
-  // ← estado compartido
+  // estado compartido
   const [activeId, setActiveId] = useState<number | null>(null);
 
   // Para tarjetas: más reciente → más antiguo (por fecha fin)
@@ -204,7 +253,7 @@ export default function ExperienceSection(): JSX.Element {
     return [...DATA_RAW].sort((a, b) => endStamp(b) - endStamp(a));
   }, []);
 
-  // Para timeline: ordenados por inicio (o como prefieras), sin perder el id
+  // Para timeline: ordenados por inicio
   const itemsForCircle = useMemo(() => {
     const startStamp = (d: ExpItem) => new Date(d.from.y, d.from.m - 1, 1).getTime();
     return [...DATA_RAW].sort((a, b) => startStamp(a) - startStamp(b));
@@ -212,16 +261,8 @@ export default function ExperienceSection(): JSX.Element {
 
   return (
     <section className="exp-wrap" style={{ display: 'grid', gap: 16 }}>
-      <ExperienceCircle
-        items={itemsForCircle}
-        activeId={activeId}
-        onActivate={setActiveId}
-      />
-      <ExperienceCards
-        items={itemsForCards}
-        activeId={activeId}
-        onActivate={setActiveId}
-      />
+      <ExperienceCircle items={itemsForCircle} activeId={activeId} onActivate={setActiveId} />
+      <ExperienceCards items={itemsForCards} activeId={activeId} onActivate={setActiveId} />
     </section>
   );
 }

@@ -1,4 +1,4 @@
-/* ===== Floating Action Button (FAB) para descargar CV ===== */
+/* ===== Floating Action Button (FAB) para ver/descargar CV ===== */
 
 .cv-fab{
   position: fixed;
@@ -102,38 +102,160 @@
   transform: translateY(0);
 }
 
+/* ===== Modal CV (overlay + contenedor + header + iframe) ===== */
+
+.cv-modalOverlay{
+  position: fixed;
+  inset: 0;
+  z-index: 120; /* por encima del FAB */
+  display: grid;
+  place-items: center;
+  padding: 18px;
+
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px) saturate(140%);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
+}
+
+.cv-modal{
+  width: min(1020px, 96vw);
+  height: min(760px, 90vh);
+
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.cv-modalHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.cv-modalTitle{
+  margin: 0;
+  color: #fff;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: .2px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+}
+
+.cv-modalActions{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Botones del modal (glass, consistentes con tu tema) */
+.cv-btn{
+  pointer-events: auto;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 12px;
+
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.08);
+  color: #fff;
+
+  font-weight: 900;
+  letter-spacing: .2px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  box-shadow: 0 12px 24px rgba(0,0,0,.28);
+
+  transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
+}
+
+.cv-btn:hover{
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 16px 28px rgba(0,0,0,.35);
+}
+.cv-btn:active{ transform: translateY(0); }
+
+.cv-btnGhost{
+  background: rgba(255,255,255,.08);
+}
+
+.cv-btnPrimary{
+  background: rgba(9,26,70,.55);
+  border-color: rgba(9,26,70,.55);
+}
+
+.cv-modalBody{
+  height: 100%;
+  padding: 12px;
+}
+
+.cv-pdf{
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 14px;
+  background: #fff;
+
+  /* borde sutil para que se vea pro dentro del glass */
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+}
+
+.cv-fallback{
+  height: 100%;
+  border-radius: 14px;
+  padding: 14px;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
 /* ===== Responsivo ===== */
 
 /* Móviles: pegado al borde inferior (safe-area iPhone) y tamaño más compacto */
 @media (max-width: 520px){
   .cv-fab{
-    /* A TOPE abajo, respetando notch/safe area */
     right: max(8px, env(safe-area-inset-right, 0px) + 8px);
-    /* constant() es fallback para iOS antiguos; env() para los actuales */
-    bottom: max(8px,
-                env(safe-area-inset-bottom, 0px) + 8px);
+    bottom: max(8px, env(safe-area-inset-bottom, 0px) + 8px);
   }
 
   .cv-fab-btn{
-    height: 40px;          /* más bajo */
-    padding: 0 12px;       /* menos ancho */
+    height: 40px;
+    padding: 0 12px;
     gap: 8px;
-    border-radius: 16px;   /* un poco menos redondo para compactar */
-
-    /* sombra más corta para que no “levite” demasiado en pantallas chicas */
+    border-radius: 16px;
     box-shadow: 0 10px 18px rgba(0,0,0,.32);
   }
 
-  .cv-fab-btn svg{
-    font-size: 16px;       /* ícono más pequeño */
-  }
+  .cv-fab-btn svg{ font-size: 16px; }
 
   .cv-fab-btn .cv-fab-label{
-    font-size: 12.5px;     /* texto ligeramente menor */
+    font-size: 12.5px;
     letter-spacing: .1px;
   }
 
-  /* Glow más corto para que no sobresalga del botón pequeño */
   .cv-fab-btn::before,
   .cv-fab-btn::after{
     width: 70%;
@@ -143,15 +265,23 @@
   .cv-fab-btn::before{ bottom: 0; }
   .cv-fab-btn::after { top: 0; }
 
-  /* Sheen ajustado para que no se vea “por fuera” del botón */
   .cv-fab-btn > i{
     transform: skewX(45deg) translateX(-40%);
     filter: blur(0.2px);
   }
+
+  /* Modal en móvil: menos padding */
+  .cv-modalOverlay{ padding: 10px; }
+  .cv-modal{
+    width: 96vw;
+    height: 92vh;
+    border-radius: 16px;
+  }
+  .cv-modalHeader{ padding: 12px 12px; }
+  .cv-modalBody{ padding: 10px; }
 }
 
-/* Evita que el botón suba cuando la ventana es baja;
-   lo dejamos a tope y confiamos en el safe-area. */
+/* Evita que el botón suba cuando la ventana es baja */
 @media (max-height: 680px){
   .cv-fab{
     bottom: max(8px, env(safe-area-inset-bottom, 0px) + 8px);
