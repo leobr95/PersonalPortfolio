@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState, type JSX } from 'react';
-import { FaDownload } from 'react-icons/fa';
+import { FaDownload, FaFileAlt } from 'react-icons/fa';
 import '@/app/styles/CvFab.css';
 
 export type CvFabProps = {
@@ -128,6 +128,7 @@ export default function CvFab({
           aria-haspopup="dialog"
           aria-expanded={isOpen}
         >
+          <FaFileAlt aria-hidden className="cv-fab-icon" />
           <span className="cv-fab-label">{label}</span>
           <i aria-hidden />
         </button>
