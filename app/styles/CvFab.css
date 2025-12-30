@@ -117,9 +117,10 @@
   -webkit-backdrop-filter: blur(6px) saturate(140%);
 }
 
+/* ✅ AJUSTE: modal más grande en pantallas grandes */
 .cv-modal{
-  width: min(1020px, 96vw);
-  height: min(760px, 90vh);
+  width: min(1240px, 98vw);
+  height: min(880px, 92vh);
 
   border-radius: 18px;
   overflow: hidden;
@@ -135,6 +136,24 @@
   grid-template-rows: auto 1fr;
 }
 
+/* Pantallas grandes */
+@media (min-width: 1280px){
+  .cv-modal{
+    width: min(1400px, 96vw);
+    height: min(920px, 92vh);
+  }
+  .cv-modalBody{ padding: 10px; }
+}
+
+/* Pantallas muy grandes (2K/4K) */
+@media (min-width: 1600px){
+  .cv-modal{
+    width: min(1600px, 94vw);
+    height: min(980px, 92vh);
+  }
+}
+
+/* Header del modal */
 .cv-modalHeader{
   display: flex;
   align-items: center;

@@ -31,7 +31,8 @@
 }
 
 /* =======================
-   Viewport con scroll interno + sticky
+   Viewport con scroll interno
+   (en desktop grande lo sobre-escribimos para que use todo el alto)
    ======================= */
 .skl2-viewport{
   position: relative;
@@ -40,8 +41,9 @@
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  scroll-padding-top: 48px; /* compensa barra sticky */
+  scroll-padding-top: 48px;
 }
+
 /* Scrollbar (opcional) */
 .skl2-viewport::-webkit-scrollbar{ width: 10px; }
 .skl2-viewport::-webkit-scrollbar-thumb{
@@ -55,7 +57,8 @@
 }
 
 /* =======================
-   Barra de años (sticky y visible SIEMPRE)
+   Barra de años
+   (en tu JSX está fuera del viewport, así que siempre se ve)
    ======================= */
 .skl2-years{
   position: sticky;
@@ -72,23 +75,23 @@
     radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.18), transparent 50%),
     radial-gradient(1200px 600px at 110% 120%, rgba(0,140,255,.12), transparent 50%),
     rgba(14,16,22,.70);
+
   -webkit-backdrop-filter: blur(10px) saturate(130%);
           backdrop-filter: blur(10px) saturate(130%);
+
   border-bottom: 1px solid rgba(255,255,255,.14);
   box-shadow:
     0 8px 22px rgba(0,0,0,.28),
     inset 0 1px 0 rgba(255,255,255,.04);
+
   color:#c6cbe6;
   font-weight: 700;
   font-size: 12px;
-
-  /* Asegura ser el contexto para los <li> absolutos */
-  position: sticky; /* reiterado a propósito */
 }
 .skl2-years li{
   position: absolute;
-  top: 12px;                   /* alineado al padding-top */
-  left: var(--x, 0%);          /* o sobreescribe con style={{ left:'XX%' }} */
+  top: 12px;
+  left: var(--x, 0%);
   transform: translateX(-50%);
   white-space: nowrap;
   pointer-events: none;
@@ -184,7 +187,8 @@
 
 .skl2-name{
   display:block;
-  font-weight: 800; letter-spacing:.2px;
+  font-weight: 800;
+  letter-spacing:.2px;
 }
 .skl2-span{
   display:block;
@@ -214,8 +218,8 @@
   position: absolute;
   top: 5px;
   height: 10px;
-  left: var(--left, 0%);           /* proviene del TSX */
-  width: var(--width, 0%);         /* proviene del TSX */
+  left: var(--left, 0%);
+  width: var(--width, 0%);
   background:
     radial-gradient(80% 80% at 20% 0%, rgba(255,255,255,.30), transparent 60%),
     var(--bar-color, #60a5fa);
@@ -240,8 +244,8 @@
 .skl2-grid{
   display: grid;
   gap: 40px;
-      padding-left: 22px;
-    padding-right: 22px;
+  padding-left: 22px;
+  padding-right: 22px;
 }
 @media (min-width: 1200px){
   .skl2-grid{
@@ -251,43 +255,6 @@
 }
 .skl2-col{
   position: relative;
-}
-/* Cada columna lleva su propio viewport (si decides separarlos) */
-.skl2-col .skl2-viewport{
-  position: relative;
-  padding: 10px 8px 8px;
-}
-/* Barra de años sticky dentro de cada columna */
-.skl2-col .skl2-years{
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  min-height: 34px;
-  margin: 0 0 8px;
-  padding: 12px 8px 8px;
-  background:
-    radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.12), transparent 50%),
-    radial-gradient(1200px 600px at 110% 120%, rgba(0,140,255,.08), transparent 50%),
-    rgba(14,16,22,.65);
-  -webkit-backdrop-filter: blur(8px) saturate(130%);
-          backdrop-filter: blur(8px) saturate(130%);
-  border-bottom: 1px solid rgba(255,255,255,.12);
-  box-shadow:
-    0 8px 22px rgba(0,0,0,.24),
-    inset 0 1px 0 rgba(255,255,255,.03);
-}
-.skl2-col .skl2-years li{
-  position:absolute;
-  top:12px;
-  left: var(--x, 0%);
-  transform: translateX(-50%);
-}
-.skl2-col .skl2-years li::after{
-  content:"";
-  position:absolute; left:50%;
-  width:1px; height:12px; background:rgba(255,255,255,.20);
-  transform: translateX(-50%);
-  bottom:-10px;
 }
 
 /* =======================
@@ -306,15 +273,15 @@
 @media (max-width: 520px){
   .skl2-viewport{ max-height: clamp(420px, 58vh, 620px); }
 
-  /* Barra de años compacta; mostrar solo cada 3 años */
+  /* Barra de años compacta; mostrar solo cada 2 */
   .skl2-years{
     min-height: 26px;
     height: 26px;
     padding: 10px 8px 6px;
     font-size: 10px;
   }
-  .skl2-years li{ font-size: 0; }                 /* oculta etiquetas */
-  .skl2-years li:nth-child(2n + 1){ font-size: 10px; } /* muestra 1 de cada 3 */
+  .skl2-years li{ font-size: 0; }
+  .skl2-years li:nth-child(2n + 1){ font-size: 10px; }
   .skl2-years li::after{
     height: 8px;
     background: rgba(255,255,255,.14);
@@ -325,3 +292,45 @@
   .skl2-span{ font-size: 11px; }
 }
 
+/* =======================
+   ✅ FIX: en pantallas grandes, el viewport crece al alto disponible
+   Evita scroll cuando hay espacio abajo.
+   ======================= */
+@media (min-width: 1200px){
+  /* Ajusta este offset según tu layout (sidebar, paddings, etc.) */
+  .skl2{
+    --skl2-offset: 170px;
+    min-height: clamp(680px, calc(100dvh - var(--skl2-offset)), 980px);
+    display: grid;
+  }
+
+  .skl2-grid{
+    height: 100%;
+    align-items: stretch;
+  }
+
+  /* Título + años + viewport (rellena el resto) */
+  .skl2-col{
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    min-height: 0; /* CLAVE */
+  }
+
+  .skl2-col .skl2-viewport{
+    max-height: none; /* quita el clamp que limitaba */
+    height: 100%;
+    min-height: 0;    /* CLAVE */
+    overflow-y: auto; /* scroll solo si realmente se desborda */
+  }
+}
+
+/* Más aire para pantallas gigantes */
+@media (min-width: 1600px){
+  .skl2{ min-height: clamp(720px, calc(100dvh - var(--skl2-offset)), 1080px); }
+}
+@media (min-width: 1920px){
+  .skl2{ min-height: clamp(760px, calc(100dvh - var(--skl2-offset)), 1180px); }
+}
+@media (min-width: 2560px){
+  .skl2{ min-height: clamp(820px, calc(100dvh - var(--skl2-offset)), 1320px); }
+}

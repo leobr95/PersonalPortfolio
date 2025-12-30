@@ -12,9 +12,15 @@
   --green:#1eff45;
 
   position: relative;
+  width: 100%;
+
+  /* ✅ Base: ya no queda chiquito */
+  max-width: 1520px;
+  margin-inline: auto;
+
   border: 1px solid var(--line);
   border-radius: 18px;
-  padding: 22px;
+  padding: clamp(16px, 2vw, 30px);
   color: var(--text);
 
   background:
@@ -28,9 +34,11 @@
 /* Card cristal principal */
 .prf-card{
   position: relative;
+  width: 100%;
   border: 1px solid var(--line);
   border-radius: 20px;
-  padding: clamp(16px, 3vw, 24px);
+  padding: clamp(16px, 2.4vw, 32px);
+
   background:
     radial-gradient(ellipse at right top, rgba(0,69,143,.56) 0%, var(--panel) 45%, var(--panel) 100%);
   box-shadow: 0 12px 34px rgba(0,0,0,.45);
@@ -56,11 +64,11 @@
   gap: 4px;
 }
 .prf-title .ghost{
-  font-size: clamp(18px, 3.6vw, 28px);
+  font-size: clamp(18px, 2vw, 34px);
   color: var(--muted);
 }
 .prf-title .name{
-  font-size: clamp(28px, 6vw, 44px);
+  font-size: clamp(30px, 3.2vw, 60px);
   font-weight: 900;
   letter-spacing: .3px;
   background: linear-gradient(90deg, #E7E9FF 0%, #9AC6FF 60%, #77F9E6 100%);
@@ -69,10 +77,13 @@
   color: transparent;
   text-shadow: 0 1px 0 rgba(0,0,0,.2);
 }
+
+/* ✅ Texto más ancho en desktop */
 .prf-sub{
-  margin: 4px auto 0;
-  max-width: 900px;
-  font-size: clamp(14px, 2.2vw, 18px);
+  margin: 6px 0 0;
+  max-width: 1120px;
+  font-size: clamp(14px, 1.05vw, 20px);
+  line-height: 1.65;
   color: var(--muted);
 }
 
@@ -80,7 +91,7 @@
 .prf-actions{
   position: relative; z-index: 1;
   margin-top: 14px;
-  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-start;
 }
 
 /* Línea separadora */
@@ -92,7 +103,7 @@
 /* Acciones de contacto */
 .prf-contact{
   position: relative; z-index: 1;
-  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-start;
 }
 
 /* ========== Botón Glow (reutilizado del contacto, scopeado) ========== */
@@ -117,6 +128,8 @@
   transition: .5s;
   overflow: hidden;
   isolation: isolate;
+
+  white-space: nowrap;
 }
 
 /* Variantes */
@@ -150,7 +163,6 @@
 .prf .pf-glow-btn > i{
   content:"";
   position:absolute; inset:0; z-index: 0;
-  /* background: linear-gradient(to left, rgba(255,255,255,0.18), transparent); */
   transform: skewX(45deg) translateX(0);
   transition: .5s; filter: blur(0);
 }
@@ -180,16 +192,20 @@
 .prf-hero{
   position: relative;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   align-items: center;
-  gap: clamp(16px, 4vw, 36px);
-  min-height: clamp(520px, 60vh, 680px);
+
+  gap: clamp(18px, 3.2vw, 56px);
+  min-height: clamp(560px, 62vh, 860px);
+
   z-index: 1;
 }
 
 .prf-copy{
   display: grid;
   gap: 12px;
+  max-width: 1120px;
 }
 
 /* ====== Figura/personaje derecha ====== */
@@ -204,8 +220,8 @@
 /* Halo degradado detrás del personaje */
 .prf-orb{
   position: absolute;
-  width: clamp(320px, 40vw, 520px);
-  height: clamp(320px, 40vw, 520px);
+  width: clamp(420px, 30vw, 720px);
+  height: clamp(420px, 30vw, 720px);
   border-radius: 999px;
   background:
     radial-gradient(closest-side, rgba(157, 115, 255, .75), rgba(77, 206, 255, .45), transparent 70%),
@@ -222,10 +238,9 @@
 .prf-char{
   position: relative;
   z-index: 1;
-  width: min(100%, 520px);
+  width: min(100%, 680px);
   height: auto;
-  transform: translateZ(0);
-  transform: rotateY(180deg);
+  transform: translateZ(0) rotateY(180deg);
   filter:
     drop-shadow(0 30px 40px rgba(0, 0, 0, .45))
     drop-shadow(0 10px 18px rgba(0, 0, 0, .25));
@@ -254,34 +269,92 @@
   50%{ transform: translateY(-10px); }
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 1200px){
+/* ===== ✅ Escalado para pantallas MUY grandes ===== */
+
+/* 1920px+ */
+@media (min-width: 1920px){
+  .prf{ max-width: 1860px; }
+  .prf-card{ padding: 40px; }
+
   .prf-hero{
-    grid-template-columns: 1fr 0.9fr;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    min-height: min(980px, 72vh);
+    gap: 70px;
+  }
+
+  .prf-sub{
+    max-width: 1280px;
+    font-size: clamp(16px, .95vw, 22px);
+  }
+
+  .prf-char{ width: min(100%, 760px); }
+  .prf-orb{
+    width: clamp(560px, 26vw, 860px);
+    height: clamp(560px, 26vw, 860px);
   }
 }
+
+/* 2200px+ (ultra-wide) */
+@media (min-width: 2200px){
+  .prf{ max-width: 2040px; }
+  .prf-hero{ gap: 84px; }
+  .prf-char{ width: min(100%, 820px); }
+  .prf-orb{
+    width: clamp(640px, 24vw, 940px);
+    height: clamp(640px, 24vw, 940px);
+  }
+}
+
+/* 2560px+ (2K/4K) */
+@media (min-width: 2560px){
+  .prf{ max-width: 2280px; }
+  .prf-title .name{ font-size: clamp(40px, 2.8vw, 72px); }
+  .prf-sub{ max-width: 1480px; font-size: 22px; }
+
+  .prf-hero{
+    min-height: min(1100px, 74vh);
+    gap: 96px;
+  }
+
+  .prf-char{ width: min(100%, 900px); }
+  .prf-orb{
+    width: 980px;
+    height: 980px;
+  }
+}
+
+/* ===== Responsive existentes ===== */
+@media (max-width: 1200px){
+  .prf-hero{ grid-template-columns: 1fr 0.95fr; }
+}
+
 @media (max-width: 1024px){
   .prf-hero{
     grid-template-columns: 1fr;
     min-height: unset;
   }
-  /* >>> ÚNICO CAMBIO: personaje ABAJO del texto en iPad/medianos <<< */
+
   .prf-figure{
-    order: 1;             /* antes: -1 (arriba); ahora: 1 (abajo) */
+    order: 1;
     margin-top: 6px;
   }
+
   .prf-orb{
     width: clamp(260px, 70vw, 420px);
     height: clamp(260px, 70vw, 420px);
   }
-  .prf-char{ width: min(86%, 440px); }
-}
-@media (max-width: 620px){
-  .prf{ padding: 16px; }
-  .prf-actions, .prf-contact{ justify-content: flex-start; }
-  .prf-card{ padding: 14px;}
+
+  .prf-char{
+    width: min(86%, 440px);
+    transform: rotateY(0);
+  }
 }
 
+@media (max-width: 620px){
+  .prf{ padding: 16px; }
+  .prf-card{ padding: 14px; }
+  .prf-actions, .prf-contact{ justify-content: flex-start; }
+}
 
 /* ===== Compacto en iPad / medianos: solo íconos (sidebar) ===== */
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -318,51 +391,38 @@
 
 /* ===== Aún más compacto en <= 820px (iPad en vertical, opcional) ===== */
 @media (max-width: 820px){
-  .pf-aside{
-    --aside-w: 76px;
-  }
+  .pf-aside{ --aside-w: 76px; }
   .pf-aside .pf-nav-ico{ font-size: 20px; }
 }
 
 /* --- Anti-jitter para botones del perfil --- */
-
-/* 1) Evita que crezca el ancho por texto: fija un ancho mínimo y evita cortes */
 .prf .pf-glow-btn{
-  min-width: 148px;        /* puedes subirlo a 160–172 si tus labels son largos */
-  white-space: nowrap;     /* no permitas salto dentro del botón */
+  min-width: 148px;
 }
 
-/* 2) En pantallas donde hay riesgo de wrap, no cambies el letter-spacing en hover.
-      En su lugar usa un scale suave (transform no provoca reflow). */
 @media (max-width: 1280px){
   .prf .pf-glow-btn:hover{
-    letter-spacing: .3px;  /* igual que estado base: NO crece */
-    transform: scale(1.02);/* feedback visual sin alterar layout del flex */
+    letter-spacing: .3px;
+    transform: scale(1.02);
   }
 }
 
-/* 3) Si quieres el mismo comportamiento en iPad y móvil, amplía el rango: */
 @media (max-width: 1024px){
-  .prf .pf-glow-btn{ min-width: 156px; } /* un pelín más de colchón */
+  .prf .pf-glow-btn{ min-width: 156px; }
   .prf-actions, .prf-contact{
     justify-content: center;
-    gap: 12px;             /* un poco más de espacio entre botones */
+    gap: 12px;
   }
-      .prf-char{transform: rotateY(0);} 
-
 }
 
-/* 4) Opcional: haz que el “glow” no empuje visualmente nada */
 .prf .pf-glow-btn::before,
 .prf .pf-glow-btn::after{
   pointer-events: none;
   will-change: transform, opacity;
 }
 
-
 /* ===== Móviles pequeños (iPhone) — 2 botones por fila ===== */
 @media (max-width: 480px){
-  /* 2 columnas fijas para acciones y contactos */
   .prf-actions,
   .prf-contact{
     display: grid;
@@ -370,46 +430,37 @@
     gap: 10px;
     justify-content: stretch;
     align-items: stretch;
-    
   }
 
-
-  /* Botón compacto y elástico dentro de la grilla */
   .prf .pf-glow-btn{
     width: 100%;
-    min-width: 0;              /* anula el min-width grande de desktop */
-    height: 42px;              /* un poco más bajo */
-    padding: 0 12px;           /* acolchado más compacto */
-    font-size: 13px;           /* texto más pequeño */
-    gap: 6px;                  /* menos separación icono/texto */
-    white-space: nowrap;       /* evita cortes internos */
+    min-width: 0;
+    height: 42px;
+    padding: 0 12px;
+    font-size: 13px;
+    gap: 6px;
+    white-space: nowrap;
     border-radius: 26px;
 
-    /* iOS: evita que el esmerilado/glow “sangre” fuera del borde */
-    overflow: hidden;                  /* clave */
-    -webkit-mask-image: -webkit-radial-gradient(white, black); /* hack iOS */
-    contain: paint;                    /* evita artefactos de pintado */
+    overflow: hidden;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    contain: paint;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
 
-  /* Ícono ligeramente más pequeño */
   .prf .pf-glow-btn > svg{ font-size: 16px; }
-
-  /* Hover sin reflow (no cambies letter-spacing en móviles) */
   .prf .pf-glow-btn:hover{ transform: scale(1.01); }
 
-  /* Domar el glow en móviles (que no se salga visualmente) */
   .prf .pf-glow-btn::before,
   .prf .pf-glow-btn::after{
-    width: 58%;                /* más corto que en desktop */
+    width: 58%;
     height: 7px;
     border-radius: 18px;
-    filter: saturate(0.9);     /* menos intenso para pantallas chicas */
+    filter: saturate(0.9);
   }
 }
 
-/* Extra-compacto para teléfonos muy estrechos (<=360px) */
 @media (max-width: 360px){
   .prf .pf-glow-btn{
     height: 40px;
