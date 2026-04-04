@@ -63,7 +63,13 @@ export default function ExperienceCards({
           >
             {it.logo && (
               <figure className="xp-card-logo">
-                <Image src={it.logo} alt={`Logo ${it.company}`} width={96} height={96} />
+                <Image
+                  src={it.logo}
+                  alt={`Logo ${it.company}`}
+                  width={96}
+                  height={96}
+                  style={it.logoBg ? { backgroundColor: it.logoBg } : undefined}
+                />
               </figure>
             )}
 

@@ -7,8 +7,20 @@ import { MIN_YEAR, MAX_YEAR, type ExpItem, type YM } from './ExperienceSection';
 import '@/app/styles/ExperienceCircle.css';
 
 const MES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-const fmtYM = ({ y, m }: YM) => `${MES[m - 1]} ${y}`;
-const ymToFraction = ({ y, m }: YM) => y + (Math.max(1, Math.min(12, m)) - 1) / 12;
+const clampMonth = (m: number) => Math.max(1, Math.min(12, m));
+const daysInMonth = (y: number, m: number) => new Date(y, m, 0).getDate();
+const clampDay = (y: number, m: number, d?: number) =>
+  Math.max(1, Math.min(daysInMonth(y, m), d ?? 1));
+const fmtYM = ({ y, m, d }: YM) => {
+  const mm = clampMonth(m);
+  return d ? `${d} ${MES[mm - 1]} ${y}` : `${MES[mm - 1]} ${y}`;
+};
+const ymToFraction = ({ y, m, d }: YM) => {
+  const mm = clampMonth(m);
+  const dd = clampDay(y, mm, d);
+  const dayOffset = (dd - 1) / daysInMonth(y, mm);
+  return y + ((mm - 1) + dayOffset) / 12;
+};
 const posPct = (f: number) => ((f - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100;
 
 function assignLanes(items: { start: number; end: number }[], minGap = 0.0015): number[] {
@@ -23,11 +35,32 @@ function assignLanes(items: { start: number; end: number }[], minGap = 0.0015): 
   return lanes;
 }
 
+function assignLogoRows(centersPct: number[], minGapPct = 6.2): number[] {
+  const rowsLastCenter: number[] = [];
+  const rows: number[] = [];
+  centersPct.forEach(center => {
+    let i = rowsLastCenter.findIndex(lastCenter => center >= lastCenter + minGapPct);
+    if (i === -1) {
+      i = rowsLastCenter.length;
+      rowsLastCenter.push(center);
+    } else {
+      rowsLastCenter[i] = center;
+    }
+    rows.push(i + 1);
+  });
+  return rows;
+}
+
 // CSS variables tipadas
 type BarVars = CSSProperties & {
   ['--left']?: string;
   ['--width']?: string;
   ['--bar-color']?: string;
+  ['--logo-offset']?: string;
+};
+type BarsVars = CSSProperties & {
+  ['--logo-stack-top']?: number;
+  ['--logo-stack-bottom']?: number;
 };
 
 export default function ExperienceCircle({
@@ -46,25 +79,55 @@ export default function ExperienceCircle({
     endF: ymToFraction(d.to),
   }));
 
-  const lanes = assignLanes(withFrac.map(s => ({ start: s.startF, end: s.endF })));
+  const withPos = withFrac.map(d => {
+    const left = posPct(d.startF);
+    const width = Math.max(posPct(d.endF) - posPct(d.startF), 1.2);
+    const center = left + (width / 2);
+    return { ...d, left, width, center };
+  });
+
+  const lanes = assignLanes(withPos.map(s => ({ start: s.startF, end: s.endF })));
+  const logoRowsByCenter = assignLogoRows(withPos.map(s => s.center));
+  const logoRows = withPos.map((_, idx) => Math.max(logoRowsByCenter[idx] ?? 1, lanes[idx] ?? 1));
+  const topBands = logoRows
+    .filter(row => row % 2 === 1)
+    .map(row => Math.ceil(row / 2));
+  const bottomBands = logoRows
+    .filter(row => row % 2 === 0)
+    .map(row => Math.ceil(row / 2));
+  const maxTopBand = Math.max(1, ...topBands);
+  const maxBottomBand = Math.max(0, ...bottomBands);
+  const barsStyle: BarsVars = {
+    '--logo-stack-top': maxTopBand,
+    '--logo-stack-bottom': maxBottomBand,
+  };
   // lane por índice actual (ya viene ordenado por el padre)
   return (
     <section className="xt2">
       <h2 className="xt2-title">Timeline</h2>
 
       <div className="xt2-viewport" role="region" aria-label="Línea de tiempo de experiencia">
-        <ul className="xt2-bars" role="list">
-          {withFrac.map((e, idx) => {
-            const left = posPct(e.startF);
-            const width = Math.max(posPct(e.endF) - posPct(e.startF), 1.2);
+        <ul
+          className="xt2-bars"
+          role="list"
+          style={barsStyle}
+        >
+          {withPos.map((e, idx) => {
             const lane = lanes[idx] ?? 1;
+            const logoRow = logoRows[idx] ?? 1;
+            const logoBand = Math.ceil(logoRow / 2);
+            const isLogoBelow = logoRow % 2 === 0;
             const title = `${fmtYM(e.from)} – ${fmtYM(e.to)} • ${e.company} • ${e.role}`;
             const isActive = activeId === e.id;
+            const logoOffset = isLogoBelow
+              ? 18 + ((logoBand - 1) * 66)
+              : 24 + ((logoBand - 1) * 66);
 
             const style: BarVars = {
-              '--left': `${left}%`,
-              '--width': `${width}%`,
+              '--left': `${e.left}%`,
+              '--width': `${e.width}%`,
               '--bar-color': e.color ?? '#60a5fa',
+              '--logo-offset': `${logoOffset}px`,
             };
 
             return (
@@ -79,8 +142,20 @@ export default function ExperienceCircle({
                 onClick={() => onActivate(isActive ? null : e.id)}
               >
                 {e.logo && (
-                  <div className="xt2-logo" aria-hidden="true">
-                    <Image src={e.logo} alt={e.company} width={28} height={28} />
+                  <div
+                    className={`xt2-logo ${isLogoBelow ? 'is-below' : 'is-above'} ${e.company === 'HelpPeople' ? 'is-helppeople' : ''}`}
+                    title={e.company}
+                    aria-label={`Empresa: ${e.company}`}
+                  >
+                    <Image
+                      src={e.logo}
+                      alt={e.company}
+                      width={56}
+                      height={56}
+                      title={e.company}
+                      className={e.company === 'HelpPeople' ? 'xt2-logo-helppeople' : undefined}
+                      style={e.logoBg ? { backgroundColor: e.logoBg } : undefined}
+                    />
                   </div>
                 )}
 
