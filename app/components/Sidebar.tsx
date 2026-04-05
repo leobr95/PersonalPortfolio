@@ -52,6 +52,7 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
                   <span className="pf-nav-label">{n.label}</span>
                   <span className="pf-bridge" aria-hidden />
                 </Link>
+                <span className="pf-nav-tip" aria-hidden>{n.label}</span>
               </li>
             );
           })}

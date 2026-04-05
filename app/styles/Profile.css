@@ -357,7 +357,7 @@
 }
 
 /* ===== Compacto en iPad / medianos: solo íconos (sidebar) ===== */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 720px) and (max-width: 1100px) {
   .pf-aside{
     --aside-w: 84px;
     padding: 16px 10px;

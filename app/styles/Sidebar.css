@@ -73,6 +73,7 @@
   display:grid; gap: 12px;
 }
 .pf-aside .pf-menu li{ position: relative; }
+.pf-aside .pf-nav-tip{ display: none; }
 
 /* ===== Item con efecto GLASS + GLOW (como botones) ===== */
 .pf-aside .pf-nav-item{
@@ -159,7 +160,7 @@
     0 12px 28px rgba(0,0,0,.45),
     0 0 0 1px rgba(255,255,255,.06),
     0 0 32px -6px var(--clr);
-  border-color: rgba(255,255,255,.14);
+  border-color: var(--clr);
 }
 .pf-aside .pf-nav-item.is-active .pf-nav-ico{ color: var(--clr); }
 .pf-aside .pf-nav-item.is-active::before{
@@ -202,7 +203,7 @@
 
 
 /* === Compacto iPad/medianos: sidebar de solo íconos, SIEMPRE disponible en cualquier ruta === */
-@media (min-width: 768px) and (max-width: 1024px){
+@media (min-width: 720px) and (max-width: 1100px){
   .pf-aside{
     --aside-w: 84px;
     padding: 16px 10px;
@@ -226,9 +227,39 @@
     border: 0 !important;
   }
   .pf-aside .pf-nav-ico{ font-size: 22px; }
+
+  .pf-aside .pf-nav-tip{
+    display: block;
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%) translateX(-4px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 60;
+
+    padding: 6px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 700;
+    color: #eff0ff;
+    background: rgba(11,12,17,.96);
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 10px 20px rgba(0,0,0,.35);
+    transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+  }
+
+  .pf-aside .pf-nav-item:hover + .pf-nav-tip,
+  .pf-aside .pf-nav-item:focus-visible + .pf-nav-tip{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+  }
 }
 
-/* Aún más compacto (iPad vertical/entre 768–820px) */
+/* Aún más compacto (entre 720–820px) */
 @media (max-width: 820px){
   .pf-aside{ --aside-w: 76px; }
   .pf-aside .pf-nav-ico{ font-size: 20px; }
