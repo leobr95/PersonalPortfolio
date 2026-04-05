@@ -2,17 +2,18 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { JSX, useMemo } from 'react';
+import { JSX, useEffect, useMemo, useState } from 'react';
 import {
   FaUserCircle, FaRegListAlt, FaGithub, FaLinkedin, FaPhoneAlt,
 } from 'react-icons/fa';
 import {
-  MdWorkOutline, MdFolderOpen, MdChatBubbleOutline, MdEmail, MdSchool,
+  MdWorkOutline, MdFolderOpen, MdChatBubbleOutline, MdEmail, MdSchool, MdLightMode, MdDarkMode,
 } from 'react-icons/md';
 
 import '@/app/styles/Sidebar.css';
 
 type NavItem = { href: string; label: string; icon: JSX.Element };
+type ThemeMode = 'dark' | 'light';
 
 const NAV: NavItem[] = [
   { href: '/perfil',      label: 'Perfil',       icon: <FaUserCircle /> },
@@ -25,6 +26,29 @@ const NAV: NavItem[] = [
 
 export default function Sidebar({ open, onClose }: { open: boolean; onClose: () => void; }) {
   const pathname = usePathname() || '/perfil';
+  const [theme, setTheme] = useState<ThemeMode>('dark');
+  const [themeReady, setThemeReady] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const savedTheme = window.localStorage.getItem('pf-theme');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      setTheme(savedTheme);
+      setThemeReady(true);
+      return;
+    }
+
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    setTheme(prefersLight ? 'light' : 'dark');
+    setThemeReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!themeReady || typeof window === 'undefined') return;
+    document.documentElement.setAttribute('data-theme', theme);
+    window.localStorage.setItem('pf-theme', theme);
+  }, [theme, themeReady]);
 
   const socials = useMemo(() => ([
     { href: 'tel:+573236504428', label: 'Teléfono', icon: <FaPhoneAlt /> },
@@ -60,6 +84,28 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
       </nav>
 
       <div className="pf-aside-foot">
+        <div className="pf-theme-switch" role="group" aria-label="Tema de color">
+          <button
+            type="button"
+            className={`pf-theme-btn ${theme === 'dark' ? 'is-active' : ''}`}
+            onClick={() => setTheme('dark')}
+            aria-pressed={theme === 'dark'}
+            title="Tema oscuro"
+          >
+            <MdDarkMode aria-hidden />
+            <span className="pf-theme-label">Oscuro</span>
+          </button>
+          <button
+            type="button"
+            className={`pf-theme-btn ${theme === 'light' ? 'is-active' : ''}`}
+            onClick={() => setTheme('light')}
+            aria-pressed={theme === 'light'}
+            title="Tema claro"
+          >
+            <MdLightMode aria-hidden />
+            <span className="pf-theme-label">Claro</span>
+          </button>
+        </div>
         <div className="pf-socials">
           {socials.map(s => (
             <a

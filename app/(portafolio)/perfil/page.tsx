@@ -6,7 +6,8 @@ import { JSX, useMemo } from 'react';
 import { FaGithub, FaLinkedin, FaPhoneAlt, FaWhatsapp, FaRegListAlt } from 'react-icons/fa';
 import { MdEmail, MdWorkOutline, MdFolderOpen, MdSchool } from 'react-icons/md';
 
-import imageProfile from '@/app/logos/profile-photo.png';
+import imageProfileLight from '@/app/logos/profile-photo-claro.png';
+import imageProfileDark from '@/app/logos/profile-photo.png';
 import '@/app/styles/Profile.css';
 
 export default function PerfilPage(): JSX.Element {
@@ -88,12 +89,19 @@ export default function PerfilPage(): JSX.Element {
           <div className="prf-figure" aria-hidden="true">
             <div className="prf-orb" />
             <Image
-              src={imageProfile}
+              src={imageProfileDark}
               alt="Ilustración de Leonardo trabajando en su laptop"
-              className="prf-char"
+              className="prf-char prf-char--dark"
               width={560}
               height={560}
               priority
+            />
+            <Image
+              src={imageProfileLight}
+              alt="Ilustración de Leonardo trabajando en su laptop"
+              className="prf-char prf-char--light"
+              width={560}
+              height={560}
             />
             <div className="prf-badge prf-badge--one" />
             <div className="prf-badge prf-badge--two" />

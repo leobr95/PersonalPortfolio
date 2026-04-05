@@ -35,7 +35,7 @@ export type ExpItem = {
 
 /** Rango visible del timeline */
 export const MIN_YEAR = 2015;
-export const MAX_YEAR = 2026; // inclusive
+export const MAX_YEAR = 2027; // inclusive
 
 // Usa este "to" para roles "Actualidad" dentro del rango del timeline
 const TO_PRESENT: YM = { y: 2026, m: 4, d: 4 };

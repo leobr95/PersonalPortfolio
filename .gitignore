@@ -10,6 +10,8 @@ pnpm-lock.yaml
 
 # === Next.js / Build artifacts ===
 .next/
+.next-dev/
+.next-build/
 out/
 dist/
 build/

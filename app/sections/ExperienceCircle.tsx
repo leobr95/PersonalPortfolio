@@ -156,8 +156,8 @@ export default function ExperienceCircle({
                     <Image
                       src={e.logo}
                       alt={e.company}
-                      width={56}
-                      height={56}
+                      width={62}
+                      height={62}
                       title={e.company}
                       className={e.company === 'HelpPeople' ? 'xt2-logo-helppeople' : undefined}
                       style={e.logoBg ? { backgroundColor: e.logoBg } : undefined}

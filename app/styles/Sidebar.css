@@ -56,14 +56,17 @@
 .pf-aside .pf-brand{
   color:#fff; font-weight:900; letter-spacing:.6px; font-size:18px;
   margin: 6px 8px 14px;
-    font-size: clamp(14px, 3vw, 22px);
+  font-size: clamp(14px, 3vw, 22px);
   font-weight: 900;
   letter-spacing: .3px;
-  background: linear-gradient(90deg, #E7E9FF 0%, #9AC6FF 40%, #77F9E6 100%);
+  background: linear-gradient(96deg, #f7fbff 0%, #a8d7ff 36%, #59d5ff 68%, #6fffc8 100%);
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
-  text-shadow: 0 1px 0 rgba(0,0,0,.2);
+  -webkit-text-stroke: .2px rgba(255,255,255,.12);
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.26),
+    0 10px 24px rgba(34,113,198,.18);
 }
 
 /* ===== Menú ===== */
@@ -182,6 +185,41 @@
 
 /* Footer socials */
 .pf-aside .pf-aside-foot{ align-self:end; margin-top: 16px; }
+.pf-aside .pf-theme-switch{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.pf-aside .pf-theme-btn{
+  border: 1px solid rgba(255,255,255,.12);
+  background: var(--glass);
+  color: #eaf0ff;
+  border-radius: 10px;
+  padding: 9px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  transition: transform .12s ease, filter .18s ease, border-color .18s ease, box-shadow .18s ease;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+.pf-aside .pf-theme-btn:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+.pf-aside .pf-theme-btn.is-active{
+  border-color: rgba(139,92,246,.7);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.3),
+    0 0 0 1px rgba(139,92,246,.35) inset;
+}
+.pf-aside .pf-theme-btn svg{ font-size: 16px; }
+.pf-aside .pf-theme-label{ line-height: 1; }
 .pf-aside .pf-socials{ display:flex; gap:8px; flex-wrap: wrap; }
 .pf-aside .pf-ico{
   display:grid; place-items:center;
@@ -228,6 +266,26 @@
   }
   .pf-aside .pf-nav-ico{ font-size: 22px; }
 
+  .pf-aside .pf-theme-switch{
+    grid-template-columns: 1fr;
+    margin-bottom: 8px;
+  }
+  .pf-aside .pf-theme-btn{
+    min-height: 40px;
+    padding: 10px;
+  }
+  .pf-aside .pf-theme-label{
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
   .pf-aside .pf-nav-tip{
     display: block;
     position: absolute;
@@ -257,6 +315,70 @@
     visibility: visible;
     transform: translateY(-50%) translateX(0);
   }
+}
+
+/* Tema claro del sidebar */
+[data-theme="light"] .pf-aside{
+  --side-bg: #eaf1fb;
+  --panel: #f6f9ff;
+  --base: #edf3ff;
+  --text: #1c2b46;
+  --line: rgba(46,66,104,.18);
+  --line-weak: rgba(138,160,198,.24);
+  --glass: rgba(255,255,255,.58);
+  --glass-weak: rgba(255,255,255,.65);
+
+  background: linear-gradient(180deg, #f7faff, #eaf1fb);
+  border-right: 1px solid rgba(131,154,197,.32);
+  box-shadow: 0 12px 30px rgba(23,41,79,.12);
+}
+
+[data-theme="light"] .pf-aside .pf-nav-item{
+  color: #1f2f4d;
+  background: rgba(255,255,255,.7);
+  border-color: rgba(84,109,158,.2);
+  box-shadow: 0 10px 18px rgba(34,54,90,.12);
+}
+[data-theme="light"] .pf-aside .pf-brand{
+  background: linear-gradient(96deg, #1c3b88 0%, #2567ee 42%, #1798d7 72%, #0f766e 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: .18px rgba(255,255,255,.28);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.35),
+    0 8px 18px rgba(40,62,104,.22);
+}
+[data-theme="light"] .pf-aside .pf-nav-ico{ color: #49628f; }
+[data-theme="light"] .pf-aside .pf-nav-item:hover{ filter: brightness(1.02); }
+[data-theme="light"] .pf-aside .pf-nav-item.is-active{
+  color: #162843;
+  box-shadow:
+    0 12px 22px rgba(30,47,80,.18),
+    0 0 0 1px rgba(255,255,255,.85),
+    0 0 24px -8px var(--clr);
+}
+[data-theme="light"] .pf-aside .pf-nav-tip{
+  color: #1c2b46;
+  background: rgba(255,255,255,.95);
+  border-color: rgba(70,94,142,.2);
+  box-shadow: 0 10px 20px rgba(23,41,79,.16);
+}
+[data-theme="light"] .pf-aside .pf-theme-btn{
+  color: #213252;
+  background: rgba(255,255,255,.76);
+  border-color: rgba(82,106,150,.22);
+}
+[data-theme="light"] .pf-aside .pf-theme-btn.is-active{
+  border-color: rgba(79,111,255,.7);
+  box-shadow:
+    0 8px 18px rgba(40,62,104,.16),
+    0 0 0 1px rgba(79,111,255,.26) inset;
+}
+[data-theme="light"] .pf-aside .pf-ico{
+  color: #1f2f4d;
+  background: rgba(255,255,255,.72);
+  border-color: rgba(84,109,158,.22);
 }
 
 /* Aún más compacto (entre 720–820px) */

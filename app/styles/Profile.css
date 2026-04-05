@@ -71,11 +71,14 @@
   font-size: clamp(30px, 3.2vw, 60px);
   font-weight: 900;
   letter-spacing: .3px;
-  background: linear-gradient(90deg, #E7E9FF 0%, #9AC6FF 60%, #77F9E6 100%);
+  background: linear-gradient(96deg, #f7fbff 0%, #acd8ff 36%, #58d6ff 68%, #70ffd0 100%);
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
-  text-shadow: 0 1px 0 rgba(0,0,0,.2);
+  -webkit-text-stroke: .2px rgba(255,255,255,.1);
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.26),
+    0 12px 24px rgba(17,26,48,.22);
 }
 
 /* ✅ Texto más ancho en desktop */
@@ -245,6 +248,11 @@
     drop-shadow(0 30px 40px rgba(0, 0, 0, .45))
     drop-shadow(0 10px 18px rgba(0, 0, 0, .25));
 }
+
+.prf-char--light{ display: none; }
+
+html[data-theme="light"] .prf-char--dark{ display: none; }
+html[data-theme="light"] .prf-char--light{ display: block; }
 
 /* Chips flotantes decorativos (opcionales) */
 .prf-badge{

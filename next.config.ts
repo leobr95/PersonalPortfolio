@@ -6,8 +6,11 @@
 // export default nextConfig;
 import type { NextConfig } from 'next';
 
+const distDir = process.env.NEXT_DIST_DIR?.trim();
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  ...(distDir ? { distDir } : {}),
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'cerveceria7estrellas.com', pathname: '/wp-content/uploads/**' },
