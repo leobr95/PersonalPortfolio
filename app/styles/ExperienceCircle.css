@@ -25,7 +25,7 @@
 
 .xt2-viewport{
   position:relative;
-  overflow-x: auto;        /* móvil: scroll horizontal */
+  overflow-x: hidden;
   overflow-y: hidden;
   padding-bottom:10px;
   -webkit-overflow-scrolling: touch;
@@ -36,24 +36,50 @@
 .xt2-bars{
   --track-h: 12px;
   --fade: 26px;
+  --seq-step: 780ms;
   position:relative; list-style:none;
   margin:
     calc(32px + ((var(--logo-stack-top, 1) - 1) * 66px))
     0
     calc(12px + (var(--logo-stack-bottom, 0) * 66px));
   padding:40px 0 0; height:160px;
-  min-width: calc(740px * var(--timeline-zoom));   /* zoom horizontal */
+  min-width: 100%;
 }
-.xt2-bar{ position:absolute; left:var(--left); width:var(--width); height:var(--track-h); transform: translateY(-50%); }
+.xt2-bar{
+  position:absolute;
+  left:var(--left);
+  width:var(--width);
+  height:var(--track-h);
+  transform: translateY(-50%);
+  transform-origin: left center;
+  opacity: 0;
+  animation: xt2-bar-enter .72s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: var(--bar-delay, 0ms);
+}
 .xt2-bar.lane-1{ top:40%; } .xt2-bar.lane-2{ top:58%; } .xt2-bar.lane-3{ top:76%; }
 
 .xt2-track{
   position:absolute; inset:0; display:block; border:none; border-radius:999px; cursor:pointer;
   background: var(--bar-color,#60a5fa);
   box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05);
+  overflow: hidden;
+  animation: xt2-track-glow-seq calc(var(--bar-count, 1) * var(--seq-step)) linear infinite both;
+  animation-delay: calc(var(--bar-order, 0) * var(--seq-step));
   -webkit-mask-image: linear-gradient(to right, transparent 0, black var(--fade), black calc(100% - var(--fade)), transparent 100%);
   mask-image: linear-gradient(to right, transparent 0, black var(--fade), black calc(100% - var(--fade)), transparent 100%);
   transition: filter .15s ease, transform .12s ease;
+}
+.xt2-track::after{
+  content: "";
+  position: absolute;
+  inset: -62% -96%;
+  pointer-events: none;
+  background:
+    linear-gradient(112deg, transparent 34%, rgba(255,255,255,.28) 43%, rgba(255,255,255,.82) 50%, rgba(255,255,255,.24) 57%, transparent 66%);
+  transform: translateX(-62%);
+  filter: blur(.4px) drop-shadow(0 0 14px rgba(255,255,255,.45));
+  animation: xt2-track-sweep-seq calc(var(--bar-count, 1) * var(--seq-step)) linear infinite both;
+  animation-delay: calc(var(--bar-order, 0) * var(--seq-step));
 }
 .xt2-track:hover, .xt2-track:focus-visible{ filter:brightness(1.05); transform: translateY(-1px); outline:none; }
 
@@ -134,7 +160,7 @@
 .xt2-years{
   position:relative; list-style:none; margin:6px 0 0; padding:10px 0 0; height:22px;
   border-top:1px solid rgba(255,255,255,.08); color:#c6cbe6; font-size:12px;
-  min-width: calc(740px * var(--timeline-zoom)); /* acompaña el zoom horizontal */
+  min-width: 100%;
 }
 .xt2-years li{ position:absolute; top:0; transform: translateX(-50%); padding-left:4px; }
 .xt2-years li::after{ content:""; position:absolute; top:-10px; left:50%; width:1px; height:10px; background:rgba(255,255,255,.12); transform: translateX(-50%); }
@@ -148,6 +174,17 @@
   .xt2-years li:nth-child(even){ display:none; }
 }
 
+/* Solo en teléfonos habilitamos scroll horizontal del timeline */
+@media (max-width: 768px){
+  .xt2-viewport{
+    overflow-x: auto;
+  }
+  .xt2-bars,
+  .xt2-years{
+    min-width: calc(740px * var(--timeline-zoom));
+  }
+}
+
 /* En <= 520px muestra sólo 1 de cada 3 para máxima legibilidad */
 @media (max-width: 520px){
   .xt2::before{ background-size:48px 100%; }
@@ -158,7 +195,66 @@
 }
 
 @media (prefers-reduced-motion: reduce){
+  .xt2-bar{
+    animation: none;
+    opacity: 1;
+  }
+  .xt2-track{
+    animation: none;
+  }
+  .xt2-track::after{
+    animation: none;
+  }
   .xt2-logo img{
     transition: none;
+  }
+}
+
+@keyframes xt2-bar-enter{
+  from{
+    opacity: 0;
+    transform: translateY(-50%) scaleX(.72);
+    filter: blur(1px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(-50%) scaleX(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes xt2-track-sweep-seq{
+  0%, 6%{
+    transform: translateX(-70%) scaleX(.92);
+    opacity: 0;
+  }
+  12%{
+    transform: translateX(2%) scaleX(1.14);
+    opacity: .98;
+  }
+  18%{
+    transform: translateX(70%) scaleX(1);
+    opacity: .34;
+  }
+  19%, 100%{
+    transform: translateX(70%) scaleX(1);
+    opacity: 0;
+  }
+}
+
+@keyframes xt2-track-glow-seq{
+  0%, 7%, 100%{
+    filter: brightness(1.02) saturate(1.04);
+    box-shadow:
+      0 10px 28px rgba(0,0,0,.35),
+      0 0 10px rgba(255,255,255,.08),
+      inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  12%{
+    filter: brightness(1.22) saturate(1.26);
+    box-shadow:
+      0 16px 34px rgba(0,0,0,.42),
+      0 0 26px rgba(255,255,255,.24),
+      inset 0 0 0 1px rgba(255,255,255,.14);
   }
 }

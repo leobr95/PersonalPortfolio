@@ -57,10 +57,13 @@ type BarVars = CSSProperties & {
   ['--width']?: string;
   ['--bar-color']?: string;
   ['--logo-offset']?: string;
+  ['--bar-delay']?: string;
+  ['--bar-order']?: number;
 };
 type BarsVars = CSSProperties & {
   ['--logo-stack-top']?: number;
   ['--logo-stack-bottom']?: number;
+  ['--bar-count']?: number;
 };
 
 export default function ExperienceCircle({
@@ -100,6 +103,7 @@ export default function ExperienceCircle({
   const barsStyle: BarsVars = {
     '--logo-stack-top': maxTopBand,
     '--logo-stack-bottom': maxBottomBand,
+    '--bar-count': withPos.length,
   };
   // lane por índice actual (ya viene ordenado por el padre)
   return (
@@ -128,6 +132,8 @@ export default function ExperienceCircle({
               '--width': `${e.width}%`,
               '--bar-color': e.color ?? '#60a5fa',
               '--logo-offset': `${logoOffset}px`,
+              '--bar-delay': `${Math.min(idx * 90, 720)}ms`,
+              '--bar-order': idx,
             };
 
             return (
