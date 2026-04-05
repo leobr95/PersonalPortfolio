@@ -128,10 +128,10 @@
   letter-spacing: 1.2px;
 }
 .glow-btn:hover::before{
-  bottom: 0; height: 50%; width: 82%; border-radius: 30px;
+  bottom: 0; height: 50%; width: 100%; border-radius: 30px;
 }
 .glow-btn:hover::after{
-  top: 0; height: 50%; width: 82%; border-radius: 30px;
+  top: 0; height: 50%; width: 100%; border-radius: 30px;
 }
 
 /* Sheen diagonal (si usas <i> o .glow-sheen) — queda ENTRE el glow y el texto */

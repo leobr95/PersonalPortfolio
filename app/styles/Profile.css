@@ -179,10 +179,10 @@
 /* Hover */
 .prf .pf-glow-btn:hover{ letter-spacing: 1.2px; }
 .prf .pf-glow-btn:hover::before{
-  bottom: 0; height: 50%; width: 82%; border-radius: 30px;
+  bottom: 0; height: 50%; width: 100%; border-radius: 30px;
 }
 .prf .pf-glow-btn:hover::after{
-  top: 0; height: 50%; width: 82%; border-radius: 30px;
+  top: 0; height: 50%; width: 100%; border-radius: 30px;
 }
 .prf .pf-glow-btn:hover > i{
   transform: skewX(45deg) translateX(200px);
@@ -385,7 +385,7 @@
 
   .pf-aside .pf-nav-ico{ font-size: 22px; }
   .pf-aside .pf-nav-item::before{ width: 60%; }
-  .pf-aside .pf-nav-item:hover::before{ width: 76%; }
+  .pf-aside .pf-nav-item:hover::before{ width: 100%; }
   .pf-aside .pf-socials{ justify-content: center; }
 }
 

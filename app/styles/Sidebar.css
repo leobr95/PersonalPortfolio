@@ -144,7 +144,12 @@
   filter: brightness(1.05);
 }
 .pf-aside .pf-nav-item:hover::before{
-  bottom: 0; height: 50%; width: 86%; border-radius: 14px;
+  left: 0;
+  transform: none;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
 }
 
 /* Activo */
@@ -158,7 +163,12 @@
 }
 .pf-aside .pf-nav-item.is-active .pf-nav-ico{ color: var(--clr); }
 .pf-aside .pf-nav-item.is-active::before{
-  bottom: 0; height: 55%; width: 90%; border-radius: 14px;
+  left: 0;
+  transform: none;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
 }
 
 /* Colores por posición */
