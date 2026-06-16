@@ -166,6 +166,10 @@
 .xt2-years li{ position:absolute; top:0; transform: translateX(-50%); padding-left:4px; }
 .xt2-years li::after{ content:""; position:absolute; top:-10px; left:50%; width:1px; height:10px; background:rgba(255,255,255,.12); transform: translateX(-50%); }
 
+.xt2-mobile{
+  display: none;
+}
+
 /* En <= 700px muestra un año sí, uno no */
 @media (max-width: 700px){
   .xt2::before{ background-size:56px 100%; }
@@ -175,14 +179,218 @@
   .xt2-years li:nth-child(even){ display:none; }
 }
 
-/* Solo en teléfonos habilitamos scroll horizontal del timeline */
+/* En teléfonos, el timeline pasa a lectura vertical por años. */
 @media (max-width: 768px){
-  .xt2-viewport{
-    overflow-x: auto;
+  .xt2{
+    padding: 22px 12px 16px;
   }
-  .xt2-bars,
-  .xt2-years{
-    min-width: calc(740px * var(--timeline-zoom));
+
+  .xt2-title{
+    margin-bottom: 14px;
+  }
+
+  .xt2-viewport{
+    display: none;
+  }
+
+  .xt2-mobile{
+    position: relative;
+    display: grid;
+    gap: 14px;
+    list-style: none;
+    margin: 0;
+    padding: 4px 0 2px;
+  }
+
+  .xt2-mobile::before{
+    content: "";
+    position: absolute;
+    top: 16px;
+    bottom: 18px;
+    left: 29px;
+    width: 2px;
+    border-radius: 999px;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(96,165,250,.20),
+        rgba(255,255,255,.34) 12%,
+        rgba(255,255,255,.18) 88%,
+        rgba(96,165,250,.14)
+      );
+    box-shadow:
+      0 0 18px rgba(96,165,250,.24),
+      0 0 42px rgba(139,92,246,.12);
+    pointer-events: none;
+  }
+
+  .xt2m-item{
+    --bar-color: #60a5fa;
+    position: relative;
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    color: #fff;
+  }
+
+  .xt2m-year{
+    position: relative;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 30px;
+    margin-top: 18px;
+    border-radius: 999px;
+    color: #eaf0ff;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .4px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.05)),
+      rgba(10,12,20,.92);
+    border: 1px solid color-mix(in srgb, var(--bar-color) 44%, rgba(255,255,255,.14));
+    box-shadow:
+      0 8px 16px rgba(0,0,0,.28),
+      0 0 14px color-mix(in srgb, var(--bar-color) 34%, transparent);
+  }
+
+  .xt2m-card{
+    position: relative;
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
+    min-height: 88px;
+    padding: 12px 12px 12px 16px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-left-color: color-mix(in srgb, var(--bar-color) 58%, rgba(255,255,255,.18));
+    border-radius: 14px;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--bar-color) 18%, transparent), transparent 42%),
+      linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.035)),
+      rgba(10,12,20,.90);
+    box-shadow:
+      0 12px 24px rgba(0,0,0,.32),
+      inset 0 1px 0 rgba(255,255,255,.10);
+    overflow: hidden;
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    touch-action: manipulation;
+  }
+
+  .xt2m-card::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(112deg, transparent 0 42%, rgba(255,255,255,.14) 52%, transparent 64%);
+    opacity: .36;
+    transform: translateX(-28%);
+  }
+
+  .xt2m-rail{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 5px;
+    background: var(--bar-color);
+    box-shadow:
+      0 0 12px var(--bar-color),
+      0 0 26px color-mix(in srgb, var(--bar-color) 48%, transparent);
+  }
+
+  .xt2m-dot{
+    position: absolute;
+    left: -45px;
+    top: 25px;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: var(--bar-color);
+    border: 2px solid #10121a;
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,.08),
+      0 0 16px var(--bar-color);
+    z-index: 2;
+  }
+
+  .xt2m-logo{
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    align-self: start;
+    width: 52px;
+    height: 52px;
+    border-radius: 13px;
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 8px 16px rgba(0,0,0,.26);
+  }
+
+  .xt2m-logo img{
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 11px;
+    padding: 2px;
+  }
+
+  .xt2m-logo.is-helppeople img{
+    background: #fff;
+    padding: 4px;
+  }
+
+  .xt2m-copy{
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    align-self: center;
+  }
+
+  .xt2m-period{
+    color: #b9c1ff;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .xt2m-company{
+    color: #fff;
+    font-size: 14px;
+    font-weight: 950;
+    line-height: 1.18;
+  }
+
+  .xt2m-role{
+    color: rgba(234,240,255,.92);
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1.28;
+  }
+
+  .xt2m-card:focus-visible{
+    outline: 2px solid color-mix(in srgb, var(--bar-color) 72%, #fff);
+    outline-offset: 3px;
+  }
+
+  .xt2m-card:active,
+  .xt2m-item.is-active .xt2m-card{
+    border-color: color-mix(in srgb, var(--bar-color) 70%, rgba(255,255,255,.20));
+    box-shadow:
+      0 16px 30px rgba(0,0,0,.40),
+      0 0 0 1px rgba(255,255,255,.08),
+      0 0 22px color-mix(in srgb, var(--bar-color) 28%, transparent),
+      inset 0 1px 0 rgba(255,255,255,.14);
   }
 }
 

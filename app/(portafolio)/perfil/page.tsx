@@ -6,7 +6,7 @@ import { JSX, useMemo } from 'react';
 import { FaGithub, FaLinkedin, FaPhoneAlt, FaWhatsapp, FaRegListAlt } from 'react-icons/fa';
 import { MdEmail, MdWorkOutline, MdFolderOpen, MdSchool } from 'react-icons/md';
 
-import imageProfileLight from '@/app/logos/profile-photo-claro.png';
+import imageProfileLight from '@/app/logos/profile-photo.png';
 import imageProfileDark from '@/app/logos/profile-photo.png';
 import '@/app/styles/Profile.css';
 
@@ -22,14 +22,26 @@ export default function PerfilPage(): JSX.Element {
     []
   );
 
-  const contacts = useMemo(
+  const contactGroups = useMemo(
     () => [
-      { href: 'tel:+573236504428', label: 'Llamar', icon: <FaPhoneAlt aria-hidden />, tone: 'green' },
-      { href: 'https://wa.me/573236504428', label: 'WhatsApp', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
-      { href: 'https://wa.me/message/TU_ID_EMPRESA', label: 'WA empresa', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
-      { href: 'mailto:br.david@outlook.com', label: 'Email', icon: <MdEmail aria-hidden />, tone: 'blue' },
-      { href: 'https://github.com/leobr95', label: 'GitHub', icon: <FaGithub aria-hidden />, tone: 'blue' },
-      { href: 'https://www.linkedin.com/in/leonardoburbano', label: 'LinkedIn', icon: <FaLinkedin aria-hidden />, tone: 'blue' },
+      {
+        id: 'direct',
+        label: 'Teléfono y WhatsApp',
+        items: [
+          { href: 'tel:+573236504428', label: 'Llamar', icon: <FaPhoneAlt aria-hidden />, tone: 'green' },
+          { href: 'https://wa.me/573236504428', label: 'WhatsApp', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
+          { href: 'https://wa.me/message/TU_ID_EMPRESA', label: 'WA empresa', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
+        ],
+      },
+      {
+        id: 'professional',
+        label: 'GitHub, email y LinkedIn',
+        items: [
+          { href: 'https://github.com/leobr95', label: 'GitHub', icon: <FaGithub aria-hidden />, tone: 'blue' },
+          { href: 'mailto:br.david@outlook.com', label: 'Email', icon: <MdEmail aria-hidden />, tone: 'blue' },
+          { href: 'https://www.linkedin.com/in/leonardoburbano', label: 'LinkedIn', icon: <FaLinkedin aria-hidden />, tone: 'blue' },
+        ],
+      },
     ],
     []
   );
@@ -43,7 +55,8 @@ export default function PerfilPage(): JSX.Element {
 
             <h1 className="prf-title">
               <span className="ghost">Hola, soy</span>
-              <span className="name">Leonardo David Burbano</span>
+              <span className="name name--desktop">Leonardo David Burbano</span>
+              <span className="name name--mobile">Leonardo Burbano</span>
             </h1>
 
             <p className="prf-sub">
@@ -69,19 +82,28 @@ export default function PerfilPage(): JSX.Element {
             <div className="prf-sep" aria-hidden />
 
             <div className="prf-contact" aria-label="Acciones de contacto">
-              {contacts.map((c) => (
-                <a
-                  key={c.label}
-                  href={c.href}
-                  target={c.href.startsWith('http') ? '_blank' : undefined}
-                  rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className={`pf-glow-btn ${c.tone}`}
-                  aria-label={c.label}
+              {contactGroups.map((group) => (
+                <div
+                  key={group.id}
+                  className={`prf-contact-group prf-contact-group--${group.id}`}
+                  role="group"
+                  aria-label={group.label}
                 >
-                  {c.icon}
-                  <span>{c.label}</span>
-                  <i aria-hidden />
-                </a>
+                  {group.items.map((c) => (
+                    <a
+                      key={c.label}
+                      href={c.href}
+                      target={c.href.startsWith('http') ? '_blank' : undefined}
+                      rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className={`pf-glow-btn ${c.tone}`}
+                      aria-label={c.label}
+                    >
+                      {c.icon}
+                      <span>{c.label}</span>
+                      <i aria-hidden />
+                    </a>
+                  ))}
+                </div>
               ))}
             </div>
           </div>

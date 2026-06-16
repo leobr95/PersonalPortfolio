@@ -43,6 +43,10 @@
     border-color .22s ease;
   will-change: transform, box-shadow, filter;
 }
+.xpSec .xp-card.is-open{
+  overflow: visible;
+  z-index: 2;
+}
 
 /* Borde-acento en máscara */
 .xpSec .xp-card::before{
@@ -185,6 +189,11 @@
 @media (max-width: 520px){
   .xpSec .xp-card{ padding: 1rem .9rem; }
   .xpSec .xp-title{ font-size: 1.2rem; }
+  .xpSec .xp-duties{ padding-inline: .45rem; }
+  .xpSec .xp-duties.is-open{
+    max-height: none !important;
+    overflow: visible;
+  }
 }
 
 
@@ -214,6 +223,7 @@
   padding: .9rem 1rem 1rem;
   opacity: 1;
   transform: translateY(0);
+  overflow: visible;
 }
 
 .xpSec .xp-duties ul{

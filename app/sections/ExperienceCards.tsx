@@ -31,8 +31,8 @@ export default function ExperienceCards({
         const el = dutiesRefs.current[it.id];
         if (!el) return;
         if (open === it.id) {
-          // setear a scrollHeight para animar a su tamaño real
-          el.style.maxHeight = `${el.scrollHeight}px`;
+          // Deja margen para padding/bordes y cambios de wrapping en móvil.
+          el.style.maxHeight = `${el.scrollHeight + 32}px`;
         } else {
           el.style.maxHeight = '0px';
         }
@@ -55,7 +55,7 @@ export default function ExperienceCards({
         return (
           <article
             key={it.id}
-            className={`xp-card tone-${it.tone ?? 'blue'} ${isActive ? 'is-active' : ''}`}
+            className={`xp-card tone-${it.tone ?? 'blue'} ${isActive ? 'is-active' : ''} ${isOpen ? 'is-open' : ''}`}
             onMouseEnter={() => onActivate(it.id)}
             onFocus={() => onActivate(it.id)}
             onMouseLeave={() => onActivate(null)}

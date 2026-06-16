@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, PropsWithChildren } from 'react';
+import { useEffect, useState, PropsWithChildren } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 import CvFab from '@/app/components/CvFab';
@@ -11,24 +11,50 @@ const CV_BASE64 = 'data:application/pdf;base64,JVBERi0xLjMKJcTl8uXrp/Og0MTGCjMgM
 
 export default function PortfolioLayout({ children }: PropsWithChildren) {
   const [open, setOpen] = useState(false);
+  const [sidebarHidden, setSidebarHidden] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const media = window.matchMedia('(max-width: 980px)');
+    const syncViewport = () => {
+      setIsMobile(media.matches);
+      if (!media.matches) setOpen(false);
+    };
+
+    syncViewport();
+    media.addEventListener('change', syncViewport);
+    return () => media.removeEventListener('change', syncViewport);
+  }, []);
+
+  const sidebarVisible = isMobile ? open : !sidebarHidden;
+
+  const handleSidebarToggle = () => {
+    if (isMobile) {
+      setOpen((value) => !value);
+      return;
+    }
+
+    setSidebarHidden((value) => !value);
+  };
 
   return (
     <>
-      {/* Botón hamburguesa (solo móvil) */}
       <button
         type="button"
-        className="pf-hamburger"
-        aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-        aria-expanded={open}
-        onClick={() => setOpen(v => !v)}
+        className={`pf-hamburger ${sidebarHidden ? 'is-sidebar-hidden' : ''}`}
+        aria-label={sidebarVisible ? 'Ocultar barra lateral' : 'Mostrar barra lateral'}
+        aria-expanded={sidebarVisible}
+        onClick={handleSidebarToggle}
       >
-        {open ? <FaTimes aria-hidden /> : <FaBars aria-hidden />}
+        {sidebarVisible ? <FaTimes aria-hidden /> : <FaBars aria-hidden />}
       </button>
 
       {/* Overlay móvil */}
       <div className={`pf-overlay ${open ? 'is-on' : ''}`} onClick={() => setOpen(false)} />
 
-      <section className={`pf ${open ? 'pf--menuOpen' : ''}`}>
+      <section className={`pf ${open ? 'pf--menuOpen' : ''} ${sidebarHidden ? 'pf--sidebarHidden' : ''}`}>
         <Sidebar open={open} onClose={() => setOpen(false)} />
         <main className="pf-main">{children}</main>
       </section>

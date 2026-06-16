@@ -10,7 +10,7 @@ const LLAMADAS = '573236504428';    // <- cámbialo si deseas
 const WHATSAPP_EMPRESA  = '573236504428';     // <- o pon el de tu WhatsApp Business
 const MAIL_TO            = 'br.david@outlook.com';
 
-export default function ContactPanel() {
+export default function ContactPanel({ showHeader = true }: { showHeader?: boolean }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -61,10 +61,12 @@ export default function ContactPanel() {
 
   return (
     <section className="ctc">
-      <header className="ctc-head">
-        <h1 className="ctc-title">Contacto</h1>
-        <p className="ctc-sub">Hablemos sobre tu proyecto — respuesta rápida por WhatsApp o correo.</p>
-      </header>
+      {showHeader ? (
+        <header className="ctc-head">
+          <h1 className="ctc-title">Contacto</h1>
+          <p className="ctc-sub">Hablemos sobre tu proyecto — respuesta rápida por WhatsApp o correo.</p>
+        </header>
+      ) : null}
 
       <div className="ctc-grid">
         {/* ---- Tarjeta de contacto (llamadas / WhatsApp) ---- */}
@@ -73,7 +75,6 @@ export default function ContactPanel() {
             <div className="ctc-avatar">LB</div>
             <div className="ctc-card-meta">
               <h3>Leonardo D. Burbano</h3>
-              <p>Full-Stack .NET · React/Next · SQL · Docker</p>
             </div>
           </div>
 
@@ -91,12 +92,12 @@ export default function ContactPanel() {
             </li>
           </ul>
 
-          <div className="ctc-actions">
+          <div className="ctc-actions ctc-whatsappBar">
             <a className="glow-btn green"  href={wspPersonalHref} target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp aria-hidden /> <span className='texto-btn'>WhatsApp Personal</span>
+              <FaWhatsapp aria-hidden /> <span className='texto-btn'>WhatsApp pers.</span>
             </a>
             <a className="glow-btn green"  href={wspEmpresaHref}  target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp aria-hidden /> <span className='texto-btn'>WhatsApp Empresa</span>
+              <FaWhatsapp aria-hidden /> <span className='texto-btn'>WhatsApp empr.</span>
             </a>
           </div>
         </aside>
@@ -120,19 +121,19 @@ export default function ContactPanel() {
               <textarea name="message" rows={5} placeholder="Cuéntame brevemente sobre el proyecto" required />
             </label>
 
-            <div className="form-actions">
+            <div className="form-actions ctc-submitBar">
               <button
                 className="glow-btn blue"
                 type="submit"
                 disabled={status === 'sending'}
               >
-                {status === 'sending' ? 'Enviando…' : <span className='texto-btn'>Enviar mensaje</span>}
+                <span className='texto-btn'>{status === 'sending' ? 'Enviando…' : 'Enviar mensaje'}</span>
               </button>
 
               {/* fallback Mailto visible si no hay API configurada */}
               {!process.env.NEXT_PUBLIC_CONTACT_API && (
-                <a className="link-ghost" href={`mailto:${MAIL_TO}?subject=Contacto%20desde%20Portafolio`}>
-                  Usar correo por defecto
+                <a className="glow-btn blue" href={`mailto:${MAIL_TO}?subject=Contacto%20desde%20Portafolio`}>
+                  <MdEmail aria-hidden /> <span className='texto-btn'>Usar correo por defecto</span>
                 </a>
               )}
             </div>

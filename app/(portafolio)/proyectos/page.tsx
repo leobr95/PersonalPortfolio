@@ -335,16 +335,11 @@ function ProjectCard({ p }: { p: Project }) {
   );
 }
 
-export default function ProjectsPage() {
+function ProjectsContent({ showSectionTitles = true }: { showSectionTitles?: boolean }) {
   return (
-    <section className="ctc">
-      <header className="ctc-head">
-        <h1 className="ctc-title">Proyectos</h1>
-        <p className="ctc-sub">Te cuento acerca de los proyectos en los que he participado y lo que he conseguido.</p>
-      </header>
-
+    <>
       <section className="prj-section">
-        <h2 className="prj-section-title">Proyectos freelance / personales</h2>
+        {showSectionTitles ? <h2 className="prj-section-title">Proyectos freelance / personales</h2> : null}
         <div className="prj-grid">
           {FREELANCE.map((p) => (
             <ProjectCard key={p.title} p={p} />
@@ -353,13 +348,25 @@ export default function ProjectsPage() {
       </section>
 
       <section className="prj-section">
-        <h2 className="prj-section-title">Proyectos laborales</h2>
+        {showSectionTitles ? <h2 className="prj-section-title">Proyectos laborales</h2> : null}
         <div className="prj-grid">
           {LABORAL.map((p) => (
             <ProjectCard key={p.title} p={p} />
           ))}
         </div>
       </section>
+    </>
+  );
+}
+
+export default function ProjectsPage() {
+  return (
+    <section className="ctc">
+      <header className="ctc-head">
+        <h1 className="ctc-title">Proyectos</h1>
+        <p className="ctc-sub">Te cuento acerca de los proyectos en los que he participado y lo que he conseguido.</p>
+      </header>
+      <ProjectsContent />
     </section>
   );
 }

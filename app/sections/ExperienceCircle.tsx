@@ -51,6 +51,14 @@ function assignLogoRows(centersPct: number[], minGapPct = 6.2): number[] {
   return rows;
 }
 
+const CONTRAST_LOGO_COMPANIES = new Set([
+  'VASS LATAM',
+  'GVS Colombia',
+  'Procesos y Tecnología',
+]);
+
+const needsContrastLogoBg = (company: string) => CONTRAST_LOGO_COMPANIES.has(company);
+
 // CSS variables tipadas
 type BarVars = CSSProperties & {
   ['--left']?: string;
@@ -123,6 +131,13 @@ export default function ExperienceCircle({
             const isLogoBelow = logoRow % 2 === 0;
             const title = `${fmtYM(e.from)} – ${fmtYM(e.to)} • ${e.company} • ${e.role}`;
             const isActive = activeId === e.id;
+            const isHelpPeopleLogo = e.company === 'HelpPeople';
+            const hasContrastLogoBg = needsContrastLogoBg(e.company);
+            const logoClassName = isHelpPeopleLogo
+              ? 'xt2-logo-helppeople'
+              : hasContrastLogoBg
+                ? 'xt2-logo-contrast'
+                : undefined;
             const logoOffset = isLogoBelow
               ? 18 + ((logoBand - 1) * 66)
               : 24 + ((logoBand - 1) * 66);
@@ -149,7 +164,7 @@ export default function ExperienceCircle({
               >
                 {e.logo && (
                   <div
-                    className={`xt2-logo ${isLogoBelow ? 'is-below' : 'is-above'} ${e.company === 'HelpPeople' ? 'is-helppeople' : ''}`}
+                    className={`xt2-logo ${isLogoBelow ? 'is-below' : 'is-above'} ${isHelpPeopleLogo ? 'is-helppeople' : ''} ${hasContrastLogoBg ? 'needs-contrast' : ''}`}
                     title={e.company}
                     aria-label={`Empresa: ${e.company}`}
                   >
@@ -159,7 +174,7 @@ export default function ExperienceCircle({
                       width={62}
                       height={62}
                       title={e.company}
-                      className={e.company === 'HelpPeople' ? 'xt2-logo-helppeople' : undefined}
+                      className={logoClassName}
                       style={e.logoBg ? { backgroundColor: e.logoBg } : undefined}
                     />
                   </div>
@@ -185,6 +200,65 @@ export default function ExperienceCircle({
           })}
         </ul>
       </div>
+
+      <ol className="xt2-mobile" aria-label="Línea de tiempo vertical de experiencia">
+        {withPos.map((e) => {
+          const title = `${fmtYM(e.from)} – ${fmtYM(e.to)} • ${e.company} • ${e.role}`;
+          const isActive = activeId === e.id;
+          const isHelpPeopleLogo = e.company === 'HelpPeople';
+          const hasContrastLogoBg = needsContrastLogoBg(e.company);
+          const logoClassName = isHelpPeopleLogo
+            ? 'xt2-logo-helppeople'
+            : hasContrastLogoBg
+              ? 'xt2-logo-contrast'
+              : undefined;
+
+          return (
+            <li
+              key={`mobile-${e.id}`}
+              className={`xt2m-item ${isActive ? 'is-active' : ''}`}
+              style={{ '--bar-color': e.color ?? '#60a5fa' } as CSSProperties}
+              onMouseEnter={() => onActivate(e.id)}
+              onFocus={() => onActivate(e.id)}
+              onMouseLeave={() => onActivate(null)}
+              onBlur={() => onActivate(null)}
+            >
+              <div className="xt2m-year" aria-hidden="true">{e.from.y}</div>
+              <button
+                type="button"
+                className="xt2m-card"
+                aria-label={title}
+                onClick={() => onActivate(isActive ? null : e.id)}
+              >
+                <span className="xt2m-rail" aria-hidden="true" />
+                <span className="xt2m-dot" aria-hidden="true" />
+
+                {e.logo && (
+                  <span
+                    className={`xt2m-logo ${isHelpPeopleLogo ? 'is-helppeople' : ''} ${hasContrastLogoBg ? 'needs-contrast' : ''}`}
+                    aria-hidden="true"
+                  >
+                    <Image
+                      src={e.logo}
+                      alt=""
+                      width={52}
+                      height={52}
+                      className={logoClassName}
+                      style={e.logoBg ? { backgroundColor: e.logoBg } : undefined}
+                    />
+                  </span>
+                )}
+
+                <span className="xt2m-copy">
+                  <span className="xt2m-period">{fmtYM(e.from)} – {fmtYM(e.to)}</span>
+                  <span className="xt2m-company">{e.company}</span>
+                  <span className="xt2m-role">{e.role}</span>
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
     </section>
   );
 }

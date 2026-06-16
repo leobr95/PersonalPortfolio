@@ -81,6 +81,10 @@
     0 12px 24px rgba(17,26,48,.22);
 }
 
+.prf-title .name--mobile{
+  display: none;
+}
+
 /* ✅ Texto más ancho en desktop */
 .prf-sub{
   margin: 6px 0 0;
@@ -106,7 +110,19 @@
 /* Acciones de contacto */
 .prf-contact{
   position: relative; z-index: 1;
-  display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  gap: 12px 24px;
+  align-items: start;
+  justify-content: flex-start;
+}
+
+.prf-contact-group{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 0;
 }
 
 /* ========== Botón Glow (reutilizado del contacto, scopeado) ========== */
@@ -126,9 +142,9 @@
   border-top: 1px solid rgba(255,255,255,.1);
   border-bottom: 1px solid rgba(255,255,255,.1);
   box-shadow: 0 15px 15px rgba(0,0,0,.30);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  transition: .5s;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  transition: letter-spacing .5s, transform .18s ease, background-color .2s ease, border-color .2s ease;
   overflow: hidden;
   isolation: isolate;
 
@@ -157,7 +173,8 @@
     0 0 60px var(--clr);
   transition: .5s;
   z-index: 0;
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
+  pointer-events: none;
 }
 .prf .pf-glow-btn::before{ bottom: -5px; }
 .prf .pf-glow-btn::after { top: -5px; }
@@ -165,29 +182,47 @@
 /* Brillo diagonal interno */
 .prf .pf-glow-btn > i{
   content:"";
-  position:absolute; inset:0; z-index: 0;
+  position:absolute; inset:0; z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to left, rgba(255,255,255,.18), transparent);
   transform: skewX(45deg) translateX(0);
-  transition: .5s; filter: blur(0);
+  transition: transform .5s;
+  filter: none;
 }
 
 /* Contenido SIEMPRE visible encima */
 .prf .pf-glow-btn > span,
 .prf .pf-glow-btn > svg{
   position: relative;
-  z-index: 2;
-  filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.65);
+  transform: translateZ(0);
   font-weight: 800;
 }
 
 /* Hover */
-.prf .pf-glow-btn:hover{ letter-spacing: 1.2px; }
-.prf .pf-glow-btn:hover::before{
+.prf .pf-glow-btn:hover,
+.prf .pf-glow-btn:focus-visible,
+.prf .pf-glow-btn:active{
+  letter-spacing: 1.2px;
+}
+.prf .pf-glow-btn:hover::before,
+.prf .pf-glow-btn:focus-visible::before,
+.prf .pf-glow-btn:active::before{
   bottom: 0; height: 50%; width: 100%; border-radius: 30px;
 }
-.prf .pf-glow-btn:hover::after{
+.prf .pf-glow-btn:hover::after,
+.prf .pf-glow-btn:focus-visible::after,
+.prf .pf-glow-btn:active::after{
   top: 0; height: 50%; width: 100%; border-radius: 30px;
 }
-.prf .pf-glow-btn:hover > i{
+.prf .pf-glow-btn:hover > i,
+.prf .pf-glow-btn:focus-visible > i,
+.prf .pf-glow-btn:active > i{
   transform: skewX(45deg) translateX(200px);
 }
 
@@ -359,9 +394,149 @@ html[data-theme="light"] .prf-char--light{ display: block; }
 }
 
 @media (max-width: 620px){
-  .prf{ padding: 16px; }
-  .prf-card{ padding: 14px; }
+  .prf{
+    padding: 14px;
+    border-radius: 14px;
+    box-shadow: 0 8px 18px rgba(0,0,0,.28);
+    contain: layout paint;
+  }
+
+  .prf-card{
+    padding: 14px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.34);
+  }
+
+  .prf-hero{
+    gap: 16px;
+    transform: translateZ(0);
+  }
+
+  .prf-title .name--desktop{
+    display: none;
+  }
+
+  .prf-title .name--mobile{
+    display: inline;
+  }
+
+  .prf-orb{
+    width: min(76vw, 320px);
+    height: min(76vw, 320px);
+    box-shadow: 0 0 46px rgba(99,102,241,.22);
+    opacity: .82;
+  }
+
+  .prf-char{
+    width: min(84%, 360px);
+    filter: drop-shadow(0 16px 20px rgba(0,0,0,.34));
+  }
+
+  .prf-badge{
+    display: none;
+    animation: none;
+  }
+
   .prf-actions, .prf-contact{ justify-content: flex-start; }
+
+  .prf-contact{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .prf-contact-group{
+    justify-content: flex-start;
+  }
+
+  .prf .pf-glow-btn{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.045)),
+      color-mix(in srgb, var(--clr) 13%, #10131f 87%);
+    border: 1px solid rgba(255,255,255,.16);
+    border-top-color: rgba(255,255,255,.28);
+    border-bottom-color: color-mix(in srgb, var(--clr) 40%, rgba(255,255,255,.10));
+    box-shadow:
+      0 10px 18px rgba(0,0,0,.30),
+      inset 0 1px 0 rgba(255,255,255,.16),
+      0 0 0 1px rgba(255,255,255,.035);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: letter-spacing .5s, transform .12s ease, background-color .16s ease, border-color .16s ease;
+    touch-action: manipulation;
+  }
+
+  .prf .pf-glow-btn > span,
+  .prf .pf-glow-btn > svg{
+    text-shadow: 0 1px 2px rgba(0,0,0,.65);
+  }
+
+  .prf .pf-glow-btn > i{
+    display: block;
+    background: linear-gradient(to left, rgba(255,255,255,.18), transparent);
+    opacity: .55;
+    transform: skewX(45deg) translateX(0);
+    transition: transform .5s;
+    filter: none;
+    pointer-events: none;
+  }
+
+  .prf .pf-glow-btn::before,
+  .prf .pf-glow-btn::after{
+    width: clamp(34px, 34%, 86px);
+    height: 7px;
+    box-shadow:
+      0 0 5px var(--clr),
+      0 0 14px var(--clr);
+    opacity: .64;
+    transition: .5s;
+    will-change: width, height, top, bottom;
+  }
+
+  @media (hover: none){
+    .prf .pf-glow-btn:hover{
+      letter-spacing: .3px;
+      transform: none;
+    }
+
+    .prf .pf-glow-btn:hover::before{
+      bottom: -5px;
+      height: 7px;
+      width: clamp(34px, 34%, 86px);
+    }
+
+    .prf .pf-glow-btn:hover::after{
+      top: -5px;
+      height: 7px;
+      width: clamp(34px, 34%, 86px);
+    }
+
+    .prf .pf-glow-btn:hover > i{
+      transform: skewX(45deg) translateX(0);
+    }
+
+    .prf .pf-glow-btn:active{
+      letter-spacing: 1.2px;
+      transform: scale(.99);
+    }
+
+    .prf .pf-glow-btn:active::before{
+      bottom: 0;
+      height: 50%;
+      width: 100%;
+      border-radius: 30px;
+    }
+
+    .prf .pf-glow-btn:active::after{
+      top: 0;
+      height: 50%;
+      width: 100%;
+      border-radius: 30px;
+    }
+
+    .prf .pf-glow-btn:active > i{
+      transform: skewX(45deg) translateX(200px);
+    }
+  }
 }
 
 /* ===== Compacto en iPad / medianos: solo íconos (sidebar) ===== */
@@ -410,7 +585,6 @@ html[data-theme="light"] .prf-char--light{ display: block; }
 
 @media (max-width: 1280px){
   .prf .pf-glow-btn:hover{
-    letter-spacing: .3px;
     transform: scale(1.02);
   }
 }
@@ -420,6 +594,10 @@ html[data-theme="light"] .prf-char--light{ display: block; }
   .prf-actions, .prf-contact{
     justify-content: center;
     gap: 12px;
+  }
+
+  .prf-contact-group{
+    justify-content: center;
   }
 }
 
@@ -431,10 +609,25 @@ html[data-theme="light"] .prf-char--light{ display: block; }
 
 /* ===== Móviles pequeños (iPhone) — 2 botones por fila ===== */
 @media (max-width: 480px){
-  .prf-actions,
+  .prf-actions{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    justify-content: stretch;
+    align-items: stretch;
+  }
+
   .prf-contact{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    justify-content: stretch;
+    align-items: stretch;
+  }
+
+  .prf-contact-group{
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 10px;
     justify-content: stretch;
     align-items: stretch;
@@ -453,8 +646,6 @@ html[data-theme="light"] .prf-char--light{ display: block; }
     overflow: hidden;
     -webkit-mask-image: -webkit-radial-gradient(white, black);
     contain: paint;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
   }
 
   .prf .pf-glow-btn > svg{ font-size: 16px; }

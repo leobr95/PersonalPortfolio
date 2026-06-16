@@ -56,6 +56,58 @@
   display:flex; gap:12px; flex-wrap: wrap; margin-top: 6px;
 }
 
+.ctc-whatsappBar{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.ctc-whatsappBar .glow-btn{
+  width: 100%;
+  min-width: 0;
+  justify-content: center;
+  padding: 0 12px;
+}
+
+.ctc-whatsappBar .texto-btn{
+  white-space: nowrap;
+  font-size: clamp(12px, 3vw, 14px);
+}
+
+.ctc-submitBar{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.ctc-submitBar .glow-btn{
+  width: 100%;
+  min-width: 0;
+  justify-content: center;
+  padding: 0 10px;
+  border-left: 0;
+  border-right: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.ctc-submitBar .texto-btn{
+  white-space: nowrap;
+  font-size: clamp(10.5px, 2.9vw, 14px);
+}
+
+.ctc-submitBar .glow-btn:disabled{
+  cursor: wait;
+  opacity: .72;
+}
+
+.ctc-submitBar .glow-btn:only-child{
+  grid-column: 1 / -1;
+}
+
 /* ========== GLOW BUTTON (Glassmorphism con capas corregidas) ========== */
 /* Soporta:
    - Contenido directo (<span> y/o <svg>)  -> se fuerza a z-index 3

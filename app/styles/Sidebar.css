@@ -18,12 +18,13 @@
   --elev-1: 0 10px 24px rgba(0,0,0,.35);
 
   /* Colores glow por ítem */
-  --clr-1: #ff1f71;  /* Perfil */
-  --clr-2: #01c3a8;  /* Experiencia */
-  --clr-3: #1890ff;  /* Proyectos */
-  --clr-4: #8b5cf6;  /* Habilidades */
-  --clr-5: #ffb741;  /* Educación */
-  --clr-6: #1eff45;  /* Contacto */
+  --clr-1: #f59e0b;  /* Landing */
+  --clr-2: #ff1f71;  /* Perfil */
+  --clr-3: #01c3a8;  /* Experiencia */
+  --clr-4: #1890ff;  /* Proyectos */
+  --clr-5: #8b5cf6;  /* Habilidades */
+  --clr-6: #ffb741;  /* Educación */
+  --clr-7: #1eff45;  /* Contacto */
 }
 
 /* ===== Contenedor aside (fijo / drawer) ===== */
@@ -182,6 +183,7 @@
 .pf-aside .pf-menu li:nth-child(4) .pf-nav-item{ --clr: var(--clr-4); }
 .pf-aside .pf-menu li:nth-child(5) .pf-nav-item{ --clr: var(--clr-5); }
 .pf-aside .pf-menu li:nth-child(6) .pf-nav-item{ --clr: var(--clr-6); }
+.pf-aside .pf-menu li:nth-child(7) .pf-nav-item{ --clr: var(--clr-7); }
 
 /* Footer socials */
 .pf-aside .pf-aside-foot{ align-self:end; margin-top: 16px; }

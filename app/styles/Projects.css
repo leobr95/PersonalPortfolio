@@ -39,6 +39,12 @@
   gap: 16px;
 }
 
+@media (min-width: 1081px){
+  .prj-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* ===== Tarjeta 50/50 ===== */
 .prj-card{
   position: relative;
@@ -291,4 +297,3 @@
 .glow-btn:hover::before{ bottom:0; height:50%; width:82%; border-radius:30px; }
 .glow-btn:hover::after { top:0;    height:50%; width:82%; border-radius:30px; }
 .glow-btn:hover > i{ transform: skewX(45deg) translateX(200px); }
-
