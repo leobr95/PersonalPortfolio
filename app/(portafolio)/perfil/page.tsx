@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { JSX, useMemo } from 'react';
 import { FaGithub, FaLinkedin, FaPhoneAlt, FaWhatsapp, FaRegListAlt } from 'react-icons/fa';
-import { MdEmail, MdWorkOutline, MdFolderOpen, MdSchool } from 'react-icons/md';
+import { MdChevronRight, MdEmail, MdWorkOutline, MdFolderOpen, MdSchool } from 'react-icons/md';
 
 import imageProfileLight from '@/app/logos/profile-photo.png';
 import imageProfileDark from '@/app/logos/profile-photo.png';
@@ -13,11 +13,36 @@ import '@/app/styles/Profile.css';
 export default function PerfilPage(): JSX.Element {
   const nav = useMemo(
     () => [
-      { href: '/experiencia', label: 'Experiencia', icon: <MdWorkOutline aria-hidden /> },
-      { href: '/proyectos', label: 'Proyectos', icon: <MdFolderOpen aria-hidden /> },
-      { href: '/skills', label: 'Habilidades', icon: <FaRegListAlt aria-hidden /> },
-      { href: '/educacion', label: 'Educación', icon: <MdSchool aria-hidden /> },
-      { href: '/contacto', label: 'Contacto', icon: <MdEmail aria-hidden /> },
+      {
+        href: '/experiencia',
+        label: 'Experiencia',
+        description: 'Mi trayectoria profesional.',
+        icon: <MdWorkOutline aria-hidden />,
+      },
+      {
+        href: '/proyectos',
+        label: 'Proyectos',
+        description: 'Casos de éxito recientes.',
+        icon: <MdFolderOpen aria-hidden />,
+      },
+      {
+        href: '/skills',
+        label: 'Habilidades',
+        description: 'Tecnologías y herramientas.',
+        icon: <FaRegListAlt aria-hidden />,
+      },
+      {
+        href: '/educacion',
+        label: 'Educación',
+        description: 'Formación académica.',
+        icon: <MdSchool aria-hidden />,
+      },
+      {
+        href: '/contacto',
+        label: 'Contacto',
+        description: 'Hablemos sobre tu proyecto.',
+        icon: <MdEmail aria-hidden />,
+      },
     ],
     []
   );
@@ -48,6 +73,11 @@ export default function PerfilPage(): JSX.Element {
 
   return (
     <section className="prf" aria-label="Perfil">
+      <div className="prf-mobileTopbar" aria-hidden="true">
+        <span className="prf-mobileLogo">LB</span>
+        <span className="prf-mobileBrand">Leonardo Burbano</span>
+      </div>
+
       <div className="prf-card">
         <div className="prf-hero">
           <div className="prf-copy">
@@ -59,7 +89,21 @@ export default function PerfilPage(): JSX.Element {
               <span className="name name--mobile">Leonardo Burbano</span>
             </h1>
 
-            <p className="prf-sub">
+            <p className="prf-status">
+              <span aria-hidden>●</span>
+              Disponible para proyectos
+            </p>
+
+            <p className="prf-role">
+              Full-Stack .NET
+              <span>APIs y arquitectura limpia</span>
+            </p>
+
+            <p className="prf-summary">
+              Desarrollador Full-Stack .NET especializado en APIs, arquitectura limpia y aplicaciones empresariales.
+            </p>
+
+            <p className="prf-sub prf-sub--long">
               Desarrollador <strong>Full-Stack .NET</strong>. Back: <strong>APIs REST</strong> y
               <strong> microservicios .NET/Core</strong> (Clean Architecture), datos en
               <strong> SQL Server/Oracle</strong> (EF Core, LINQ) y <strong>SSRS/RDL</strong>. Front:
@@ -73,7 +117,11 @@ export default function PerfilPage(): JSX.Element {
               {nav.map((n) => (
                 <Link key={n.href} href={n.href} className="pf-glow-btn blue" aria-label={n.label}>
                   {n.icon}
-                  <span>{n.label}</span>
+                  <span className="prf-action-copy">
+                    <span className="prf-action-title">{n.label}</span>
+                    <span className="prf-action-desc">{n.description}</span>
+                  </span>
+                  <MdChevronRight className="prf-action-chevron" aria-hidden />
                   <i aria-hidden />
                 </Link>
               ))}
@@ -82,6 +130,11 @@ export default function PerfilPage(): JSX.Element {
             <div className="prf-sep" aria-hidden />
 
             <div className="prf-contact" aria-label="Acciones de contacto">
+              <div className="prf-contact-head">
+                <span>Contacto</span>
+                <strong>Elige el canal que prefieras</strong>
+              </div>
+
               {contactGroups.map((group) => (
                 <div
                   key={group.id}

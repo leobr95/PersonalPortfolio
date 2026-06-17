@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type JSX } from 'react';
-import { FaCompressAlt, FaDownload, FaFileAlt, FaSearchMinus, FaSearchPlus } from 'react-icons/fa';
+import { FaCompressAlt, FaDownload, FaSearchMinus, FaSearchPlus } from 'react-icons/fa';
 import '@/app/styles/CvFab.css';
 
 export type CvFabProps = {
@@ -12,6 +12,8 @@ export type CvFabProps = {
   filename?: string;
   /** Texto del botón flotante */
   label?: string;
+  /** Texto secundario del botón flotante */
+  subtitle?: string;
   /** Título del modal */
   modalTitle?: string;
   /** Texto botón descargar dentro del modal */
@@ -40,6 +42,7 @@ export default function CvFab({
   dataBase64,
   filename = 'Leonardo_Burbano_CV.pdf',
   label = 'Ver curriculum',
+  subtitle,
   modalTitle = 'Currículum',
   downloadLabel = 'Descargar CV',
   closeLabel = 'Cerrar',
@@ -154,8 +157,11 @@ export default function CvFab({
           aria-haspopup="dialog"
           aria-expanded={isOpen}
         >
-          <FaFileAlt aria-hidden className="cv-fab-icon" />
-          <span className="cv-fab-label">{label}</span>
+          <FaDownload aria-hidden className="cv-fab-icon" />
+          <span className="cv-fab-copy">
+            <span className="cv-fab-label">{label}</span>
+            {subtitle ? <span className="cv-fab-subtitle">{subtitle}</span> : null}
+          </span>
           <i aria-hidden />
         </button>
       </div>
