@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type JSX } from 'react';
-import { FaCompressAlt, FaDownload, FaSearchMinus, FaSearchPlus } from 'react-icons/fa';
+import { useCallback, useEffect, useMemo, useRef, useState, type JSX } from 'react';
+import { FaDownload } from 'react-icons/fa';
 import '@/app/styles/CvFab.css';
 
 export type CvFabProps = {
@@ -48,7 +48,6 @@ export default function CvFab({
   closeLabel = 'Cerrar',
 }: CvFabProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
-  const [previewScale, setPreviewScale] = useState(1);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
   const hasBase64 = useMemo(() => typeof dataBase64 === 'string' && dataBase64.length > 20, [dataBase64]);
@@ -85,25 +84,6 @@ export default function CvFab({
   const openModal = useCallback(() => setIsOpen(true), []);
   const closeModal = useCallback(() => setIsOpen(false), []);
 
-  const zoomIn = useCallback(() => {
-    setPreviewScale((scale) => Math.min(2.5, Number((scale + 0.25).toFixed(2))));
-  }, []);
-
-  const zoomOut = useCallback(() => {
-    setPreviewScale((scale) => Math.max(1, Number((scale - 0.25).toFixed(2))));
-  }, []);
-
-  const resetZoom = useCallback(() => setPreviewScale(1), []);
-
-  const previewStageStyle = useMemo(
-    () => ({
-      '--cv-preview-scale': previewScale,
-      width: `${previewScale * 100}%`,
-      height: `${previewScale * 100}%`,
-    }) as CSSProperties,
-    [previewScale]
-  );
-
   const handleDownload = useCallback(() => {
     try {
       const blob = base64ToBlob(dataBase64, 'application/pdf');
@@ -125,7 +105,6 @@ export default function CvFab({
   // UX: ESC para cerrar + bloquear scroll + foco al botón cerrar
   useEffect(() => {
     if (!isOpen) return;
-    setPreviewScale(1);
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeModal();
@@ -211,7 +190,7 @@ export default function CvFab({
 
                   <div className="cv-mobilePreview" aria-label="Vista previa del CV">
                     <div className="cv-previewViewport">
-                      <div className="cv-previewStage" style={previewStageStyle}>
+                      <div className="cv-previewStage">
                         <Image
                           className="cv-previewImg"
                           src="/cv/cv-preview.png"
@@ -222,39 +201,6 @@ export default function CvFab({
                           draggable={false}
                         />
                       </div>
-                    </div>
-
-                    <div className="cv-zoomControls" aria-label="Controles de zoom">
-                      <button
-                        type="button"
-                        className="cv-zoomBtn"
-                        onClick={zoomOut}
-                        disabled={previewScale <= 1}
-                        aria-label="Reducir zoom"
-                      >
-                        <FaSearchMinus aria-hidden />
-                      </button>
-                      <span className="cv-zoomValue" aria-live="polite">
-                        {Math.round(previewScale * 100)}%
-                      </span>
-                      <button
-                        type="button"
-                        className="cv-zoomBtn"
-                        onClick={zoomIn}
-                        disabled={previewScale >= 2.5}
-                        aria-label="Aumentar zoom"
-                      >
-                        <FaSearchPlus aria-hidden />
-                      </button>
-                      <button
-                        type="button"
-                        className="cv-zoomBtn"
-                        onClick={resetZoom}
-                        disabled={previewScale === 1}
-                        aria-label="Ajustar página completa"
-                      >
-                        <FaCompressAlt aria-hidden />
-                      </button>
                     </div>
                   </div>
                 </div>

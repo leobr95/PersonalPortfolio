@@ -61,8 +61,8 @@ export default function PortfolioLayout({ children }: PropsWithChildren) {
       <CvFab
         dataBase64={CV_BASE64}
         filename="Leonardo_Burbano_CV.pdf"
-        label="Ver Curriculum"
-        subtitle="Descargar CV en PDF"
+        label="Ver curriculum"
+        subtitle="Descargar mi CV en PDF"
         modalTitle="Currículum"
         downloadLabel="Descargar CV"
         closeLabel="Cerrar"

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { JSX, useMemo } from 'react';
-import { FaGithub, FaLinkedin, FaPhoneAlt, FaWhatsapp, FaRegListAlt } from 'react-icons/fa';
+import { FaDownload, FaGithub, FaLinkedin, FaPhoneAlt, FaWhatsapp, FaRegListAlt } from 'react-icons/fa';
 import { MdChevronRight, MdEmail, MdWorkOutline, MdFolderOpen, MdSchool } from 'react-icons/md';
 
 import imageProfileLight from '@/app/logos/profile-photo.png';
@@ -16,31 +16,31 @@ export default function PerfilPage(): JSX.Element {
       {
         href: '/experiencia',
         label: 'Experiencia',
-        description: 'Mi trayectoria profesional.',
+        description: 'Mi trayectoria',
         icon: <MdWorkOutline aria-hidden />,
       },
       {
         href: '/proyectos',
         label: 'Proyectos',
-        description: 'Casos de éxito recientes.',
+        description: 'Trabajos recientes',
         icon: <MdFolderOpen aria-hidden />,
       },
       {
         href: '/skills',
         label: 'Habilidades',
-        description: 'Tecnologías y herramientas.',
+        description: 'Tecnologías',
         icon: <FaRegListAlt aria-hidden />,
       },
       {
         href: '/educacion',
         label: 'Educación',
-        description: 'Formación académica.',
+        description: 'Formación académica',
         icon: <MdSchool aria-hidden />,
       },
       {
         href: '/contacto',
         label: 'Contacto',
-        description: 'Hablemos sobre tu proyecto.',
+        description: 'Hablemos',
         icon: <MdEmail aria-hidden />,
       },
     ],
@@ -159,6 +159,20 @@ export default function PerfilPage(): JSX.Element {
                 </div>
               ))}
             </div>
+
+            <button
+              type="button"
+              className="prf-cv-inline"
+              onClick={() => document.querySelector<HTMLButtonElement>('.cv-fab-btn')?.click()}
+              aria-label="Ver curriculum"
+            >
+              <FaDownload aria-hidden />
+              <span>
+                <strong>Ver curriculum</strong>
+                <small>Descargar mi CV en PDF</small>
+              </span>
+              <MdChevronRight aria-hidden />
+            </button>
           </div>
 
           <div className="prf-figure" aria-hidden="true">
