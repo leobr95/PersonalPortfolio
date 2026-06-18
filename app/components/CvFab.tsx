@@ -52,6 +52,11 @@ export default function CvFab({
 
   const hasBase64 = useMemo(() => typeof dataBase64 === 'string' && dataBase64.length > 20, [dataBase64]);
 
+  const unlockDocumentScroll = useCallback(() => {
+    document.documentElement.classList.remove('cv-scroll-lock');
+    document.body.classList.remove('cv-scroll-lock');
+  }, []);
+
   // Genera URL blob solo cuando el modal esté abierto (y la revoca al cerrar)
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const pdfPreviewUrl = useMemo(
@@ -82,7 +87,10 @@ export default function CvFab({
   }, [isOpen, dataBase64, hasBase64]);
 
   const openModal = useCallback(() => setIsOpen(true), []);
-  const closeModal = useCallback(() => setIsOpen(false), []);
+  const closeModal = useCallback(() => {
+    unlockDocumentScroll();
+    setIsOpen(false);
+  }, [unlockDocumentScroll]);
 
   const handleDownload = useCallback(() => {
     try {
@@ -112,17 +120,17 @@ export default function CvFab({
 
     window.addEventListener('keydown', onKeyDown);
 
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    document.documentElement.classList.add('cv-scroll-lock');
+    document.body.classList.add('cv-scroll-lock');
 
     // Focus en botón cerrar
     setTimeout(() => closeBtnRef.current?.focus(), 0);
 
     return () => {
       window.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = prevOverflow;
+      unlockDocumentScroll();
     };
-  }, [isOpen, closeModal]);
+  }, [isOpen, closeModal, unlockDocumentScroll]);
 
   return (
     <>
