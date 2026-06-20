@@ -548,6 +548,163 @@
   }
 }
 
+/* CTA de curriculum alineado al sistema visual de las tarjetas del portafolio */
+.cv-fab::before{
+  inset: -10px -12px;
+  background:
+    radial-gradient(closest-side, rgba(96,165,250,.22), rgba(96,165,250,.1) 48%, transparent 74%),
+    radial-gradient(closest-side, rgba(20,184,166,.12), transparent 68%);
+  filter: blur(8px);
+  opacity: .8;
+}
+
+.cv-fab-btn{
+  display: grid !important;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center !important;
+  gap: 12px !important;
+  min-height: 58px !important;
+  height: auto !important;
+  padding: 10px 14px !important;
+  border-radius: 16px !important;
+  letter-spacing: 0 !important;
+  text-align: left !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition:
+    transform .16s ease,
+    border-color .18s ease,
+    background-color .18s ease,
+    box-shadow .18s ease,
+    filter .18s ease !important;
+}
+
+.cv-fab-btn::before,
+.cv-fab-btn::after,
+.cv-fab-btn > i{
+  display: none !important;
+  content: none !important;
+}
+
+.cv-fab-btn .cv-fab-icon{
+  grid-column: 1;
+  justify-self: center;
+  width: 19px;
+  height: 19px;
+  font-size: 19px !important;
+  filter: none !important;
+}
+
+.cv-fab-btn .cv-fab-copy{
+  grid-column: 2;
+  display: grid !important;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cv-fab-btn .cv-fab-label{
+  color: #fff;
+  font-size: 14px !important;
+  line-height: 1.05;
+  font-weight: 900;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
+}
+
+.cv-fab-btn .cv-fab-subtitle{
+  display: block;
+  color: rgba(255,255,255,.82);
+  font-size: 12px !important;
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: 0 !important;
+}
+
+.cv-fab-btn:hover,
+.cv-fab-btn:focus-visible,
+.cv-fab-btn:active{
+  letter-spacing: 0 !important;
+  outline: none;
+}
+
+.cv-fab-btn:hover,
+.cv-fab-btn:focus-visible{
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.cv-fab-btn:active{
+  transform: scale(.985);
+}
+
+html[data-theme="light"] .cv-fab-btn{
+  color: #fff !important;
+  border: 1px solid rgba(59,130,246,.22) !important;
+  background: linear-gradient(135deg, #4f7df3 0%, #56a7f8 100%) !important;
+  box-shadow:
+    0 16px 30px rgba(37,99,235,.2),
+    0 1px 0 rgba(255,255,255,.28) inset !important;
+}
+
+html[data-theme="light"] .cv-fab .cv-fab-btn,
+html[data-theme="light"] .cv-fab .cv-fab-btn .cv-fab-label,
+html[data-theme="light"] .cv-fab .cv-fab-btn .cv-fab-subtitle,
+html[data-theme="light"] .cv-fab .cv-fab-btn .cv-fab-icon,
+html[data-theme="light"] .cv-fab .cv-fab-btn svg{
+  color: #fff !important;
+}
+
+html[data-theme="light"] .cv-fab .cv-fab-btn .cv-fab-subtitle{
+  opacity: .86;
+}
+
+html[data-theme="light"] .cv-fab-btn:hover,
+html[data-theme="light"] .cv-fab-btn:focus-visible{
+  box-shadow:
+    0 20px 38px rgba(37,99,235,.24),
+    0 10px 20px rgba(14,165,233,.14),
+    0 1px 0 rgba(255,255,255,.32) inset !important;
+}
+
+html[data-theme="dark"] .cv-fab-btn,
+html:not([data-theme="light"]) .cv-fab-btn{
+  color: #fff !important;
+  border: 1px solid rgba(96,165,250,.28) !important;
+  background:
+    radial-gradient(120% 140% at 16% 0%, rgba(96,165,250,.26), transparent 44%),
+    linear-gradient(180deg, rgba(32,67,158,.88), rgba(26,50,121,.9)) !important;
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.28),
+    0 1px 0 rgba(255,255,255,.1) inset !important;
+}
+
+html[data-theme="dark"] .cv-fab-btn:hover,
+html[data-theme="dark"] .cv-fab-btn:focus-visible,
+html:not([data-theme="light"]) .cv-fab-btn:hover,
+html:not([data-theme="light"]) .cv-fab-btn:focus-visible{
+  border-color: rgba(147,197,253,.38) !important;
+  box-shadow:
+    0 20px 38px rgba(0,0,0,.32),
+    0 1px 0 rgba(255,255,255,.12) inset !important;
+}
+
+@media (max-width: 520px){
+  .cv-fab-btn{
+    grid-template-columns: 32px minmax(0, 1fr);
+    min-height: 54px !important;
+    padding: 9px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  .cv-fab-btn .cv-fab-label{
+    font-size: 13px !important;
+  }
+
+  .cv-fab-btn .cv-fab-subtitle{
+    font-size: 11px !important;
+  }
+}
+
 /* Light mode keeps the CV modal aligned with the premium profile surface. */
 html[data-theme="light"] .cv-modalOverlay{
   background:

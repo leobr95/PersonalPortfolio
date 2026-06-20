@@ -3,6 +3,8 @@
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+import { FaGithub } from 'react-icons/fa';
+import { MdOpenInNew } from 'react-icons/md';
 
 import '@/app/styles/Projects.css';
 import bebidassoftc2 from '@/app/capturas/babidasc2.png';
@@ -25,6 +27,9 @@ import gvsc1 from '@/app/capturas/gvsc1.png';
 import lbcodeworksc1 from '@/app/capturas/lbcodeworksc1.png';
 import lbcodeworksc2 from '@/app/capturas/lbcodeworksc2.png';
 import megadevc1 from '@/app/capturas/megadevc1.png';
+import observadorObservaciones from '@/app/capturas/observador-observaciones.png';
+import observadorPanel from '@/app/capturas/observador-panel.png';
+import observadorReportes from '@/app/capturas/observador-reportes.png';
 import ofc1 from '@/app/capturas/ofc1.png';
 import portfolioc1 from '@/app/capturas/portfolioc1.png';
 import pytc1 from '@/app/capturas/pytc1.png';
@@ -39,6 +44,8 @@ type Project = {
   tech: string[];
   images: (string | StaticImageData)[];
   href?: string;
+  codeHref?: string;
+  badge?: 'Destacado' | 'Freelance' | 'Personal' | 'Comercial';
 };
 
 const LABORAL: Project[] = [
@@ -215,6 +222,20 @@ const FREELANCE: Project[] = [
   },
 
   {
+    title: 'Observador Estudiantil – Gestión académica',
+    description:
+      'MVP full-stack para colegios de primaria: panel docente, gestión de cursos, estudiantes, asignaturas, observaciones, registro de notas, asistencia, horarios y reportes exportables.',
+    tech: ['React 19', 'Vite', 'MUI', 'NestJS', 'Prisma', 'PostgreSQL', '.NET JWT'],
+    images: [
+      observadorPanel,
+      observadorObservaciones,
+      observadorReportes,
+    ],
+    codeHref: 'https://github.com/leobr95/student-observer-system',
+    badge: 'Personal',
+  },
+
+  {
     title: 'DEBS – Gestión de Deudas Personales',
     description:
       'Plataforma con microservicios en .NET Core (API REST documentada con Swagger) y frontend React/Next.js. Incluye tablero con Chart.js, autenticación, categorías y flujo de seguimiento de pagos. Pruebas unitarias en capa de dominio/servicios.',
@@ -258,61 +279,41 @@ const FREELANCE: Project[] = [
 
 
 /* ----- Tarjeta con slider (sin modal) ----- */
-function ProjectCard({ p }: { p: Project }) {
+function ProjectCard({
+  p,
+  priorityMedia = false,
+  showActions = true,
+}: {
+  p: Project;
+  priorityMedia?: boolean;
+  showActions?: boolean;
+}) {
   const [idx, setIdx] = useState(0);
   const total = p.images.length;
+  const badge = p.badge ?? (p.href ? 'Destacado' : 'Comercial');
+  const activeImage = p.images[idx];
 
   const go = (dir: number) => setIdx((i) => (i + dir + total) % total);
   const dots = useMemo(() => Array.from({ length: total }), [total]);
 
   return (
     <article className="prj-card">
-      {/* Columna texto */}
-      <div className="prj-info">
-        <header className="prj-head">
-          <h3 className="prj-title">{p.title}</h3>
-          <p className="prj-desc">{p.description}</p>
-        </header>
-
-        <ul className="prj-pills" role="list">
-          {p.tech.slice(0, 6).map((t) => (
-            <li key={t} className="pill">{t}</li>
-          ))}
-        </ul>
-
-        <div className="prj-actions">
-          {p.href ? (
-            <Link
-              href={p.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glow-btn blue"
-              aria-label={`Visitar ${p.title}`}
-            >
-              <span>Visitar</span>
-              <i aria-hidden />
-            </Link>
-          ) : (
-            <span className="no-link">Repositorio/Demo privada</span>
-          )}
-        </div>
-      </div>
-
-      {/* Columna media (slider) */}
       <div className="prj-media">
-        <div className="prj-orb" aria-hidden="true" />
+        <span className={`prj-badge prj-badge--${badge.toLowerCase()}`}>{badge}</span>
+
         <div className="prj-slider">
           <button className="nav prev" aria-label="Anterior" onClick={() => go(-1)}>‹</button>
 
-          <div className="prj-frame">
+          <div className="prj-frame" aria-label={`${p.title} capturas del proyecto`}>
             <Image
-              src={p.images[idx]}
-              alt={`${p.title} – imagen ${idx + 1}`}
+              src={activeImage}
+              alt={`${p.title} – captura ${idx + 1}`}
               className="prj-img"
-              width={900}
-              height={600}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority={false}
+              width={1200}
+              height={760}
+              sizes="(max-width: 900px) 90vw, 44vw"
+              loading={priorityMedia ? 'eager' : 'lazy'}
+              unoptimized
             />
           </div>
 
@@ -331,8 +332,72 @@ function ProjectCard({ p }: { p: Project }) {
           ))}
         </div>
       </div>
+
+      <div className={`prj-info ${showActions ? '' : 'prj-info--no-actions'}`}>
+        <header className="prj-head">
+          <h3 className="prj-title">{p.title}</h3>
+          <p className="prj-desc">{p.description}</p>
+        </header>
+
+        <ul className="prj-pills" role="list">
+          {p.tech.slice(0, 7).map((t) => (
+            <li key={t} className={`prj-chip prj-chip--${techTone(t)}`}>{t}</li>
+          ))}
+        </ul>
+
+        {showActions ? (
+          <div className="prj-actions">
+            {p.href ? (
+              <Link
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="prj-btn prj-btn--primary"
+                aria-label={`Ver proyecto ${p.title}`}
+              >
+                <span>Ver proyecto</span>
+                <MdOpenInNew aria-hidden />
+              </Link>
+            ) : (
+              <span className="prj-btn prj-btn--primary is-disabled" aria-disabled="true">
+                <span>Ver proyecto</span>
+                <MdOpenInNew aria-hidden />
+              </span>
+            )}
+
+            {p.codeHref ? (
+              <Link
+                href={p.codeHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="prj-btn prj-btn--secondary"
+                aria-label={`Ver código de ${p.title}`}
+              >
+                <FaGithub aria-hidden />
+                <span>Código</span>
+              </Link>
+            ) : (
+              <span className="prj-btn prj-btn--secondary is-disabled" aria-disabled="true">
+                <FaGithub aria-hidden />
+                <span>Código</span>
+              </span>
+            )}
+          </div>
+        ) : null}
+      </div>
     </article>
   );
+}
+
+function techTone(tech: string) {
+  const value = tech.toLowerCase();
+  if (value.includes('react') || value.includes('next') || value.includes('typescript') || value.includes('angular') || value.includes('vue')) return 'blue';
+  if (value.includes('.net') || value.includes('c#') || value.includes('api') || value.includes('micro')) return 'violet';
+  if (value.includes('sql') || value.includes('oracle') || value.includes('data') || value.includes('report')) return 'cyan';
+  if (value.includes('azure') || value.includes('vercel') || value.includes('docker') || value.includes('devops')) return 'indigo';
+  if (value.includes('qa') || value.includes('test') || value.includes('scrum')) return 'green';
+  if (value.includes('sharepoint') || value.includes('soap') || value.includes('sap') || value.includes('salesforce')) return 'amber';
+  return 'slate';
 }
 
 function ProjectsContent({ showSectionTitles = true }: { showSectionTitles?: boolean }) {
@@ -341,8 +406,12 @@ function ProjectsContent({ showSectionTitles = true }: { showSectionTitles?: boo
       <section className="prj-section">
         {showSectionTitles ? <h2 className="prj-section-title">Proyectos freelance / personales</h2> : null}
         <div className="prj-grid">
-          {FREELANCE.map((p) => (
-            <ProjectCard key={p.title} p={p} />
+          {FREELANCE.map((p, index) => (
+            <ProjectCard
+              key={p.title}
+              p={{ ...p, badge: p.badge ?? (p.title.includes('Portafolio') ? 'Personal' : 'Freelance') }}
+              priorityMedia={index === 0}
+            />
           ))}
         </div>
       </section>
@@ -351,7 +420,7 @@ function ProjectsContent({ showSectionTitles = true }: { showSectionTitles?: boo
         {showSectionTitles ? <h2 className="prj-section-title">Proyectos laborales</h2> : null}
         <div className="prj-grid">
           {LABORAL.map((p) => (
-            <ProjectCard key={p.title} p={p} />
+            <ProjectCard key={p.title} p={{ ...p, badge: p.href ? 'Destacado' : 'Comercial' }} showActions={false} />
           ))}
         </div>
       </section>
@@ -361,10 +430,29 @@ function ProjectsContent({ showSectionTitles = true }: { showSectionTitles?: boo
 
 export default function ProjectsPage() {
   return (
-    <section className="ctc">
-      <header className="ctc-head">
-        <h1 className="ctc-title">Proyectos</h1>
-        <p className="ctc-sub">Te cuento acerca de los proyectos en los que he participado y lo que he conseguido.</p>
+    <section className="ctc prj">
+      <header className="prj-hero prj-hero--classic">
+        <div className="ctc-head prj-hero-copy">
+          <h1 className="ctc-title">Proyectos</h1>
+          <p className="ctc-sub prj-sub">
+            Te cuento acerca de los proyectos en los que he participado y lo que he conseguido.
+          </p>
+        </div>
+
+        <dl className="prj-stats" aria-label="Resumen de proyectos">
+          <div className="prj-stat">
+            <dt>Experiencia</dt>
+            <dd>5+ años</dd>
+          </div>
+          <div className="prj-stat">
+            <dt>Proyectos</dt>
+            <dd>20+</dd>
+          </div>
+          <div className="prj-stat">
+            <dt>Tecnologías</dt>
+            <dd>15+</dd>
+          </div>
+        </dl>
       </header>
       <ProjectsContent />
     </section>

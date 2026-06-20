@@ -83,7 +83,7 @@ export default function ContactPanel({ showHeader = true }: { showHeader?: boole
               <MdPhone aria-hidden />
               <span><strong>Llamadas:</strong> +57 {LLAMADAS.replace(/^57/,'')}</span>
               <button className="link-ghost" onClick={handleCopy} aria-label="Copiar número">
-                {copied ? <><MdCheckCircle/> Copiado</> : <><MdContentCopy/> Copiar</>}
+                {copied ? <><MdCheckCircle/> <span className="ctc-copy-text">Copiado</span></> : <><MdContentCopy/> <span className="ctc-copy-text">Copiar</span></>}
               </button>
             </li>
             <li>

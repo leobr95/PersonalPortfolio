@@ -4,6 +4,7 @@ import { useEffect, useState, PropsWithChildren } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 import CvFab from '@/app/components/CvFab';
+import RouteLoadingIndicator from '@/app/components/RouteLoadingIndicator';
 import Sidebar from '@/app/components/Sidebar';
 import '@/app/styles/theme.css';
 import '@/app/styles/portfolio.css';
@@ -41,6 +42,8 @@ export default function PortfolioLayout({ children }: PropsWithChildren) {
 
   return (
     <>
+      <RouteLoadingIndicator />
+
       <button
         type="button"
         className={`pf-hamburger ${sidebarHidden ? 'is-sidebar-hidden' : ''}`}

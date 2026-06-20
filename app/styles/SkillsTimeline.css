@@ -2,10 +2,12 @@
    Skills Timeline (oscuro + cristal)
    ======================= */
 .skl2{
+  --skl2-sticky-top: max(12px, env(safe-area-inset-top));
+  --skl2-title-sticky-h: 44px;
   position: relative;
   border-radius: 16px;
   box-shadow: 0 10px 28px rgba(0,0,0,.25);
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
   background:
     radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.25), transparent 50%),
@@ -40,7 +42,7 @@
   max-height: clamp(460px, 62vh, 760px);
   overflow-y: auto;
   overflow-x: hidden;
-  overscroll-behavior: contain;
+  overscroll-behavior-y: auto;
   scroll-padding-top: 48px;
 }
 
@@ -62,8 +64,8 @@
    ======================= */
 .skl2-years{
   position: sticky;
-  top: 0;
-  z-index: 20;
+  top: calc(var(--skl2-sticky-top) + var(--skl2-title-sticky-h));
+  z-index: 35;
   width: 100%;
   list-style: none;
   margin: 0 0 8px;
@@ -255,6 +257,32 @@
 }
 .skl2-col{
   position: relative;
+}
+
+.skl2-col > h3{
+  position: sticky;
+  top: var(--skl2-sticky-top);
+  z-index: 36;
+  min-height: var(--skl2-title-sticky-h);
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 10px 10px 8px;
+  border-radius: 14px 14px 0 0;
+  color: #f8fafc;
+  font-size: clamp(16px, 2.1vw, 20px);
+  font-weight: 900;
+  letter-spacing: 0;
+  background:
+    radial-gradient(900px 360px at 10% -30%, rgba(98,0,234,.18), transparent 52%),
+    radial-gradient(900px 360px at 110% 110%, rgba(0,140,255,.14), transparent 52%),
+    rgba(14,16,22,.82);
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+          backdrop-filter: blur(10px) saturate(130%);
 }
 
 /* =======================

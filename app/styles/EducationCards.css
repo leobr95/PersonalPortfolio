@@ -260,3 +260,8 @@
     transition: none !important;
   }
 }
+
+html[data-theme="light"] .edu-btn,
+html[data-theme="light"] .edu-btn > span{
+  color: #111827 !important;
+}

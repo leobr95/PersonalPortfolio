@@ -249,3 +249,30 @@
     transition: none !important;
   }
 }
+
+html[data-theme="light"] .xpSec .xp-btn{
+  color: #111827 !important;
+}
+
+html[data-theme="light"] .xpSec .tone-green .xp-btn,
+html[data-theme="light"] .xpSec .tone-blue .xp-btn,
+html[data-theme="light"] .xpSec .tone-orange .xp-btn,
+html[data-theme="light"] .xpSec .tone-red .xp-btn{
+  color: #111827 !important;
+}
+
+html[data-theme="light"] .xpSec .tone-green .xp-btn > svg{
+  color: #059669 !important;
+}
+
+html[data-theme="light"] .xpSec .tone-blue .xp-btn > svg{
+  color: #2563eb !important;
+}
+
+html[data-theme="light"] .xpSec .tone-orange .xp-btn > svg{
+  color: #c2410c !important;
+}
+
+html[data-theme="light"] .xpSec .tone-red .xp-btn > svg{
+  color: #dc2626 !important;
+}

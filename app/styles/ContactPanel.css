@@ -256,3 +256,105 @@
   position: relative;
   z-index: 3;                          /* capa superior garantizada */
 }
+
+html[data-theme="light"] .ctc .glow-btn,
+html[data-theme="light"] .ctc .link-ghost,
+html[data-theme="light"] .ctc .glow-btn > span,
+html[data-theme="light"] .ctc .glow-btn .texto-btn,
+html[data-theme="light"] .ctc .link-ghost > span{
+  color: #111827 !important;
+}
+
+html[data-theme="light"] .ctc .glow-btn.green > svg{
+  color: #059669 !important;
+}
+
+html[data-theme="light"] .ctc .glow-btn.blue > svg,
+html[data-theme="light"] .ctc .link-ghost > svg{
+  color: #2563eb !important;
+}
+
+/* Alineación fina de las cards internas de contacto */
+.ctc-grid{
+  align-items: stretch;
+}
+
+.ctc-card,
+.ctc-form{
+  height: 100%;
+}
+
+.ctc-card{
+  display: flex;
+  flex-direction: column;
+}
+
+.ctc-card-head{
+  flex: 0 0 auto;
+}
+
+.ctc-lines{
+  gap: 10px;
+}
+
+.ctc-lines li{
+  min-height: 56px;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 16px;
+}
+
+.ctc-lines li > span,
+.ctc-lines li > .link{
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ctc-lines .link-ghost{
+  flex: 0 0 auto;
+  justify-self: end;
+  gap: 6px;
+}
+
+.ctc-whatsappBar{
+  margin-top: auto;
+}
+
+.ctc-whatsappBar .glow-btn,
+.ctc-submitBar .glow-btn{
+  min-height: 56px;
+  align-items: center;
+}
+
+@media (max-width: 960px){
+  .ctc-card,
+  .ctc-form{
+    height: auto;
+  }
+}
+
+@media (max-width: 420px){
+  .ctc-lines li{
+    grid-template-columns: 20px minmax(0, 1fr) 40px;
+    min-height: 56px;
+    gap: 8px;
+  }
+
+  .ctc-lines .link-ghost{
+    width: 40px !important;
+    min-width: 40px !important;
+    padding: 0 !important;
+  }
+
+  .ctc-lines .link-ghost .ctc-copy-text{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
