@@ -123,10 +123,9 @@ const COURSES: Course[] = [
   },
   {
     name: 'Curso de Inglés',
-    provider: 'Udemy / Pluralsight',
+    provider: 'Smart Financial Systems',
     period: { from: { y: 2018, m: 3 }, to: { y: 2020, m: 11 } },
     logo: smartFinancial,
-    mode: 'Online',
     details: [
       'Formación de inglés desarrollada durante mi etapa en Smart Financial Systems.',
       'Refuerzo de lectura técnica, comunicación profesional y documentación en inglés.',

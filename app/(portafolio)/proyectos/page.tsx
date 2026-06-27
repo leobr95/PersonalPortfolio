@@ -23,9 +23,19 @@ import debsc7 from '@/app/capturas/debsc7.webp';
 import debsc8 from '@/app/capturas/debsc8.webp';
 import debsc9 from '@/app/capturas/debsc9.webp';
 import devinmotionc1 from '@/app/capturas/devinmotionc1.webp';
+import felipeSantanaBlog from '@/app/capturas/felipe-santana-psicologo-blog.webp';
+import felipeSantanaHero from '@/app/capturas/felipe-santana-psicologo-hero.webp';
+import felipeSantanaServicios from '@/app/capturas/felipe-santana-psicologo-servicios.webp';
 import gcc1 from '@/app/capturas/gcc1.webp';
 import gvsc1 from '@/app/capturas/gvsc1.webp';
 import lbcodeworksCom2026 from '@/app/capturas/lbcodeworks-com-2026.webp';
+import lbcodeworksComLight2026 from '@/app/capturas/lbcodeworks-com-light-2026.webp';
+import lbcodeworksContacto2026 from '@/app/capturas/lbcodeworks-contacto-2026.webp';
+import lbcodeworksContactoLight2026 from '@/app/capturas/lbcodeworks-contacto-light-2026.webp';
+import lbcodeworksFaq2026 from '@/app/capturas/lbcodeworks-faq-2026.webp';
+import lbcodeworksFaqLight2026 from '@/app/capturas/lbcodeworks-faq-light-2026.webp';
+import lbcodeworksProyectos2026 from '@/app/capturas/lbcodeworks-proyectos-2026.webp';
+import lbcodeworksProyectosLight2026 from '@/app/capturas/lbcodeworks-proyectos-light-2026.webp';
 import megadevc1 from '@/app/capturas/megadevc1.webp';
 import observadorAsistencia2026 from '@/app/capturas/observador-asistencia-2026.webp';
 import observadorCalendario2026 from '@/app/capturas/observador-calendario-2026.webp';
@@ -50,6 +60,8 @@ type Project = {
   badge?: 'Destacado' | 'Freelance' | 'Personal' | 'Comercial';
   imageFit?: 'cover' | 'contain';
 };
+
+type ProjectTab = 'freelance' | 'laboral';
 
 const LABORAL: Project[] = [
   /* ───────────────── Procesos y Tecnología ───────────────── */
@@ -201,12 +213,34 @@ qvisionc1,
 
 const FREELANCE: Project[] = [
   {
+    title: 'Felipe Santana Psicólogo – Landing profesional',
+    description:
+      'Landing profesional para psicólogo organizacional en Cali. Presenta marca personal, servicios para personas y empresas, secciones de acerca de, blog, preguntas frecuentes y contacto con CTA directo a WhatsApp/correo, cuidando una experiencia visual limpia con elementos que aparecen al hacer scroll.',
+    tech: ['Landing profesional', 'Marca personal', 'Servicios', 'Blog', 'Scroll reveal', 'WhatsApp CTA', 'Vercel'],
+    images: [
+      felipeSantanaHero,
+      felipeSantanaServicios,
+      felipeSantanaBlog,
+    ],
+    href: 'https://felipe-santana-psicologo.vercel.app/landing',
+    badge: 'Freelance',
+    imageFit: 'contain',
+  },
+
+  {
     title: 'lb.codeworks – Empresa de software a medida',
     description:
       'Sitio corporativo de lb.codeworks para ofrecer desarrollo web y software a la medida. Presenta servicios, enfoque comercial, CTA de cotización, contacto por WhatsApp, navegación bilingüe y experiencia visual en modo claro/oscuro.',
     tech: ['Next.js (React/TS)', 'Landing comercial', 'Software a medida', 'WhatsApp CTA', 'SEO'],
     images: [
       lbcodeworksCom2026,
+      lbcodeworksComLight2026,
+      lbcodeworksProyectos2026,
+      lbcodeworksProyectosLight2026,
+      lbcodeworksFaq2026,
+      lbcodeworksFaqLight2026,
+      lbcodeworksContacto2026,
+      lbcodeworksContactoLight2026,
     ],
     href: 'https://lbcodeworks.com/',
     imageFit: 'contain',
@@ -530,30 +564,73 @@ function techTone(tech: string) {
 }
 
 function ProjectsContent({ showSectionTitles = true }: { showSectionTitles?: boolean }) {
+  const [activeTab, setActiveTab] = useState<ProjectTab>('freelance');
+  const isFreelanceActive = activeTab === 'freelance';
+  const activeProjects = isFreelanceActive ? FREELANCE : LABORAL;
+  const activeTitle = isFreelanceActive ? 'Proyectos freelance / personales' : 'Proyectos laborales';
+  const activeDescription = isFreelanceActive
+    ? 'Productos propios, landings comerciales y soluciones desarrolladas de punta a punta.'
+    : 'Participación en equipos empresariales, fábrica de software, integraciones y plataformas internas.';
+
   return (
-    <>
-      <section className="prj-section">
-        {showSectionTitles ? <h2 className="prj-section-title">Proyectos freelance / personales</h2> : null}
+    <section className="prj-section prj-section--tabs">
+      <div className="prj-tabs" role="tablist" aria-label="Tipo de proyectos">
+        <button
+          type="button"
+          id="tab-proyectos-freelance"
+          role="tab"
+          className={`prj-tab ${isFreelanceActive ? 'is-active' : ''}`}
+          aria-selected={isFreelanceActive}
+          aria-controls="panel-proyectos"
+          onClick={() => setActiveTab('freelance')}
+        >
+          <span>Proyectos freelance / personales</span>
+        </button>
+
+        <button
+          type="button"
+          id="tab-proyectos-laborales"
+          role="tab"
+          className={`prj-tab ${!isFreelanceActive ? 'is-active' : ''}`}
+          aria-selected={!isFreelanceActive}
+          aria-controls="panel-proyectos"
+          onClick={() => setActiveTab('laboral')}
+        >
+          <span>Proyectos laborales</span>
+        </button>
+      </div>
+
+      <section
+        key={activeTab}
+        id="panel-proyectos"
+        className="prj-tab-panel"
+        role="tabpanel"
+        aria-labelledby={isFreelanceActive ? 'tab-proyectos-freelance' : 'tab-proyectos-laborales'}
+      >
+        {showSectionTitles ? (
+          <header className="prj-section-head">
+            <h2 className="prj-section-title">{activeTitle}</h2>
+            <p className="prj-section-desc">{activeDescription}</p>
+          </header>
+        ) : null}
+
         <div className="prj-grid">
-          {FREELANCE.map((p, index) => (
+          {activeProjects.map((p, index) => (
             <ProjectCard
               key={p.title}
-              p={{ ...p, badge: p.badge ?? (p.title.includes('Portafolio') ? 'Personal' : 'Freelance') }}
+              p={{
+                ...p,
+                badge: isFreelanceActive
+                  ? p.badge ?? (p.title.includes('Portafolio') ? 'Personal' : 'Freelance')
+                  : p.href ? 'Destacado' : 'Comercial',
+              }}
               priorityMedia={index === 0}
+              showActions={isFreelanceActive}
             />
           ))}
         </div>
       </section>
-
-      <section className="prj-section">
-        {showSectionTitles ? <h2 className="prj-section-title">Proyectos laborales</h2> : null}
-        <div className="prj-grid">
-          {LABORAL.map((p) => (
-            <ProjectCard key={p.title} p={{ ...p, badge: p.href ? 'Destacado' : 'Comercial' }} showActions={false} />
-          ))}
-        </div>
-      </section>
-    </>
+    </section>
   );
 }
 

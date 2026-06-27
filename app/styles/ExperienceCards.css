@@ -20,7 +20,9 @@
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--gap);
+  align-items: stretch;
 }
+.xpSec.has-open-card,
 .xpSec:has(.xp-card.is-open){
   align-items: start;
 }

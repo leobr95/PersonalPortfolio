@@ -2,6 +2,7 @@
    Skills Timeline (oscuro + cristal)
    ======================= */
 .skl2{
+  container: skills-timeline / inline-size;
   --skl2-sticky-top: max(12px, env(safe-area-inset-top));
   --skl2-title-sticky-h: 44px;
   position: relative;
@@ -366,10 +367,19 @@
   padding-left: 22px;
   padding-right: 22px;
 }
-@media (min-width: 1200px){
+@container skills-timeline (min-width: 1040px){
   .skl2-grid{
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
+  }
+}
+
+@supports not (container-type: inline-size){
+  @media (min-width: 1400px){
+    .skl2-grid{
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
+    }
   }
 }
 .skl2-col{
