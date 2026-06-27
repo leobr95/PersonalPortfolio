@@ -19,16 +19,13 @@
   margin-inline: auto;
 
   border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: clamp(16px, 2vw, 30px);
+  border-radius: var(--pf-section-radius, 18px);
+  padding: var(--pf-section-pad, clamp(16px, 2vw, 30px));
   color: var(--text);
 
-  background:
-    radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.25), transparent 50%),
-    radial-gradient(1200px 600px at 110% 120%, rgba(0,140,255,.18), transparent 50%),
-    linear-gradient(180deg, #0b0c11, #0e0f15 60%, #0b0c11);
+  background: var(--pf-surface-bg);
 
-  box-shadow: 0 10px 28px rgba(0,0,0,.35);
+  box-shadow: var(--pf-section-shadow, 0 10px 28px rgba(0,0,0,.35));
 }
 
 /* Card cristal principal */
@@ -36,17 +33,16 @@
   position: relative;
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: clamp(16px, 2.4vw, 32px);
+  border-radius: var(--pf-card-radius, 20px);
+  padding: var(--pf-card-pad, clamp(16px, 2.4vw, 32px));
 
-  background:
-    radial-gradient(ellipse at right top, rgba(0,69,143,.56) 0%, var(--panel) 45%, var(--panel) 100%);
-  box-shadow: 0 12px 34px rgba(0,0,0,.45);
+  background: var(--pf-card-bg);
+  box-shadow: var(--pf-card-shadow, 0 12px 34px rgba(0,0,0,.45));
   overflow: hidden;
 }
 .prf-card::before{
   content:""; position:absolute; inset:0;
-  border: 2px solid transparent; border-radius: 20px; z-index:0;
+  border: 2px solid transparent; border-radius: var(--pf-card-radius, 20px); z-index:0;
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out; mask-composite: exclude;
   background: linear-gradient(45deg, #0e0f15, #0e0f15, #0e0f15, #0e0f15, #1890ff) border-box;

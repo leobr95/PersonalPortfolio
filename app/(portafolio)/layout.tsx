@@ -67,13 +67,13 @@ export default function PortfolioLayout({ children }: PropsWithChildren) {
       {/* Overlay móvil */}
       <div className={`pf-overlay ${open ? 'is-on' : ''}`} onClick={() => setOpen(false)} />
 
-      <section className={`pf ${open ? 'pf--menuOpen' : ''} ${sidebarHidden ? 'pf--sidebarHidden' : ''}`}>
+      <section className={`pf ${open ? 'pf--menuOpen' : ''} ${sidebarHidden ? 'pf--sidebarHidden' : ''}`} aria-label="Portfolio shell">
         <Sidebar
           open={open}
           onClose={() => setOpen(false)}
           onRequestClose={handleSidebarClose}
         />
-        <main className="pf-main">{children}</main>
+        <main className="pf-main" id="portfolio-content">{children}</main>
       </section>
       <CvFab
         fileUrl="/cv/Leonardo_Burbano_CV.pdf"

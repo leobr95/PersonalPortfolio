@@ -3,8 +3,27 @@
   --aside-w: 300px;     /* ancho por defecto del sidebar */
   --gap-bridge: 20px;   /* puente curvo entre sidebar y contenido */
 
-  /* ✅ NUEVO: ancho máximo del contenido (pf-main) */
+  /* Shared portfolio visual system tokens */
   --content-max: 1200px;
+  --pf-shell-pad: clamp(16px, 1.2vw, 28px);
+  --pf-section-pad: clamp(16px, 2vw, 30px);
+  --pf-card-pad: clamp(16px, 2.4vw, 32px);
+  --pf-stack-gap: clamp(18px, 1.2vw, 26px);
+  --pf-section-radius: 18px;
+  --pf-card-radius: 20px;
+  --pf-control-radius: 12px;
+  --pf-glass-blur: blur(12px) saturate(140%);
+  --pf-surface-bg:
+    radial-gradient(1200px 600px at 10% -20%, rgba(98,0,234,.25), transparent 50%),
+    radial-gradient(1200px 600px at 110% 120%, rgba(0,140,255,.18), transparent 50%),
+    linear-gradient(180deg, #0b0c11, #0e0f15 60%, #0b0c11);
+  --pf-card-bg: radial-gradient(ellipse at right top, rgba(0,69,143,.56) 0%, var(--panel) 45%, var(--panel) 100%);
+  --pf-sidebar-bg: linear-gradient(180deg, #0b0c11, var(--side-bg));
+  --pf-section-shadow: 0 10px 28px rgba(0,0,0,.35);
+  --pf-card-shadow: 0 12px 34px rgba(0,0,0,.45);
+  --pf-control-shadow: 0 10px 22px rgba(0,0,0,.24);
+  --pf-route-ease: cubic-bezier(.22, 1, .36, 1);
+  --pf-route-duration: .24s;
 
   /* paleta base por si las usas en ambos */
   --side-bg: #0f1118;
@@ -15,7 +34,8 @@
   --line-weak: #1c2033;
 
   --glass: rgba(255,255,255,.05);
-  --elev-1: 0 10px 24px rgba(0,0,0,.35);
+  --glass-weak: rgba(255,255,255,.04);
+  --elev-1: var(--pf-section-shadow);
   --elev-2: 0 14px 34px rgba(0,0,0,.45);
   --primary: #8b5cf6;
   --ring: rgba(255,255,255,.12);
@@ -41,8 +61,7 @@
   min-height: 100dvh;
   overflow-x: clip;
 
-  /* ✅ Mejor: padding adaptable */
-  padding: clamp(16px, 1.2vw, 28px);
+  padding: var(--pf-shell-pad);
 
   /* el espacio del sidebar + puente */
   padding-left: calc(var(--aside-w) + var(--gap-bridge));
@@ -50,7 +69,7 @@
 }
 
 .pf--sidebarHidden{
-  padding-left: clamp(16px, 1.2vw, 28px);
+  padding-left: var(--pf-shell-pad);
 }
 
 /* ✅ Main centrado y con cards de cristal */
@@ -59,7 +78,13 @@
   max-width: min(var(--content-max), 100%);
   margin-inline: auto;
   display: grid;
-  gap: clamp(18px, 1.2vw, 26px);
+  gap: var(--pf-stack-gap);
+}
+
+.pf-route-shell{
+  display: grid;
+  gap: var(--pf-stack-gap);
+  min-width: 0;
 }
 
 /* ===== Sidebar fijo / drawer ===== */
@@ -68,8 +93,8 @@
   width: var(--aside-w); height: 100dvh;
   display: grid; grid-template-rows: auto 1fr auto;
 
-  background: var(--side-bg);
-  backdrop-filter: blur(14px) saturate(140%);
+  background: var(--pf-sidebar-bg);
+  backdrop-filter: var(--pf-glass-blur);
   border-right: 1px solid var(--line-weak);
   padding: 22px 14px 18px;
   box-shadow: var(--elev-2);
@@ -150,10 +175,10 @@
 /* ===== Panel genérico “cristal” ===== */
 .pf-panel{
   background: var(--panel);
-  backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: var(--pf-glass-blur);
   border: 1px solid var(--line);
-  border-radius: 22px;
-  padding: 16px;
+  border-radius: var(--pf-card-radius);
+  padding: var(--pf-card-pad);
   box-shadow: var(--elev-1);
 }
 .pf-head h2{ margin:0 0 10px; color:var(--text); font-weight:900; font-size:clamp(18px,2.4vw,22px); }
@@ -227,7 +252,7 @@
 /* Drawer móvil: sidebar fuera y contenido sin padding-left extra */
 @media (max-width: 980px){
   .pf{
-    padding-left: 16px;      /* ya no reservamos ancho del aside */
+    padding-left: var(--pf-shell-pad);      /* ya no reservamos ancho del aside */
     overflow-x: clip;
     overflow-y: visible;
     touch-action: auto;
@@ -242,7 +267,7 @@
     transform: translateX(-100%);
     width: min(88vw, 360px);
     border-right:none;
-    border-radius: 0 18px 18px 0;
+    border-radius: 0 var(--pf-section-radius) var(--pf-section-radius) 0;
   }
   .pf--menuOpen .pf-aside{ transform: translateX(0); }
 

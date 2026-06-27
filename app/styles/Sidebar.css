@@ -15,7 +15,7 @@
   /* glass + elevaciones */
   --glass: rgba(255,255,255,.05);
   --glass-weak: rgba(255,255,255,.04);
-  --elev-1: 0 10px 24px rgba(0,0,0,.35);
+  --elev-1: var(--pf-section-shadow, 0 10px 24px rgba(0,0,0,.35));
 
   /* Colores glow por ítem */
   --clr-1: #f59e0b;  /* Landing */
@@ -34,7 +34,7 @@
   width: var(--aside-w);
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background: linear-gradient(180deg, #0b0c11, var(--side-bg));
+  background: var(--pf-sidebar-bg, linear-gradient(180deg, #0b0c11, var(--side-bg)));
   border-right: 1px solid var(--line-weak);
   padding: 20px 14px;
   z-index: 30;
@@ -48,7 +48,7 @@
     transform: translateX(-100%);
     border-right: none;
     box-shadow: var(--elev-1);
-    border-radius: 0 18px 18px 0;
+    border-radius: 0 var(--pf-section-radius, 18px) var(--pf-section-radius, 18px) 0;
   }
   .pf-aside.is-open{ transform: translateX(0); }
 }
@@ -85,12 +85,12 @@
   display: grid;
   place-items: center;
   border: 1px solid rgba(255,255,255,.12);
-  border-radius: 12px;
+  border-radius: var(--pf-control-radius, 12px);
   background: var(--glass);
   color: #eaf0ff;
   cursor: pointer;
   box-shadow:
-    0 10px 22px rgba(0,0,0,.24),
+    var(--pf-control-shadow, 0 10px 22px rgba(0,0,0,.24)),
     inset 0 1px 0 rgba(255,255,255,.06);
   transition:
     transform .16s ease,
@@ -128,7 +128,7 @@
   position: relative;
   display:flex; align-items:center; gap:10px;
   padding: 14px 14px 14px 12px;
-  border-radius: 14px;
+  border-radius: calc(var(--pf-control-radius, 12px) + 2px);
   text-decoration: none;
   font-weight: 800; font-size: 15px;
   color: #EFF0FF;
@@ -136,8 +136,8 @@
   background: var(--glass);
   border: 1px solid rgba(255,255,255,.08);
   box-shadow: 0 15px 15px rgba(0,0,0,.30);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: var(--pf-glass-blur, blur(12px) saturate(140%));
+  -webkit-backdrop-filter: var(--pf-glass-blur, blur(12px) saturate(140%));
 
   transition: .45s ease;
   overflow: hidden;
@@ -456,7 +456,7 @@
     transform: translateX(-100%);
     width: min(88vw, 360px);
     border-right: none;
-    border-radius: 0 18px 18px 0;
+    border-radius: 0 var(--pf-section-radius, 18px) var(--pf-section-radius, 18px) 0;
   }
   .pf--menuOpen .pf-aside{ transform: translateX(0); }
 }
