@@ -1,15 +1,15 @@
 // eslint.config.js
-import { defineConfig } from "eslint/config";
 import js from "@eslint/js";
-import globals from "globals";
-import * as tseslint from "typescript-eslint";
+import nextPlugin from "@next/eslint-plugin-next";
+import { defineConfig } from "eslint/config";
+import prettier from "eslint-config-prettier";
+import importPlugin from "eslint-plugin-import";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import reactPlugin from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
-import jsxA11y from "eslint-plugin-jsx-a11y";
-import importPlugin from "eslint-plugin-import";
-import nextPlugin from "@next/eslint-plugin-next";
 import tailwind from "eslint-plugin-tailwindcss";
-import prettier from "eslint-config-prettier";
+import globals from "globals";
+import * as tseslint from "typescript-eslint";
 
 export default defineConfig([
   // Ignorados globales

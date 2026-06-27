@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { JSX, useEffect, useMemo, useState } from 'react';
 import {
-  FaUserCircle, FaRegListAlt, FaGithub, FaLinkedin, FaPhoneAlt,
+  FaUserCircle, FaRegListAlt, FaGithub, FaLinkedin, FaPhoneAlt, FaTimes,
 } from 'react-icons/fa';
 import {
   MdWorkOutline, MdFolderOpen, MdChatBubbleOutline, MdEmail, MdSchool, MdLightMode, MdDarkMode,
@@ -24,7 +24,15 @@ const NAV: NavItem[] = [
   { href: '/contacto',    label: 'Contacto',     icon: <MdChatBubbleOutline /> },
 ];
 
-export default function Sidebar({ open, onClose }: { open: boolean; onClose: () => void; }) {
+export default function Sidebar({
+  open,
+  onClose,
+  onRequestClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onRequestClose: () => void;
+}) {
   const pathname = usePathname() || '/perfil';
   const [theme, setTheme] = useState<ThemeMode>('dark');
   const [themeReady, setThemeReady] = useState(false);
@@ -59,7 +67,18 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
 
   return (
     <aside className={`pf-aside ${open ? 'is-open' : ''}`} aria-label="Barra lateral">
-      <div className="pf-brand ">PORTAFOLIO</div>
+      <div className="pf-sidebar-head">
+        <div className="pf-brand">PORTAFOLIO</div>
+        <button
+          type="button"
+          className="pf-sidebar-close"
+          onClick={onRequestClose}
+          aria-label="Ocultar barra lateral"
+          title="Ocultar barra lateral"
+        >
+          <FaTimes aria-hidden />
+        </button>
+      </div>
 
       <nav className="pf-nav" aria-label="Navegación principal">
         <ul className="pf-menu" role="list">

@@ -15,13 +15,15 @@ const SERVICES = [
   'Otro / Consultoría'
 ] as const;
 
+const CONTACT_EMAIL = 'br.david@outlook.com';
+
 export default function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [ok, setOk] = useState<null | boolean>(null);
   const [errMsg, setErrMsg] = useState<string>("");
 
   const whatsappUrl = useMemo(() => {
-    const base ='https://wa.me/+573236504428?text=Hola%2C%20quiero%20una%20cotizaci%C3%B3n%20de%20desarrollo%20de%20software.%0AMi%20nombre%3A%20%5BTu%20nombre%5D%0ANecesito%3A%20%5BWeb%20%7C%20App%20%7C%20Automatizaci%C3%B3n%5D%0APlazo%20estimado%3A%20%5B%5D';
+    const base ='https://wa.me/573236504428?text=Hola%2C%20quiero%20una%20cotizaci%C3%B3n%20de%20desarrollo%20de%20software.%0AMi%20nombre%3A%20%5BTu%20nombre%5D%0ANecesito%3A%20%5BWeb%20%7C%20App%20%7C%20Automatizaci%C3%B3n%5D%0APlazo%20estimado%3A%20%5B%5D';
     return base;
   }, []);
 
@@ -44,8 +46,20 @@ export default function ContactForm() {
       return;
     }
 
+    const contactApi = process.env.NEXT_PUBLIC_CONTACT_API;
+
+    if (!contactApi) {
+      const subject = encodeURIComponent('Contacto desde Portafolio');
+      const body = encodeURIComponent(
+        `Nombre: ${data.name}\nEmail: ${data.email}\nTeléfono: ${data.phone || ''}\nServicio: ${data.service || ''}\n\n${data.message}`
+      );
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(contactApi, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },

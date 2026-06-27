@@ -25,7 +25,7 @@ export default function ServiceCardTall({
         ))}
       </ul>
 
-      <a className="cta" href="#contact">Solicitar</a>
+      <a className="cta" href="/contacto">Solicitar</a>
 
       {/* orbes decorativos */}
       <span className="orb orb1" />

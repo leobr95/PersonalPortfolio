@@ -6,13 +6,13 @@ import { useMemo, useState, type JSX } from 'react';
 import ExperienceCards from './ExperienceCards';
 import ExperienceCircle from './ExperienceCircle';
 
-import fragansa from '@/app/logos/fragansac.png';
+import fragansa from '@/app/logos/fragansac.webp';
 import gvs from '@/app/logos/gvs.svg';
-import lbcodeworks from '@/app/logos/lbcodeworks.png';
-import helppeople from '@/app/logos/logo helppeople.png';
-import pyt from '@/app/logos/pyt.png';
-import smartfinancial from '@/app/logos/smartf.png';
-import vass from '@/app/logos/vass.png';
+import lbcodeworks from '@/app/logos/lbcodeworks.webp';
+import helppeople from '@/app/logos/logo helppeople.webp';
+import pyt from '@/app/logos/pyt.webp';
+import smartfinancial from '@/app/logos/smartf.webp';
+import vass from '@/app/logos/vass.webp';
 
 export type YM = { y: number; m: number; d?: number };
 

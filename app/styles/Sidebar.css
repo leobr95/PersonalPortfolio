@@ -54,9 +54,17 @@
 }
 
 /* Marca */
+.pf-aside .pf-sidebar-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 6px 8px 14px;
+}
+
 .pf-aside .pf-brand{
   color:#fff; font-weight:900; letter-spacing:.6px; font-size:18px;
-  margin: 6px 8px 14px;
+  margin: 0;
   font-size: clamp(14px, 3vw, 22px);
   font-weight: 900;
   letter-spacing: .3px;
@@ -68,6 +76,40 @@
   text-shadow:
     0 1px 0 rgba(0,0,0,.26),
     0 10px 24px rgba(34,113,198,.18);
+}
+
+.pf-aside .pf-sidebar-close{
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: var(--glass);
+  color: #eaf0ff;
+  cursor: pointer;
+  box-shadow:
+    0 10px 22px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  transition:
+    transform .16s ease,
+    filter .16s ease,
+    border-color .18s ease,
+    background-color .18s ease;
+}
+
+.pf-aside .pf-sidebar-close:hover,
+.pf-aside .pf-sidebar-close:focus-visible{
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  border-color: rgba(255,255,255,.2);
+  outline: none;
+}
+
+.pf-aside .pf-sidebar-close svg{
+  width: 16px;
+  height: 16px;
 }
 
 /* ===== Menú ===== */
@@ -248,7 +290,15 @@
     --aside-w: 84px;
     padding: 16px 10px;
   }
+  .pf-aside .pf-sidebar-head{
+    justify-content: center;
+    margin: 4px 0 10px;
+  }
   .pf-aside .pf-brand{ display: none; }
+  .pf-aside .pf-sidebar-close{
+    width: 40px;
+    height: 40px;
+  }
   .pf-aside .pf-menu{ padding: 10px 0; }
   .pf-aside .pf-nav-item{
     justify-content: center;
@@ -352,6 +402,14 @@
     0 8px 18px rgba(40,62,104,.22);
 }
 [data-theme="light"] .pf-aside .pf-nav-ico{ color: #49628f; }
+[data-theme="light"] .pf-aside .pf-sidebar-close{
+  color: #213252;
+  background: rgba(255,255,255,.76);
+  border-color: rgba(82,106,150,.22);
+  box-shadow:
+    0 8px 18px rgba(40,62,104,.14),
+    inset 0 1px 0 rgba(255,255,255,.72);
+}
 [data-theme="light"] .pf-aside .pf-nav-item:hover{ filter: brightness(1.02); }
 [data-theme="light"] .pf-aside .pf-nav-item.is-active{
   color: #162843;

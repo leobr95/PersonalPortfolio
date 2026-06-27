@@ -6,8 +6,10 @@ import { FaDownload } from 'react-icons/fa';
 import '@/app/styles/CvFab.css';
 
 export type CvFabProps = {
-  /** Cadena base64 del PDF. Acepta con o sin prefijo 'data:application/pdf;base64,' */
-  dataBase64: string;
+  /** URL pública del PDF. Preferida para no cargar el documento dentro del bundle JS. */
+  fileUrl?: string;
+  /** Cadena base64 del PDF. Acepta con o sin prefijo 'data:application/pdf;base64,'. */
+  dataBase64?: string;
   /** Nombre del archivo a descargar */
   filename?: string;
   /** Texto del botón flotante */
@@ -39,6 +41,7 @@ function base64ToBlob(base64: string, mime = 'application/pdf'): Blob {
 }
 
 export default function CvFab({
+  fileUrl,
   dataBase64,
   filename = 'Leonardo_Burbano_CV.pdf',
   label = 'Ver curriculum',
@@ -59,15 +62,15 @@ export default function CvFab({
 
   // Genera URL blob solo cuando el modal esté abierto (y la revoca al cerrar)
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
-  const pdfPreviewUrl = useMemo(
-    () => blobUrl ? `${blobUrl}#page=1&zoom=page-fit&view=Fit&toolbar=0&navpanes=0&scrollbar=0` : null,
-    [blobUrl]
-  );
+  const pdfPreviewUrl = useMemo(() => {
+    const source = fileUrl ?? blobUrl;
+    return source ? `${source}#page=1&zoom=page-fit&view=Fit&toolbar=0&navpanes=0&scrollbar=0` : null;
+  }, [blobUrl, fileUrl]);
 
   useEffect(() => {
     if (!isOpen) return;
 
-    if (!hasBase64) {
+    if (fileUrl || !hasBase64 || !dataBase64) {
       setBlobUrl(null);
       return;
     }
@@ -84,7 +87,7 @@ export default function CvFab({
     } catch {
       setBlobUrl(null);
     }
-  }, [isOpen, dataBase64, hasBase64]);
+  }, [isOpen, dataBase64, fileUrl, hasBase64]);
 
   const openModal = useCallback(() => setIsOpen(true), []);
   const closeModal = useCallback(() => {
@@ -93,6 +96,18 @@ export default function CvFab({
   }, [unlockDocumentScroll]);
 
   const handleDownload = useCallback(() => {
+    if (fileUrl) {
+      const a = document.createElement('a');
+      a.href = fileUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      return;
+    }
+
+    if (!hasBase64 || !dataBase64) return;
+
     try {
       const blob = base64ToBlob(dataBase64, 'application/pdf');
       const url = URL.createObjectURL(blob);
@@ -106,9 +121,9 @@ export default function CvFab({
 
       URL.revokeObjectURL(url);
     } catch {
-      console.error('No se pudo descargar el PDF. Verifica la cadena base64.');
+      console.error('No se pudo descargar el PDF.');
     }
-  }, [dataBase64, filename]);
+  }, [dataBase64, fileUrl, filename, hasBase64]);
 
   // UX: ESC para cerrar + bloquear scroll + foco al botón cerrar
   useEffect(() => {
@@ -201,7 +216,7 @@ export default function CvFab({
                       <div className="cv-previewStage">
                         <Image
                           className="cv-previewImg"
-                          src="/cv/cv-preview.png"
+                          src="/cv/cv-preview.webp"
                           alt="Vista previa del currículum"
                           width={1164}
                           height={1800}

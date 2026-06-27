@@ -2,40 +2,42 @@
 
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { FaGithub } from 'react-icons/fa';
 import { MdOpenInNew } from 'react-icons/md';
 
 import '@/app/styles/Projects.css';
-import bebidassoftc2 from '@/app/capturas/babidasc2.png';
-import bebidassoftc1 from '@/app/capturas/bebidasc1.png';
-import bebidassoftc3 from '@/app/capturas/bebidasc3.png';
-import cerveceriac1 from '@/app/capturas/cerveceriac1.png';
-import cslogo1 from '@/app/capturas/cslogo1.png';
-import debsc1 from '@/app/capturas/debsc1.png';
-import debsc2 from '@/app/capturas/debsc2.png';
-import debsc3 from '@/app/capturas/debsc3.png';
-import debsc4 from '@/app/capturas/debsc4.png';
-import debsc5 from '@/app/capturas/debsc5.png';
-import debsc6 from '@/app/capturas/debsc6.png';
-import debsc7 from '@/app/capturas/debsc7.png';
-import debsc8 from '@/app/capturas/debsc8.png';
-import debsc9 from '@/app/capturas/debsc9.png';
-import devinmotionc1 from '@/app/capturas/devinmotionc1.png';
-import gcc1 from '@/app/capturas/gcc1.png';
-import gvsc1 from '@/app/capturas/gvsc1.png';
-import lbcodeworksc1 from '@/app/capturas/lbcodeworksc1.png';
-import lbcodeworksc2 from '@/app/capturas/lbcodeworksc2.png';
-import megadevc1 from '@/app/capturas/megadevc1.png';
-import observadorObservaciones from '@/app/capturas/observador-observaciones.png';
-import observadorPanel from '@/app/capturas/observador-panel.png';
-import observadorReportes from '@/app/capturas/observador-reportes.png';
-import ofc1 from '@/app/capturas/ofc1.png';
-import portfolioc1 from '@/app/capturas/portfolioc1.png';
-import pytc1 from '@/app/capturas/pytc1.png';
-import qvisionc1 from '@/app/capturas/qvisionc1.png';
-import smartfinancialc1 from '@/app/capturas/smartfinancialc1.png';
-import logoVass from '@/app/capturas/vassc1.png';
+import bebidassoftc2 from '@/app/capturas/babidasc2.webp';
+import bebidassoftc1 from '@/app/capturas/bebidasc1.webp';
+import bebidassoftc3 from '@/app/capturas/bebidasc3.webp';
+import cerveceriac1 from '@/app/capturas/cerveceriac1.webp';
+import cslogo1 from '@/app/capturas/cslogo1.webp';
+import debsc1 from '@/app/capturas/debsc1.webp';
+import debsc2 from '@/app/capturas/debsc2.webp';
+import debsc3 from '@/app/capturas/debsc3.webp';
+import debsc4 from '@/app/capturas/debsc4.webp';
+import debsc5 from '@/app/capturas/debsc5.webp';
+import debsc6 from '@/app/capturas/debsc6.webp';
+import debsc7 from '@/app/capturas/debsc7.webp';
+import debsc8 from '@/app/capturas/debsc8.webp';
+import debsc9 from '@/app/capturas/debsc9.webp';
+import devinmotionc1 from '@/app/capturas/devinmotionc1.webp';
+import gcc1 from '@/app/capturas/gcc1.webp';
+import gvsc1 from '@/app/capturas/gvsc1.webp';
+import lbcodeworksCom2026 from '@/app/capturas/lbcodeworks-com-2026.webp';
+import megadevc1 from '@/app/capturas/megadevc1.webp';
+import observadorAsistencia2026 from '@/app/capturas/observador-asistencia-2026.webp';
+import observadorCalendario2026 from '@/app/capturas/observador-calendario-2026.webp';
+import observadorDashboard2026 from '@/app/capturas/observador-dashboard-2026.webp';
+import observadorNotas2026 from '@/app/capturas/observador-notas-2026.webp';
+import ofc1 from '@/app/capturas/ofc1.webp';
+import origendotacionesc1 from '@/app/capturas/origendotacionesc1.webp';
+import portfolioc1 from '@/app/capturas/portfolioc1.webp';
+import pytc1 from '@/app/capturas/pytc1.webp';
+import qvisionc1 from '@/app/capturas/qvisionc1.webp';
+import smartfinancialc1 from '@/app/capturas/smartfinancialc1.webp';
+import logoVass from '@/app/capturas/vassc1.webp';
 
 
 type Project = {
@@ -46,6 +48,7 @@ type Project = {
   href?: string;
   codeHref?: string;
   badge?: 'Destacado' | 'Freelance' | 'Personal' | 'Comercial';
+  imageFit?: 'cover' | 'contain';
 };
 
 const LABORAL: Project[] = [
@@ -198,14 +201,27 @@ qvisionc1,
 
 const FREELANCE: Project[] = [
   {
-    title: 'lb.codeworks – Emprendimiento de servicios',
+    title: 'lb.codeworks – Empresa de software a medida',
     description:
-      'Marca personal orientada a proyectos de desarrollo web a la medida para Workana/Upwork. Sitio corporativo con estética neomorfismo, multisección y enfoque comercial.',
-    tech: ['Next.js (React/TS)', 'Vercel', 'Neumorphism', 'i18n'],
+      'Sitio corporativo de lb.codeworks para ofrecer desarrollo web y software a la medida. Presenta servicios, enfoque comercial, CTA de cotización, contacto por WhatsApp, navegación bilingüe y experiencia visual en modo claro/oscuro.',
+    tech: ['Next.js (React/TS)', 'Landing comercial', 'Software a medida', 'WhatsApp CTA', 'SEO'],
     images: [
-      lbcodeworksc1,
-      lbcodeworksc2,],
-    href: 'https://lbcodeworks.vercel.app/',
+      lbcodeworksCom2026,
+    ],
+    href: 'https://lbcodeworks.com/',
+    imageFit: 'contain',
+  },
+
+  {
+    title: 'Origen Dotaciones – Catálogo & cotización B2B',
+    description:
+      'Catálogo digital para Origen Dotaciones y Confecciones B&R, empresa de Cali enfocada en dotación empresarial. Incluye categorías de uniformes industriales, antifluido, ejecutivos, deportivos, vigilancia, cocina y bordado; búsqueda, productos destacados, carrito de cotización y CTA a WhatsApp para atención comercial.',
+    tech: ['Next.js (React/TS)', 'Material UI', 'Catálogo digital', 'SEO', 'WhatsApp CTA'],
+    images: [
+      origendotacionesc1,
+    ],
+    href: 'https://www.origendotaciones.com/',
+    badge: 'Freelance',
   },
 
   {
@@ -224,13 +240,15 @@ const FREELANCE: Project[] = [
   {
     title: 'Observador Estudiantil – Gestión académica',
     description:
-      'MVP full-stack para colegios de primaria: panel docente, gestión de cursos, estudiantes, asignaturas, observaciones, registro de notas, asistencia, horarios y reportes exportables.',
+      'Plataforma docente full-stack para colegios: dashboard con métricas, módulos académicos, registro de notas por periodo, asistencia con reportes mensuales/PDF, calendario curricular, eventualidades, cuadernos digitales y reportes exportables.',
     tech: ['React 19', 'Vite', 'MUI', 'NestJS', 'Prisma', 'PostgreSQL', '.NET JWT'],
     images: [
-      observadorPanel,
-      observadorObservaciones,
-      observadorReportes,
+      observadorDashboard2026,
+      observadorAsistencia2026,
+      observadorCalendario2026,
+      observadorNotas2026,
     ],
+    href: 'https://observador.lbcodeworks.com/landing',
     codeHref: 'https://github.com/leobr95/student-observer-system',
     badge: 'Personal',
   },
@@ -278,7 +296,7 @@ const FREELANCE: Project[] = [
 ];
 
 
-/* ----- Tarjeta con slider (sin modal) ----- */
+/* ----- Tarjeta con slider + modal de imagen ----- */
 function ProjectCard({
   p,
   priorityMedia = false,
@@ -292,9 +310,35 @@ function ProjectCard({
   const total = p.images.length;
   const badge = p.badge ?? (p.href ? 'Destacado' : 'Comercial');
   const activeImage = p.images[idx];
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [canUsePortal, setCanUsePortal] = useState(false);
+  const activeImageLabel = `${p.title} – captura ${idx + 1}`;
 
   const go = (dir: number) => setIdx((i) => (i + dir + total) % total);
   const dots = useMemo(() => Array.from({ length: total }), [total]);
+
+  useEffect(() => {
+    setCanUsePortal(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setModalOpen(false);
+      if (event.key === 'ArrowLeft') setIdx((i) => (i - 1 + total) % total);
+      if (event.key === 'ArrowRight') setIdx((i) => (i + 1 + total) % total);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isModalOpen, total]);
 
   return (
     <article className="prj-card">
@@ -304,10 +348,15 @@ function ProjectCard({
         <div className="prj-slider">
           <button className="nav prev" aria-label="Anterior" onClick={() => go(-1)}>‹</button>
 
-          <div className="prj-frame" aria-label={`${p.title} capturas del proyecto`}>
+          <button
+            type="button"
+            className={`prj-frame prj-frame--button ${p.imageFit === 'contain' ? 'prj-frame--contain' : ''}`}
+            aria-label={`Ampliar ${activeImageLabel}`}
+            onClick={() => setModalOpen(true)}
+          >
             <Image
               src={activeImage}
-              alt={`${p.title} – captura ${idx + 1}`}
+              alt={activeImageLabel}
               className="prj-img"
               width={1200}
               height={760}
@@ -315,7 +364,8 @@ function ProjectCard({
               loading={priorityMedia ? 'eager' : 'lazy'}
               unoptimized
             />
-          </div>
+            <span className="prj-zoom-label" aria-hidden>Ampliar</span>
+          </button>
 
           <button className="nav next" aria-label="Siguiente" onClick={() => go(1)}>›</button>
         </div>
@@ -385,6 +435,85 @@ function ProjectCard({
           </div>
         ) : null}
       </div>
+
+      {canUsePortal && isModalOpen ? createPortal((
+        <div
+          className="prj-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Vista ampliada de ${p.title}`}
+          onClick={() => setModalOpen(false)}
+        >
+          <div className="prj-modal-panel" onClick={(event) => event.stopPropagation()}>
+            <header className="prj-modal-head">
+              <div>
+                <strong>{p.title}</strong>
+                <span>Captura {idx + 1} de {total}</span>
+              </div>
+              <button
+                type="button"
+                className="prj-modal-close"
+                aria-label="Cerrar imagen ampliada"
+                onClick={() => setModalOpen(false)}
+              >
+                ×
+              </button>
+            </header>
+
+            <div className={`prj-modal-body ${total > 1 ? '' : 'prj-modal-body--single'}`}>
+              {total > 1 ? (
+                <button
+                  type="button"
+                  className="prj-modal-nav prj-modal-nav--prev"
+                  aria-label="Imagen anterior"
+                  onClick={() => go(-1)}
+                >
+                  ‹
+                </button>
+              ) : null}
+
+              <div className="prj-modal-frame">
+                <Image
+                  src={activeImage}
+                  alt={activeImageLabel}
+                  className="prj-modal-img"
+                  width={1600}
+                  height={1000}
+                  sizes="100vw"
+                  priority
+                  unoptimized
+                />
+              </div>
+
+              {total > 1 ? (
+                <button
+                  type="button"
+                  className="prj-modal-nav prj-modal-nav--next"
+                  aria-label="Imagen siguiente"
+                  onClick={() => go(1)}
+                >
+                  ›
+                </button>
+              ) : null}
+            </div>
+
+            {total > 1 ? (
+              <div className="prj-modal-dots" role="tablist" aria-label="Selector de captura ampliada">
+                {dots.map((_, i) => (
+                  <button
+                    key={`modal-${i}`}
+                    type="button"
+                    className={`dot ${i === idx ? 'is-active' : ''}`}
+                    aria-label={`Ver captura ${i + 1}`}
+                    aria-selected={i === idx}
+                    onClick={() => setIdx(i)}
+                  />
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </div>
+      ), document.body) : null}
     </article>
   );
 }

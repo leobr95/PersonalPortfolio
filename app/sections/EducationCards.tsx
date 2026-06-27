@@ -4,9 +4,9 @@ import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useRef, useState, type JSX } from 'react';
 
 import '@/app/styles/EducationCards.css';
-import sena from '@/app/logos/sena.png';
-import smartFinancial from '@/app/logos/smartf.png';
-import udemy from '@/app/logos/udemy.jpg';
+import sena from '@/app/logos/sena.webp';
+import smartFinancial from '@/app/logos/smartf.webp';
+import udemy from '@/app/logos/udemy.webp';
 import universidad from '@/app/logos/universidad.webp';
 
 type YM = { y: number; m: number };                 // m: 1..12
@@ -26,9 +26,11 @@ type Course = {
   name: string;
   provider: string;
   period: Period;
+  periodLabel?: string;
   logo?: StaticImageData;
   mode?: 'Online' | 'Presencial' | 'Híbrido';
   details?: string[];
+  certificateHref?: string;
   tone?: 'blue' | 'green' | 'orange' | 'red';
 };
 
@@ -78,40 +80,58 @@ const STUDIES: Study[] = [
 
 const COURSES: Course[] = [
   {
-    name: 'Curso de Inglés',
-    provider: 'Udemy / Pluralsight',
-    period: { from: { y: 2021, m: 5 }, to: { y: 2021, m: 9 } },
-    logo: smartFinancial,
+    name: 'Angular: De cero a experto',
+    provider: 'Udemy',
+    period: { from: { y: 2023, m: 10 }, to: { y: 2023, m: 10 } },
+    periodLabel: '2023',
+    logo: udemy,
     mode: 'Online',
+    certificateHref: '/certificados/angular-de-cero-a-experto-2023.pdf',
     details: [
-      'Capas Domain, Application, Infrastructure y API.',
-      'Buenas prácticas, SOLID, inyección de dependencias.',
+      'Formación práctica en Angular moderno, componentes, servicios y enrutamiento.',
+      'Construcción de aplicaciones frontend con TypeScript y buenas prácticas.',
     ],
     tone: 'red',
   },
   {
-    name: 'React + TypeScript Avanzado',
-    provider: 'Platzi / FrontendMasters',
-    period: { from: { y: 2022, m: 2 }, to: { y: 2022, m: 8 } },
+    name: 'Creando Web APIs Profesionales con .NET 6 y .NET 7',
+    provider: 'Udemy',
+    period: { from: { y: 2023, m: 11 }, to: { y: 2023, m: 11 } },
+    periodLabel: '2023',
     logo: udemy,
     mode: 'Online',
+    certificateHref: '/certificados/creando-web-apis-profesionales-net-6-net-7.pdf',
     details: [
-      'Estado, hooks, performance y patrones.',
-      'Buenas prácticas con TS y tooling moderno.',
-    ],
-    tone: 'blue',
-  },
-  {
-    name: 'Azure Fundamentals (App Service / Key Vault / CI-CD)',
-    provider: 'Microsoft Learn',
-    period: { from: { y: 2023, m: 3 }, to: { y: 2023, m: 6 } },
-    logo: udemy,
-    mode: 'Online',
-    details: [
-      'Despliegues en App Service y pipelines en Azure DevOps.',
-      'Gestión segura de secretos con Key Vault.',
+      'Diseño y desarrollo de APIs REST profesionales con ASP.NET Core.',
+      'Buenas prácticas para endpoints, servicios, arquitectura y mantenibilidad.',
     ],
     tone: 'green',
+  },
+  {
+    name: 'Seguridad informática para empresas',
+    provider: 'Udemy',
+    period: { from: { y: 2023, m: 12 }, to: { y: 2023, m: 12 } },
+    periodLabel: '2023',
+    logo: udemy,
+    mode: 'Online',
+    certificateHref: '/certificados/seguridad-informatica-para-empresas-2023.pdf',
+    details: [
+      'Conceptos de protección de datos, riesgos y buenas prácticas empresariales.',
+      'Enfoque preventivo para seguridad, privacidad y cultura organizacional.',
+    ],
+    tone: 'orange',
+  },
+  {
+    name: 'Curso de Inglés',
+    provider: 'Udemy / Pluralsight',
+    period: { from: { y: 2018, m: 3 }, to: { y: 2020, m: 11 } },
+    logo: smartFinancial,
+    mode: 'Online',
+    details: [
+      'Formación de inglés desarrollada durante mi etapa en Smart Financial Systems.',
+      'Refuerzo de lectura técnica, comunicación profesional y documentación en inglés.',
+    ],
+    tone: 'red',
   },
 ];
 
@@ -155,8 +175,10 @@ type EduCardProps = {
   title: string;
   subtitle: string;
   period: Period;
+  periodLabel?: string;
   logo?: StaticImageData;
   details?: string[];
+  certificateHref?: string;
   tone?: 'blue' | 'green' | 'orange' | 'red';
   priority?: boolean;
 };
@@ -165,8 +187,10 @@ function EduCard({
   title,
   subtitle,
   period,
+  periodLabel,
   logo,
   details,
+  certificateHref,
   tone = 'blue',
   priority = false,
 }: EduCardProps): JSX.Element {
@@ -195,7 +219,7 @@ function EduCard({
         <h3 className="edu-title">{title}</h3>
         <p className="edu-sub">{subtitle}</p>
         <span className="edu-period">
-          {fmtYM(period.from)} – {fmtYM(period.to)}
+          {periodLabel ?? `${fmtYM(period.from)} – ${fmtYM(period.to)}`}
         </span>
       </header>
 
@@ -210,6 +234,18 @@ function EduCard({
           <span>{open ? 'Ocultar detalles' : 'Ver detalles'}</span>
           <i aria-hidden />
         </button>
+        {certificateHref ? (
+          <a
+            className="edu-btn edu-link"
+            href={certificateHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Ver certificado de ${title}`}
+          >
+            <span>Ver certificado</span>
+            <i aria-hidden />
+          </a>
+        ) : null}
       </div>
 
       <div
@@ -272,8 +308,10 @@ export default function EducationCards(): JSX.Element {
               title={c.name}
               subtitle={`${c.provider}${c.mode ? ` · ${c.mode}` : ''}`}
               period={c.period}
+              periodLabel={c.periodLabel}
               logo={c.logo}
               details={c.details}
+              certificateHref={c.certificateHref}
               tone={c.tone}
               priority={idx === 0}
             />

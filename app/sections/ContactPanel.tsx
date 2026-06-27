@@ -5,17 +5,19 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { MdEmail, MdPhone, MdContentCopy, MdCheckCircle } from 'react-icons/md';
 import '@/app/styles/ContactPanel.css';
 
-const WHATSAPP_PERSONAL = '573176820188'; 
-const LLAMADAS = '573236504428';    // <- cámbialo si deseas
-const WHATSAPP_EMPRESA  = '573236504428';     // <- o pon el de tu WhatsApp Business
-const MAIL_TO            = 'br.david@outlook.com';
+const WHATSAPP_PERSONAL = '573176820188';
+const LLAMADAS = '573236504428';
+const WHATSAPP_EMPRESA = '573236504428';
+const MAIL_TO = 'br.david@outlook.com';
+
+const formatPhone = (phone: string) => `+57 ${phone.replace(/^57/, '')}`;
 
 export default function ContactPanel({ showHeader = true }: { showHeader?: boolean }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(`+57 ${WHATSAPP_PERSONAL.replace(/^57/,'')}`);
+      await navigator.clipboard.writeText(formatPhone(LLAMADAS));
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     } catch { /* ignore */ }
@@ -81,7 +83,7 @@ export default function ContactPanel({ showHeader = true }: { showHeader?: boole
           <ul className="ctc-lines" role="list">
             <li>
               <MdPhone aria-hidden />
-              <span><strong>Llamadas:</strong> +57 {LLAMADAS.replace(/^57/,'')}</span>
+              <span><strong>Llamadas:</strong> {formatPhone(LLAMADAS)}</span>
               <button className="link-ghost" onClick={handleCopy} aria-label="Copiar número">
                 {copied ? <><MdCheckCircle/> <span className="ctc-copy-text">Copiado</span></> : <><MdContentCopy/> <span className="ctc-copy-text">Copiar</span></>}
               </button>

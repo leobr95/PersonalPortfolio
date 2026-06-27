@@ -6,8 +6,8 @@ import { JSX, useMemo } from 'react';
 import { FaDownload, FaGithub, FaLinkedin, FaPhoneAlt, FaWhatsapp, FaRegListAlt } from 'react-icons/fa';
 import { MdChevronRight, MdEmail, MdWorkOutline, MdFolderOpen, MdSchool } from 'react-icons/md';
 
-import imageProfileLight from '@/app/logos/profile-photo.png';
-import imageProfileDark from '@/app/logos/profile-photo.png';
+import imageProfileLight from '@/app/logos/profile-photo.webp';
+import imageProfileDark from '@/app/logos/profile-photo.webp';
 import '@/app/styles/Profile.css';
 
 export default function PerfilPage(): JSX.Element {
@@ -54,8 +54,8 @@ export default function PerfilPage(): JSX.Element {
         label: 'Teléfono y WhatsApp',
         items: [
           { href: 'tel:+573236504428', label: 'Llamar', icon: <FaPhoneAlt aria-hidden />, tone: 'green' },
-          { href: 'https://wa.me/573236504428', label: 'WhatsApp', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
-          { href: 'https://wa.me/message/TU_ID_EMPRESA', label: 'WA empresa', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
+          { href: 'https://wa.me/573176820188', label: 'WhatsApp', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
+          { href: 'https://wa.me/573236504428', label: 'WA empresa', icon: <FaWhatsapp aria-hidden />, tone: 'green' },
         ],
       },
       {
